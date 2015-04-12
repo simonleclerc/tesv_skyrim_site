@@ -271,6 +271,17 @@
     canvas.setAttribute('height', window.innerHeight);
     canvas.setAttribute('width', window.innerWidth);
 
+    function randomRand(rand1, rand2) {
+        if (Math.random() >= .5){
+            return rand(rand1[0], rand1[1]);
+        } else {
+            return rand(rand2[0], rand2[1]);
+        }
+    }
+    function getPercentage(base, percent) {
+        return (base/100)*(percent);
+    }
+
     var particles = {},
             particleIndex = 0;
     function Particle() {
@@ -281,16 +292,38 @@
         this.x = canvas.width/2;
         this.y = canvas.height/2;
         this.id = particleIndex;
-        this.size = rand(2,4);
+        this.size = rand(2,3);
         this.life = 0;
-        this.maxLife = 50;
-        this.way = Math.random() > .7 ? -1 : 1;
-        this.initialVx =  this.way < 0 ? rand(-5,-1) : rand(10, 40);
-        this.initialVy = Math.random() >= 0.5 ?
-        this.initialVx / rand(.9, 50) :
-        this.initialVx / rand(-50, -0.9);
+        this.maxLife = 40;
+        this.way = Math.random() > .8 ? -1 : 1;
+
+        this.angle = Math.PI*2;
+        this.modifyAngle = rand(getPercentage(2*Math.PI, -1), getPercentage(2*Math.PI, 1))
+
+        console.log
+        if(this.way < 0) {
+            this.initialVx =  rand(-2, 2);
+            this.initialVy =  rand(-2, 2);
+//            this.initialVy = randomRand([-2,-0.5],[.5,2]);
+        } else {
+            if(Math.random() > .35) {
+                this.initialVx = Math.round((rand(10, 25) * Math.cos(this.angle + this.modifyAngle)));
+                this.initialVy = Math.round((rand(10, 25) * Math.sin(this.angle + this.modifyAngle)));
+                this.specialGradient = true;
+                this.size++;
+            } else {
+                this.initialVx = Math.round((rand(3, 6) * Math.cos(this.angle+(Math.PI) + this.modifyAngle*5)));
+                this.initialVy = Math.round((rand(3, 6) * Math.sin(this.angle+(Math.PI) + this.modifyAngle*5)));
+            }
+//            this.initialVy = this.initialVx / randomRand([.9, 50], [-50, -0.9]);
+        }
+
+//        this.initialVx =  this.way < 0 ? rand(-5,5) : rand(10, 25);
+//        this.initialVy = this.way < 0 ? randomRand([-2,-0.5],[.5,2]) : this.initialVx / randomRand([.9, 50], [-50, -0.9]);
         this.vx = this.initialVx;
         this.vy = this.initialVy;
+
+
 
         this.totalIteration = 100;
         this.startValueX = this.initialVx /5;
@@ -320,10 +353,15 @@
 
 
         var gradient = c.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
-        gradient.addColorStop(0, "rgba(200,200,200,.8)");
-        gradient.addColorStop(0.2, "rgba(200,200,200,.8)");
-        gradient.addColorStop(1, 'rgba(200,200,200,0)');
-
+        if(this.specialGradient) {
+            gradient.addColorStop(0, "rgba(250,250,250,.8)");
+            gradient.addColorStop(0.2, "rgba(250,250,250,.8)");
+            gradient.addColorStop(1, 'rgba(250,250,250,0)');
+        } else {
+            gradient.addColorStop(0, "rgba(200,200,200,.8)");
+            gradient.addColorStop(0.2, "rgba(200,200,200,.8)");
+            gradient.addColorStop(1, 'rgba(200,200,200,0)');
+        }
         // Create the shapes
         c.fillStyle= gradient;
         c.beginPath();
@@ -333,16 +371,33 @@
 
     }
 
+    var fixeParticle = function () {
+        this.x = canvas.width/2;
+        this.y = canvas.height/2;
+        var gradient = c.createRadialGradient(this.x, this.y, 0, this.x, this.y, 4);
+            gradient.addColorStop(0, "rgba(200,200,200,.8)");
+            gradient.addColorStop(0.2, "rgba(200,200,200,.8)");
+            gradient.addColorStop(1, 'rgba(200,200,200,0)');
+
+        // Create the shapes
+        c.fillStyle= gradient;
+        c.beginPath();
+        c.arc(this.x, this.y, 4, 0, Math.PI*2, true);
+        c.closePath();
+        c.fill();
+    };
 
     function render() {
         c.clearRect(0, 0, canvas.width, canvas.height);
 
-        if(Math.random() > .85) {
+        if(Math.random() > .75) {
             new Particle();
         }
         for (var i in particles) {
             particles[i].draw();
         }
+        fixeParticle();
+
     }
     (function animloop(){
         requestAnimFrame(animloop);
