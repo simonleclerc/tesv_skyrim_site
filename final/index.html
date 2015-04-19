@@ -22,7 +22,14 @@
 <body>
 
 <div>
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40%" height="75%" viewBox="0 0 635 307" enable-background="new 0 0 635 307" xml:space="preserve">
+    <svg id="svgMenu" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="50%" height="75%" viewBox="0 0 635 307" enable-background="new 0 0 635 307" xml:space="preserve">
+        <defs>
+        <filter id="f2" x="0" y="0" width="200%" height="200%">
+          <feOffset result="offOut" in="SourceGraphic" dx="0" dy="0"></feOffset>
+          <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10"></feGaussianBlur>
+          <feBlend in="SourceGraphic" in2="blurOut" mode="normal"></feBlend>
+        </filter>
+      </defs>
         <g id="menu">
             <path id="black_shadow" opacity="0.9" fill="#101112" d="M359.99,136.332l-13.741-15.559c0,0-0.501,3.192-1.523,7.667
                 c-1.196-0.565-2.457-1.043-3.78-1.424c-0.469-1.625-1.098-3.145-1.842-4.576c4.197-1.116,7.145-1.667,7.145-1.667l-15.184-14.689
@@ -238,12 +245,63 @@
 		</g>
 	</g>
         </g>
+        <path fill="#ffffff" d="M360.333,151.337c0,0,147.667-32.67,254,0
+		C509.333,178,360.333,151.337,360.333,151.337z" filter="url(#f2)"></path>
     </svg>
-    <canvas id="canvas" width="" height="" style=""></canvas>
+    <div class="blur-select"></div>
+    <canvas id="canvas" width="50%" height="75%" style=""></canvas>
 </div>
 
 
 <script type="text/javascript">
+
+    E = {
+        addHandler: function( element, type, handler ) {
+            if ( element.addEventListener ) {
+                element.addEventListener ( type, handler, false );
+            } else if ( element.attachEvent ) {
+                element.attachEvent ( "on" + type, handler );
+            } else {
+                element["on" + type] = handler;
+            }
+        },
+
+        getEvent: function ( event ) {
+            return event ? event : window.event;
+        },
+
+        getTarget: function ( event ) {
+            return event.target || event.srcElement;
+        },
+
+        preventDefault: function ( event ) {
+            if ( event.preventDefault ) {
+                event.preventDefault();
+            } else {
+                event.returnValue = false;
+            }
+        },
+
+        removeHandler: function( element, type, handler ) {
+            if ( element.removeEventListener ) {
+                element.removeEventListener ( type, handler, false );
+            } else if ( element.detachEvent ) {
+                element.detachEvent ( "on" + type, handler );
+            } else {
+                element["on" + type] = null;
+            }
+        },
+
+        stopPropagation: function ( event ) {
+            if ( event.stopPropagation ) {
+                event.stopPropagation();
+            } else {
+                event.cancelBubble = true;
+            }
+        }
+
+    };
+
     function easeOutCubic(currentIteration, startValue, changeInValue, totalIterations) {
         return changeInValue * (Math.pow(currentIteration / totalIterations - 1, 3) + 1) + startValue;
     }
@@ -264,6 +322,8 @@
             window.setTimeout(callback, 1000 / 60);
         };
     })();
+
+    var svgMenu = document.getElementById('menu');
 
     var canvas = document.getElementById('canvas');
     var c = canvas.getContext("2d");
@@ -289,26 +349,25 @@
         particleIndex ++;
         particles[particleIndex] = this;
 
-        this.x = canvas.width/2;
-        this.y = canvas.height/2;
+        this.x = particlesData.position[0];
+        this.y = particlesData.position[1];
         this.id = particleIndex;
         this.size = rand(2,3);
         this.life = 0;
         this.maxLife = 40;
         this.way = Math.random() > .8 ? -1 : 1;
 
-        this.angle = Math.PI*2;
-        this.modifyAngle = rand(getPercentage(2*Math.PI, -1), getPercentage(2*Math.PI, 1))
+        this.angle = particlesData.angle;
+        this.modifyAngle = rand(getPercentage(2*Math.PI, -1.5), getPercentage(2*Math.PI, 1.5))
 
-        console.log
         if(this.way < 0) {
             this.initialVx =  rand(-2, 2);
             this.initialVy =  rand(-2, 2);
 //            this.initialVy = randomRand([-2,-0.5],[.5,2]);
         } else {
             if(Math.random() > .35) {
-                this.initialVx = Math.round((rand(10, 25) * Math.cos(this.angle + this.modifyAngle)));
-                this.initialVy = Math.round((rand(10, 25) * Math.sin(this.angle + this.modifyAngle)));
+                this.initialVx = Math.round((rand(canvas.width/300, canvas.width/70) * Math.cos(this.angle + this.modifyAngle)));
+                this.initialVy = Math.round((rand(canvas.width/300, canvas.width/130) * Math.sin(this.angle + this.modifyAngle)));
                 this.specialGradient = true;
                 this.size++;
             } else {
@@ -372,8 +431,8 @@
     }
 
     var fixeParticle = function () {
-        this.x = canvas.width/2;
-        this.y = canvas.height/2;
+        this.x = particlesData.position[0];
+        this.y = particlesData.position[1];
         var gradient = c.createRadialGradient(this.x, this.y, 0, this.x, this.y, 4);
             gradient.addColorStop(0, "rgba(200,200,200,.8)");
             gradient.addColorStop(0.2, "rgba(200,200,200,.8)");
@@ -386,23 +445,103 @@
         c.closePath();
         c.fill();
     };
-
+    var particlesData = {
+        visible: false,
+        angle: Math.PI*2
+    }
     function render() {
         c.clearRect(0, 0, canvas.width, canvas.height);
-
-        if(Math.random() > .75) {
-            new Particle();
+        if(particlesData.visible) {
+            if(Math.random() > .75) {
+                new Particle();
+            }
+            fixeParticle();
         }
         for (var i in particles) {
             particles[i].draw();
         }
-        fixeParticle();
 
     }
     (function animloop(){
         requestAnimFrame(animloop);
         render();
     })();
+
+    function resize () {
+        canvas.setAttribute('height', window.innerHeight);
+        canvas.setAttribute('width', window.innerWidth);
+        var bb = svgMenu.getBBox();
+        console.log(bb);
+    }
+
+    function hoverCanvas(e){
+
+
+//        if(e.clientX > canvas.width && e.clientY) {
+//
+//        }
+        c.beginPath();
+        c.moveTo(canvas.width/2,canvas.height/2);
+        c.lineTo(canvas.width/100*65,canvas.height/100*38);
+        c.lineTo(canvas.width/100*75,canvas.height/100*38);
+        c.lineTo(canvas.width/100*75,canvas.height/100*62);
+        c.lineTo(canvas.width/100*65,canvas.height/100*62);
+        c.moveTo(canvas.width/2,canvas.height/2);
+
+        if (c.isPointInPath(e.clientX, e.clientY)) {
+            particlesData.angle = Math.PI*2;
+            particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100*7 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().height/100*-0.5 + canvas.height/2)];
+            particlesData.visible = true;
+            return;
+        }
+        c.beginPath();
+        c.moveTo(canvas.width/2,canvas.height/2);
+        c.lineTo(canvas.width/100*35,canvas.height/100*38);
+        c.lineTo(canvas.width/100*25,canvas.height/100*38);
+        c.lineTo(canvas.width/100*25,canvas.height/100*62);
+        c.lineTo(canvas.width/100*35,canvas.height/100*62);
+        c.moveTo(canvas.width/2,canvas.height/2);
+
+        if (c.isPointInPath(e.clientX, e.clientY)) {
+            particlesData.angle = Math.PI;
+            particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100*-7 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().height/100*-0.5 + canvas.height/2)];
+            particlesData.visible = true;
+            return;
+        }
+        c.beginPath();
+        c.moveTo(canvas.width/2,canvas.height/2);
+        c.lineTo(canvas.width/100*38,canvas.height/100*35);
+        c.lineTo(canvas.width/100*38,canvas.height/100*75);
+        c.lineTo(canvas.width/100*62,canvas.height/100*75);
+        c.lineTo(canvas.width/100*62,canvas.height/100*65);
+        c.moveTo(canvas.width/2,canvas.height/2);
+
+        if (c.isPointInPath(e.clientX, e.clientY)) {
+            particlesData.angle = Math.PI*0.5;
+            particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100* -.2 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().width/100*7 + canvas.height/2)];
+            particlesData.visible = true;
+            return;
+        }
+        c.beginPath();
+        c.moveTo(canvas.width/2,canvas.height/2);
+        c.lineTo(canvas.width/100*38,canvas.height/100*35);
+        c.lineTo(canvas.width/100*38,canvas.height/100*25);
+        c.lineTo(canvas.width/100*62,canvas.height/100*25);
+        c.lineTo(canvas.width/100*62,canvas.height/100*65);
+        c.moveTo(canvas.width/2,canvas.height/2);
+
+        if (c.isPointInPath(e.clientX, e.clientY)) {
+            particlesData.angle = Math.PI*1.5;
+            particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100* -.2 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().width/100*-7.5 + canvas.height/2)];
+            particlesData.visible = true;
+            return;
+        }
+
+        particlesData.visible = false;
+    }
+
+    E.addHandler(window, 'resize', resize);
+    E.addHandler(canvas, 'mousemove', function(e){hoverCanvas(e)});
 </script>
 
 </body>
