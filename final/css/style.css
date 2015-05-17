@@ -1,0 +1,53 @@
+@font-face {
+    font-family:'Futura-Condensed-Normal';
+    src: url('../typo/Futura-Condensed-Normal_gdi.eot');
+    src: url('../typo/Futura-Condensed-Normal_gdi.eot?#iefix') format('embedded-opentype'),
+    url('../typo/Futura-Condensed-Normal_gdi.woff') format('woff'),
+    url('../typo/Futura-Condensed-Normal_gdi.ttf') format('truetype'),
+    url('../typo/Futura-Condensed-Normal_gdi.svg#Futura-Condensed-Normal') format('svg');
+    font-weight: 5;
+    font-style: normal;
+    font-stretch: normal;
+    unicode-range: U+0020-2666;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    cursor: url(../images/cursor.png), auto;
+    color: #ffffff;
+    font-family: 'Futura-Condensed-Normal', Helvetica, Arial, sans-serif ;
+}
+ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+svg, canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+#menuSelectorSvg {
+    position: fixed;
+    opacity: 0;
+}
+.hoverblureffect {
+    opacity: 0;
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+}
+.menuItems {
+    font-size: 55px;
+    color: #858A89;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+.menuItems .select{
+    color: #ffffff;
+}
