@@ -7,6 +7,7 @@
             margin: 0;
             padding: 0;
             background-color: #000000;
+            cursor: url(../traitement_image/cursor.png), auto;
         }
         svg, canvas {
             display: block;
@@ -17,17 +18,47 @@
             right: 0;
             margin: auto;
         }
+        .hoverblureffect {
+            opacity: 0;
+            -webkit-transition: all .1s linear;
+            transition: all .1s linear;
+        }
     </style>
 </head>
 <body>
-
 <div>
     <svg id="svgMenu" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="50%" height="75%" viewBox="0 0 635 307" enable-background="new 0 0 635 307" xml:space="preserve">
         <defs>
-        <filter id="f2" x="0" y="0" width="200%" height="200%">
-          <feOffset result="offOut" in="SourceGraphic" dx="0" dy="0"></feOffset>
-          <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10"></feGaussianBlur>
-          <feBlend in="SourceGraphic" in2="blurOut" mode="normal"></feBlend>
+        <linearGradient id="lgrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="10%" stop-color="rgba(255,255,255,0)"></stop>
+          <stop offset="70%" stop-color="rgba(255,255,255,1)"></stop>
+        </linearGradient>
+        <linearGradient id="lgrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="25%" stop-color="rgba(255,255,255,0)"></stop>
+          <stop offset="70%" stop-color="rgba(255,255,255,1)"></stop>
+        </linearGradient>
+        <linearGradient id="lgrad3" x1="0%" y1="100%" x2="0%" y2="0%">
+          <stop offset="25%" stop-color="rgba(255,255,255,0)"></stop>
+          <stop offset="70%" stop-color="rgba(255,255,255,1)"></stop>
+        </linearGradient>
+        <linearGradient id="lgrad4" x1="100%" y1="0%" x2="0%" y2="0%">
+          <stop offset="10%" stop-color="rgba(255,255,255,0)"></stop>
+          <stop offset="70%" stop-color="rgba(255,255,255,1)"></stop>
+        </linearGradient>
+        <mask id="mask1">
+            <rect height="75" width="50%" y="40%" x="50%" fill="url(#lgrad1)"></rect>
+        </mask>
+        <mask id="mask2">
+            <rect height="50%" width="10%" y="50%" x="45%" fill="url(#lgrad2)"></rect>
+        </mask>
+        <mask id="mask3">
+            <rect height="50%" width="10%" y="0%" x="45%" fill="url(#lgrad3)"></rect>
+        </mask>
+        <mask id="mask4">
+            <rect height="75" width="50%" y="40%" x="0%" fill="url(#lgrad4)"></rect>
+        </mask>
+        <filter id="f2" x="-250%" y="-250%" width="500%" height="500%">
+          <feGaussianBlur result="blurOut" in="offOut" stdDeviation="3"></feGaussianBlur>
         </filter>
       </defs>
         <g id="menu">
@@ -245,8 +276,22 @@
 		</g>
 	</g>
         </g>
-        <path fill="#ffffff" d="M360.333,151.337c0,0,147.667-32.67,254,0
-		C509.333,178,360.333,151.337,360.333,151.337z" filter="url(#f2)"></path>
+        <!--<path fill="#ffffff" d="M601.75,152.253c-93.436,6.917-93.436,6.917-158,6.917c-64.563,0-78.806-5.753-78.806-7.917-->
+			<!--c0-2.163,14.243-7.916,78.806-7.916C508.314,143.337,508.314,143.337,601.75,152.253z" filter="url(#f2)" style="opacity: .4" mask="url(#mask1)"/>-->
+        <!--<path fill="#ffffff" d="M601.75,152.253c-93.436,6.917-93.436,6.917-158,6.917c-64.563,0-78.806-5.753-78.806-7.917-->
+			<!--c0-2.163,14.243-7.916,78.806-7.916C508.314,143.337,508.314,143.337,601.75,152.253z" filter="url(#f2)" style="opacity: .4" mask="url(#mask1)"/>-->
+        <!--<path fill="#ffffff" d="M601.75,152.253c-93.436,6.917-93.436,6.917-158,6.917c-64.563,0-78.806-5.753-78.806-7.917-->
+			<!--c0-2.163,14.243-7.916,78.806-7.916C508.314,143.337,508.314,143.337,601.75,152.253z" filter="url(#f2)" style="opacity: .4" mask="url(#mask1)"/>-->
+        <!--<path fill="#ffffff" d="M601.75,152.253c-93.436,6.917-93.436,6.917-158,6.917c-64.563,0-78.806-5.753-78.806-7.917-->
+			<!--c0-2.163,14.243-7.916,78.806-7.916C508.314,143.337,508.314,143.337,601.75,152.253z" filter="url(#f2)" style="opacity: .4" mask="url(#mask1)"/>-->
+<path fill="#ffffff" d="M601.75,152.253c-93.436,6.917-93.436,6.917-158,6.917c-64.563,0-78.806-5.753-78.806-7.917
+			c0-2.163,14.243-7.916,78.806-7.916C508.314,143.337,508.314,143.337,601.75,152.253z" filter="url(#f2)" style="opacity: 0" mask="url(#mask1)" class="hoverblureffect hoverblureffectRight"/>
+<path fill="#ffffff" d="M316.474,290.293c6.641-38.116,6.641-38.116,6.641-64.454s-5.525-32.148-7.602-32.148
+			s-7.601,5.811-7.601,32.148S307.913,252.177,316.474,290.293z" filter="url(#f2)" style="opacity: 0" mask="url(#mask2)" class="hoverblureffect hoverblureffectBottom"/>
+<path fill="#ffffff" d="M316.474,13.417c6.641,38.116,6.641,38.116,6.641,64.454s-5.525,32.148-7.602,32.148
+			s-7.601-5.811-7.601-32.148S307.913,51.533,316.474,13.417z" filter="url(#f2)" style="opacity: 0" mask="url(#mask3)" class="hoverblureffect hoverblureffectTop"/>
+<path fill="#ffffff" d="M28.929,152.253c93.436,6.917,93.436,6.917,158,6.917c64.563,0,78.806-5.753,78.806-7.917
+			c0-2.163-14.243-7.916-78.806-7.916C122.365,143.337,122.365,143.337,28.929,152.253z" filter="url(#f2)" style="opacity: 0" mask="url(#mask4)" class="hoverblureffect hoverblureffectLeft"/>
     </svg>
     <div class="blur-select"></div>
     <canvas id="canvas" width="50%" height="75%" style=""></canvas>
@@ -474,12 +519,16 @@
         console.log(bb);
     }
 
+    var hoverblureffectPath = document.querySelectorAll('.hoverblureffect');
+    var hoverblureffectPathLength = hoverblureffectPath.length;
+    console.log(hoverblureffectPath)
     function hoverCanvas(e){
 
-
+        
 //        if(e.clientX > canvas.width && e.clientY) {
 //
 //        }
+        //RIGHT
         c.beginPath();
         c.moveTo(canvas.width/2,canvas.height/2);
         c.lineTo(canvas.width/100*65,canvas.height/100*38);
@@ -492,8 +541,14 @@
             particlesData.angle = Math.PI*2;
             particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100*7 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().height/100*-0.5 + canvas.height/2)];
             particlesData.visible = true;
+            for(var i = 0; i < hoverblureffectPathLength; i++) {
+                hoverblureffectPath[i].style.opacity = "0";
+            }
+            var elemToDisplay = document.querySelector('.hoverblureffectRight');
+            elemToDisplay.style.opacity = ".4";
             return;
         }
+        //LEFT
         c.beginPath();
         c.moveTo(canvas.width/2,canvas.height/2);
         c.lineTo(canvas.width/100*35,canvas.height/100*38);
@@ -506,8 +561,14 @@
             particlesData.angle = Math.PI;
             particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100*-7 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().height/100*-0.5 + canvas.height/2)];
             particlesData.visible = true;
+            for(var i = 0; i < hoverblureffectPathLength; i++) {
+                hoverblureffectPath[i].style.opacity = "0";
+            }
+            var elemToDisplay = document.querySelector('.hoverblureffectLeft');
+            elemToDisplay.style.opacity = ".4";
             return;
         }
+        //BOTTOM
         c.beginPath();
         c.moveTo(canvas.width/2,canvas.height/2);
         c.lineTo(canvas.width/100*38,canvas.height/100*35);
@@ -520,8 +581,14 @@
             particlesData.angle = Math.PI*0.5;
             particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100* -.2 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().width/100*7 + canvas.height/2)];
             particlesData.visible = true;
+            for(var i = 0; i < hoverblureffectPathLength; i++) {
+                hoverblureffectPath[i].style.opacity = "0";
+            }
+            var elemToDisplay = document.querySelector('.hoverblureffectBottom');
+            elemToDisplay.style.opacity = ".4";
             return;
         }
+        //TOP
         c.beginPath();
         c.moveTo(canvas.width/2,canvas.height/2);
         c.lineTo(canvas.width/100*38,canvas.height/100*35);
@@ -534,10 +601,18 @@
             particlesData.angle = Math.PI*1.5;
             particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100* -.2 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().width/100*-7.5 + canvas.height/2)];
             particlesData.visible = true;
+            for(var i = 0; i < hoverblureffectPathLength; i++) {
+                hoverblureffectPath[i].style.opacity = "0";
+            }
+            var elemToDisplay = document.querySelector('.hoverblureffectTop');
+            elemToDisplay.style.opacity = ".4";
             return;
         }
 
         particlesData.visible = false;
+        for(var i = 0; i < hoverblureffectPathLength; i++) {
+            hoverblureffectPath[i].style.opacity = "0";
+        }
     }
 
     E.addHandler(window, 'resize', resize);
