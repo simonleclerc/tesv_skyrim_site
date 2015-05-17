@@ -46,6 +46,11 @@ svg, canvas {
     color: #858A89;
     text-transform: uppercase;
     letter-spacing: 5px;
+    position: absolute;
+}
+.menuItems li {
+    display: inline-block;
+    position: absolute;
 }
 
 .menuItems .select{

@@ -219,10 +219,27 @@ var menuItemTopElm = menuItemElm.querySelector('.top');
 var menuItemBottomElm = menuItemElm.querySelector('.bottom');
 var menuSelectorSvgElm = document.getElementById('menuSelectorSvg');
 var menuElmSize = menuElm.getBoundingClientRect();
+var menuItemRightElmSize = menuItemRightElm.getBoundingClientRect();
+var menuItemLeftElmSize = menuItemLeftElm.getBoundingClientRect();
+var menuItemTopElmSize = menuItemTopElm.getBoundingClientRect();
+var menuItemBottomElmSize = menuItemBottomElm.getBoundingClientRect();
+var menuSelectorSvgSize = menuSelectorSvgElm.getBoundingClientRect();
 function resize () {
     canvas.setAttribute('height', window.innerHeight);
     canvas.setAttribute('width', window.innerWidth);
     menuElmSize = menuElm.getBoundingClientRect();
+    menuItemElm.style.fontSize = menuElmSize.width/20+'px';
+    menuSelectorSvgElm.setAttribute('width', menuElmSize.width/20);
+    menuSelectorSvgElm.setAttribute('height', menuElmSize.width/20);
+    menuSelectorSvgSize = menuSelectorSvgElm.getBoundingClientRect();
+    menuItemRightElmSize = menuItemRightElm.getBoundingClientRect();
+    menuItemLeftElmSize = menuItemLeftElm.getBoundingClientRect();
+    menuItemTopElmSize = menuItemTopElm.getBoundingClientRect();
+    menuItemBottomElmSize = menuItemBottomElm.getBoundingClientRect();
+    menuItemRightElm.style.transform = 'translateX('+Math.round(menuElmSize.right + menuElmSize.width/100)+'px) translateY('+Math.round(menuElmSize.top+(menuElmSize.height/2)-menuItemRightElmSize.height/2)+'px)';
+    menuItemLeftElm.style.transform = 'translateX('+Math.round(menuElmSize.left-(menuItemLeftElmSize.width) - menuElmSize.width/100)+'px) translateY('+Math.round(menuElmSize.top+(menuElmSize.height/2)-menuItemRightElmSize.height/2)+'px)';
+    menuItemTopElm.style.transform = 'translateX('+Math.round(menuElmSize.left+(menuElmSize.width/2)-(menuItemTopElmSize.width/2))+'px) translateY('+Math.round(menuElmSize.top - menuItemTopElmSize.height - menuElmSize.height/100)+'px)';
+    menuItemBottomElm.style.transform = 'translateX('+Math.round(menuElmSize.left+(menuElmSize.width/2 - menuItemBottomElmSize.width/2))+'px) translateY('+Math.round(menuElmSize.bottom + menuElmSize.height/100)+'px)';
 }
 
 var hoverblureffectPath = document.querySelectorAll('.hoverblureffect');
@@ -233,8 +250,8 @@ function hoverCanvas(e){
     c.beginPath();
     c.moveTo(canvas.width/2,canvas.height/2);
     c.lineTo(canvas.width/100*65,canvas.height/100*38);
-    c.lineTo(canvas.width/100*75,canvas.height/100*38);
-    c.lineTo(canvas.width/100*75,canvas.height/100*62);
+    c.lineTo(canvas.width/100*85,canvas.height/100*38);
+    c.lineTo(canvas.width/100*85,canvas.height/100*62);
     c.lineTo(canvas.width/100*65,canvas.height/100*62);
     c.moveTo(canvas.width/2,canvas.height/2);
 
@@ -247,17 +264,20 @@ function hoverCanvas(e){
         }
         var elemToDisplay = document.querySelector('.hoverblureffectRight');
         elemToDisplay.style.opacity = ".4";
-        menuItemRightElm.
+        menuItemLeftElm.classList.remove('select');
+        menuItemTopElm.classList.remove('select');
+        menuItemBottomElm.classList.remove('select');
+        menuItemRightElm.classList.add('select');
         menuSelectorSvgElm.style.opacity = '1';
-        menuSelectorSvgElm.style.transform = 'translateX('+menuElmSize.width/2+'px) rotate(-90deg)';
+        menuSelectorSvgElm.style.transform = 'translateX('+Math.round(menuElmSize.width/2+menuItemRightElmSize.width + menuElmSize.width/100 + menuSelectorSvgSize.width)+'px) rotate(-90deg)';
         return;
     }
     //LEFT
     c.beginPath();
     c.moveTo(canvas.width/2,canvas.height/2);
     c.lineTo(canvas.width/100*35,canvas.height/100*38);
-    c.lineTo(canvas.width/100*25,canvas.height/100*38);
-    c.lineTo(canvas.width/100*25,canvas.height/100*62);
+    c.lineTo(canvas.width/100*15,canvas.height/100*38);
+    c.lineTo(canvas.width/100*15,canvas.height/100*62);
     c.lineTo(canvas.width/100*35,canvas.height/100*62);
     c.moveTo(canvas.width/2,canvas.height/2);
 
@@ -270,16 +290,20 @@ function hoverCanvas(e){
         }
         var elemToDisplay = document.querySelector('.hoverblureffectLeft');
         elemToDisplay.style.opacity = ".4";
+        menuItemRightElm.classList.remove('select');
+        menuItemTopElm.classList.remove('select');
+        menuItemBottomElm.classList.remove('select');
+        menuItemLeftElm.classList.add('select');
         menuSelectorSvgElm.style.opacity = '1';
-        menuSelectorSvgElm.style.transform = 'translateX(-'+menuElmSize.width/2+'px) rotate(90deg)';
+        menuSelectorSvgElm.style.transform = 'translateX(-'+Math.round(menuElmSize.width/2+menuItemLeftElmSize.width + menuElmSize.width/100 + menuSelectorSvgSize.width)+'px) rotate(90deg)';
         return;
     }
     //BOTTOM
     c.beginPath();
     c.moveTo(canvas.width/2,canvas.height/2);
     c.lineTo(canvas.width/100*38,canvas.height/100*35);
-    c.lineTo(canvas.width/100*38,canvas.height/100*75);
-    c.lineTo(canvas.width/100*62,canvas.height/100*75);
+    c.lineTo(canvas.width/100*38,canvas.height/100*85);
+    c.lineTo(canvas.width/100*62,canvas.height/100*85);
     c.lineTo(canvas.width/100*62,canvas.height/100*65);
     c.moveTo(canvas.width/2,canvas.height/2);
 
@@ -292,16 +316,20 @@ function hoverCanvas(e){
         }
         var elemToDisplay = document.querySelector('.hoverblureffectBottom');
         elemToDisplay.style.opacity = ".4";
+        menuItemRightElm.classList.remove('select');
+        menuItemLeftElm.classList.remove('select');
+        menuItemTopElm.classList.remove('select');
+        menuItemBottomElm.classList.add('select');
         menuSelectorSvgElm.style.opacity = '1';
-        menuSelectorSvgElm.style.transform = 'translateY('+menuElmSize.height/2+'px) rotate(0deg)';
+        menuSelectorSvgElm.style.transform = 'translateY('+Math.round(menuElmSize.height/2 +menuItemBottomElmSize.height + menuSelectorSvgSize.height )+'px) rotate(0deg)';
         return;
     }
     //TOP
     c.beginPath();
     c.moveTo(canvas.width/2,canvas.height/2);
     c.lineTo(canvas.width/100*38,canvas.height/100*35);
-    c.lineTo(canvas.width/100*38,canvas.height/100*25);
-    c.lineTo(canvas.width/100*62,canvas.height/100*25);
+    c.lineTo(canvas.width/100*38,canvas.height/100*15);
+    c.lineTo(canvas.width/100*62,canvas.height/100*15);
     c.lineTo(canvas.width/100*62,canvas.height/100*65);
     c.moveTo(canvas.width/2,canvas.height/2);
 
@@ -314,8 +342,12 @@ function hoverCanvas(e){
         }
         var elemToDisplay = document.querySelector('.hoverblureffectTop');
         elemToDisplay.style.opacity = ".4";
+        menuItemRightElm.classList.remove('select');
+        menuItemLeftElm.classList.remove('select');
+        menuItemBottomElm.classList.remove('select');
+        menuItemTopElm.classList.add('select');
         menuSelectorSvgElm.style.opacity = '1';
-        menuSelectorSvgElm.style.transform = 'translateY(-'+menuElmSize.height/2+'px) rotate(180deg)';
+        menuSelectorSvgElm.style.transform = 'translateY(-'+Math.round(menuElmSize.height/2 +menuItemTopElmSize.height + menuSelectorSvgSize.height)+'px) rotate(180deg)';
         return;
     }
 
@@ -324,7 +356,12 @@ function hoverCanvas(e){
         hoverblureffectPath[i].style.opacity = '0';
         menuSelectorSvgElm.style.opacity = '0';
     }
+    menuItemLeftElm.classList.remove('select');
+    menuItemTopElm.classList.remove('select');
+    menuItemBottomElm.classList.remove('select');
+    menuItemRightElm.classList.remove('select');
 }
-
+//todo selector menu to scale on menu width
+resize();
 E.addHandler(window, 'resize', resize);
 E.addHandler(canvas, 'mousemove', function(e){hoverCanvas(e)});
