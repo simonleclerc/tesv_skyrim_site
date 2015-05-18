@@ -361,7 +361,6 @@ function hoverCanvas(e){
     menuItemBottomElm.classList.remove('select');
     menuItemRightElm.classList.remove('select');
 }
-//todo selector menu to scale on menu width
 resize();
 E.addHandler(window, 'resize', resize);
 E.addHandler(canvas, 'mousemove', function(e){hoverCanvas(e)});

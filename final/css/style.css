@@ -42,7 +42,7 @@ svg, canvas {
     transition: all .1s linear;
 }
 .menuItems {
-    font-size: 55px;
+    font-size: 30px;
     color: #858A89;
     text-transform: uppercase;
     letter-spacing: 5px;
