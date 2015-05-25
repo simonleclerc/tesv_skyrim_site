@@ -7,7 +7,7 @@
 <body>
 <div class="main-container">
     <div class="menu-container">
-        <svg id="svgMenu" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="50%" height="75%" viewBox="0 0 635 307" enable-background="new 0 0 635 307" xml:space="preserve">
+        <svg id="svgMenu" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40%" height="75%" viewBox="0 0 635 307" enable-background="new 0 0 635 307" xml:space="preserve">
             <defs>
             <linearGradient id="lgrad1" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="10%" stop-color="rgba(255,255,255,0)"></stop>
@@ -296,16 +296,58 @@
     </div>
     <div class="footer">
         <div class="level">
-            <span>LEVEL<span>24</span></span>
-            <div></div>
+            <span>LEVEL <span id="footer-age">toto</span></span>
+            <svg version="1.1" id="footerBarSvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 width="330.036px" height="34px" viewBox="0 0 330.036 34" enable-background="new 0 0 330.036 34" xml:space="preserve">
+                <defs>
+                    <linearGradient id="footer_bar_gradient_color" gradientUnits="userSpaceOnUse" x1="33.1406" y1="16.9937" x2="296.8965" y2="16.9937">
+                        <stop  offset="0.0106" style="stop-color:#90BBDE"/>
+                        <stop  offset="0.1968" style="stop-color:#6DBBCE"/>
+                        <stop  offset="0.6809" style="stop-color:#5A76A8"/>
+                        <stop  offset="1" style="stop-color:#525598"/>
+                    </linearGradient>
+                    <linearGradient id="footer_bar_gradient_darker" gradientUnits="userSpaceOnUse" x1="165.0186" y1="26" x2="165.0186" y2="7.9878">
+                        <stop  offset="0" style="stop-color:#1b282e;stop-opacity:.5"/>
+                        <stop  offset="0.49" style="stop-color:#1b282e;stop-opacity:.5"/>
+                        <stop  offset="0.5" style="stop-color:#000000;stop-opacity:.5"/>
+                        <stop  offset=".8" style="stop-color:#1b282e;stop-opacity:.5"/>
+                    </linearGradient>
+                    <linearGradient id="footer_bar_gradient_lighter" gradientUnits="userSpaceOnUse" x1="165.0186" y1="26" x2="165.0186" y2="7.9878">
+                        <stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+                        <stop  offset="0.49" style="stop-color:#FFFFFF;stop-opacity:0"/>
+                        <stop  offset="0.5" style="stop-color:#FFFFFF;stop-opacity:.7"/>
+                        <stop  offset=".8" style="stop-color:#FFFFFF;stop-opacity:0"/>
+                    </linearGradient>
+                </defs>
+                <!-- rect full width = 263.756 -->
+                <rect x="33.141" y="7.988" fill="url(#footer_bar_gradient_darker)" width="263.756" height="18.012"/>
+                <rect x="33.141" y="7.988" fill="url(#footer_bar_gradient_color)" class="levelBar" width="263.756" height="18.012"/>
+                <rect x="33.141" y="7.988" fill="url(#footer_bar_gradient_lighter)" class="levelBar" width="263.756" height="18.012"/>
+                <path d="M330.036,17L309.212,1.006l-3.075,2.236L302.564,0H27.631l-3.643,3.307l-3.163-2.3L0,17l20.825,15.994l3.163-2.3L27.631,34
+                    h274.933l3.573-3.243l3.075,2.236L330.036,17z M304.896,19.963v-5.926l0.683-0.497L309.392,17l-3.812,3.459L304.896,19.963z
+                     M25.141,14.037v5.926l-0.595,0.433L20.804,17l3.741-3.396L25.141,14.037z M299.475,26H30.72l-0.124-0.112l2.544-1.851V9.963
+                    l-2.544-1.851L30.72,8h268.755l0.054,0.048l-2.632,1.915v14.074l2.632,1.915L299.475,26z"/>
+                <path fill="#858A89" d="M325.11,17L309.163,4.751l-3.072,2.234l-4.667-4.236H28.613l-4.667,4.236l-3.072-2.234L4.926,17
+                    l15.949,12.249l3.072-2.234l4.667,4.236h272.81l4.667-4.236l3.072,2.234L325.11,17z M20.907,26.751L8.209,17l12.698-9.751
+                    l1.527,1.11L12.913,17l9.521,8.641L20.907,26.751z M24.499,9.861l3.642,2.648v8.981l-3.642,2.648L16.633,17L24.499,9.861z
+                     M300.458,28.75H29.579l-3.567-3.238l4.129-3.003V11.491l-4.129-3.003l3.567-3.238h270.878l3.567,3.238l-4.128,3.003v11.019
+                    l4.128,3.003L300.458,28.75z M305.538,9.861L313.404,17l-7.866,7.139l-3.642-2.648v-8.981L305.538,9.861z M307.603,25.641
+                    L317.124,17l-9.521-8.641l1.527-1.11L321.827,17l-12.697,9.751L307.603,25.641z"/>
+            </svg>
         </div>
         <div class="localisation-date">
-            <span>Aix-en-Provence, 20:49, 18 Mai, 2015</span>
+            <span><span id="gmap-city">Aix-en-Provence</span>, <span id="footer-date">20:49, 18 Mai, 2015</span></span>
         </div>
     </div>
 </div>
 
-<!--<script type="text/javascript" src="js/fontLoader.js"></script>-->
-<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/fontLoader.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript" src="js/menu.js"></script>
+<script type="text/javascript" src="js/other.js"></script>
+<script type="text/javascript">
+    waitForWebfonts(['Futura-Condensed-Normal'] , function(){setTimeout(resize, 10)});
+</script>
 </body>
 </html>

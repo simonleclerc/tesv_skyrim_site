@@ -21,7 +21,6 @@ function waitForWebfonts(fonts, callback) {
 
             // Remember width with no applied web font
             var width = node.offsetWidth;
-
             node.style.fontFamily = font;
 
             var interval;

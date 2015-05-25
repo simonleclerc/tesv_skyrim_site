@@ -10,20 +10,44 @@
     font-stretch: normal;
     unicode-range: U+0020-2666;
 }
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
 body{
     margin: 0;
     padding: 0;
-    background-color: #000000;
+    background: #000000 url(../images/rpgskyrimscreenshotart1.png) no-repeat center center;
+    background-size: cover;
     cursor: url(../images/cursor.png), auto;
     color: #ffffff;
     font-family: 'Futura-Condensed-Normal', Helvetica, Arial, sans-serif ;
+    height: 100%;
+    overflow: hidden;
+}
+body:after {
+    position: absolute;
+    content: '';
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.3);
+    z-index: -1;
 }
 ul, ol {
     margin: 0;
     padding: 0;
     list-style: none;
 }
-svg, canvas {
+.main-container {
+    height: 100%;
+}
+.menu-container svg,
+.menu-container canvas {
     display: block;
     position: absolute;
     top: 0;
@@ -33,7 +57,7 @@ svg, canvas {
     margin: auto;
 }
 #menuSelectorSvg {
-    position: fixed;
+    position: absolute;
     opacity: 0;
 }
 .hoverblureffect {
@@ -41,18 +65,52 @@ svg, canvas {
     -webkit-transition: all .1s linear;
     transition: all .1s linear;
 }
+.menu-container {
+    height: 85%;
+    position: relative;
+}
 .menuItems {
     font-size: 30px;
-    color: #858A89;
+    color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 5px;
     position: absolute;
+    text-shadow: 2px 2px 0 #000000;
 }
 .menuItems li {
     display: inline-block;
     position: absolute;
+    opacity: .7;
 }
 
 .menuItems .select{
+    opacity: 1;
+}
+.footer {
+    height: 15%;
+    background-color: rgba(0,0,0,0.6);
+    border-top: 3px solid rgba(255,255,255,.7);
+    box-shadow: 0 -5px 0 0 rgba(0,0,0,.6);
+    text-align: center;
+    font-size: 24px;
+    text-shadow: 2px 2px 0 #000000;
+    padding: .5% 3% 0 18%;
+}
+.level {
+    display: inline;
+    color: rgba(255,255,255,.7);
+}
+.level > span {
+    vertical-align: super;
+}
+.level span span{
+    font-size: 40px;
     color: #ffffff;
+    vertical-align: bottom;
+}
+.localisation-date {
+    display: inline;
+    float: right;
+    font-size: 28px;
+    opacity: 0.9;
 }
