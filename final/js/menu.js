@@ -204,7 +204,6 @@ function render() {
     for (var i in particles) {
         particles[i].draw();
     }
-
 }
 (function animloop(){
     requestAnimFrame(animloop);
@@ -253,9 +252,10 @@ function hoverCanvas(e){
     c.lineTo(canvas.width/100*85,canvas.height/100*38);
     c.lineTo(canvas.width/100*85,canvas.height/100*62);
     c.lineTo(canvas.width/100*65,canvas.height/100*62);
-    c.moveTo(canvas.width/2,canvas.height/2);
+    c.lineTo(canvas.width/2,canvas.height/2);
+    c.closePath();
 
-    if (c.isPointInPath(e.clientX, e.clientY)) {
+    if (c.isPointInPath(e.offsetX, e.offsetY)) {
         particlesData.angle = Math.PI*2;
         particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100*7 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().height/100*-0.5 + canvas.height/2)];
         particlesData.visible = true;
@@ -279,9 +279,10 @@ function hoverCanvas(e){
     c.lineTo(canvas.width/100*15,canvas.height/100*38);
     c.lineTo(canvas.width/100*15,canvas.height/100*62);
     c.lineTo(canvas.width/100*35,canvas.height/100*62);
-    c.moveTo(canvas.width/2,canvas.height/2);
+    c.lineTo(canvas.width/2,canvas.height/2);
+    c.closePath();
 
-    if (c.isPointInPath(e.clientX, e.clientY)) {
+    if (c.isPointInPath(e.offsetX, e.offsetY)) {
         particlesData.angle = Math.PI;
         particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100*-7 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().height/100*-0.5 + canvas.height/2)];
         particlesData.visible = true;
@@ -301,13 +302,14 @@ function hoverCanvas(e){
     //BOTTOM
     c.beginPath();
     c.moveTo(canvas.width/2,canvas.height/2);
-    c.lineTo(canvas.width/100*38,canvas.height/100*35);
+    c.lineTo(canvas.width/100*38,canvas.height/100*65);
     c.lineTo(canvas.width/100*38,canvas.height/100*85);
     c.lineTo(canvas.width/100*62,canvas.height/100*85);
     c.lineTo(canvas.width/100*62,canvas.height/100*65);
-    c.moveTo(canvas.width/2,canvas.height/2);
+    c.lineTo(canvas.width/2,canvas.height/2);
+    c.closePath();
 
-    if (c.isPointInPath(e.clientX, e.clientY)) {
+    if (c.isPointInPath(e.offsetX, e.offsetY)) {
         particlesData.angle = Math.PI*0.5;
         particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100* -.2 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().width/100*7 + canvas.height/2)];
         particlesData.visible = true;
@@ -330,10 +332,11 @@ function hoverCanvas(e){
     c.lineTo(canvas.width/100*38,canvas.height/100*35);
     c.lineTo(canvas.width/100*38,canvas.height/100*15);
     c.lineTo(canvas.width/100*62,canvas.height/100*15);
-    c.lineTo(canvas.width/100*62,canvas.height/100*65);
-    c.moveTo(canvas.width/2,canvas.height/2);
+    c.lineTo(canvas.width/100*62,canvas.height/100*35);
+    c.lineTo(canvas.width/2,canvas.height/2);
+    c.closePath();
 
-    if (c.isPointInPath(e.clientX, e.clientY)) {
+    if (c.isPointInPath(e.offsetX, e.offsetY)) {
         particlesData.angle = Math.PI*1.5;
         particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100* -.2 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().width/100*-7.5 + canvas.height/2)];
         particlesData.visible = true;

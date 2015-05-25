@@ -92,7 +92,7 @@ ul, ol {
     border-top: 3px solid rgba(255,255,255,.7);
     box-shadow: 0 -5px 0 0 rgba(0,0,0,.6);
     text-align: center;
-    font-size: 24px;
+    font-size: 1.2vw;
     text-shadow: 2px 2px 0 #000000;
     padding: .5% 3% 0 18%;
 }
@@ -104,13 +104,13 @@ ul, ol {
     vertical-align: super;
 }
 .level span span{
-    font-size: 40px;
+    font-size: 2.2vw;
     color: #ffffff;
     vertical-align: bottom;
 }
 .localisation-date {
     display: inline;
     float: right;
-    font-size: 28px;
+    font-size: 1.9vw;
     opacity: 0.9;
 }
