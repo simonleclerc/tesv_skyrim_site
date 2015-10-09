@@ -114,3 +114,51 @@ ul, ol {
     font-size: 1.9vw;
     opacity: 0.9;
 }
+.lateral-pan {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    width: 12.5%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    border-left: 3px solid rgba(255,255,255,.7);
+    border-right: 3px solid rgba(255,255,255,.7);
+    box-shadow: 5px 0 0 0 rgba(0,0,0,.6), -5px 0 0 0 rgba(0,0,0,.6);
+}
+.lateral-pan--left {
+    left: 40px;
+}
+.lateral-pan--right {
+    right: 40px;
+    text-align: right;
+}
+.sub-lateral-pan {
+    position: absolute;
+    width: 125%;
+}
+.sub-lateral-pan--left {
+    left: calc(100% + 40px);
+}
+.sub-lateral-pan--right {
+    right: calc(100% + 40px);
+}
+.pan--list {
+    padding: 0 15px;
+    width: 100%;
+}
+.pan--listItem {
+    margin: 20px 0;
+}
+.pan--listTitle {
+    text-transform: uppercase;
+    font-size: 1.35vw;
+    line-height: 1.37vw;
+}
+
+.itemModal {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

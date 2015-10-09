@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Hello World (Three.js)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel=stylesheet href="base.css"/>
+</head>
+<body>
+
+<script src="three.js"></script>
+<script src="Detector.js"></script>
+<script src="Stats.js"></script>
+<script src="OrbitControls.js"></script>
+<script src="THREEx.KeyboardState.js"></script>
+<script src="THREEx.FullScreen.js"></script>
+<script src="THREEx.WindowResize.js"></script>
+
+<!-- ------------------------------------------------------------ -->
+
+<div id="ThreeJS" style="z-index: 1; position: absolute; left:0px; top:0px"></div>
+<script>
+    // MAIN
+
+    // standard global variables
+    var container, scene, camera, renderer, controls, stats, light;
+    var keyboard = new THREEx.KeyboardState();
+    var clock = new THREE.Clock();
+
+    // custom global variables
+    var mesh;
+
+    init();
+    animate();
+
+    // FUNCTIONS
+    function init()
+    {
+        scene = new THREE.Scene();
+        var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+        var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
+        camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
+        scene.add(camera);
+        camera.position.set(1,1,1);
+        if (Detector.webgl)
+            renderer = new THREE.WebGLRenderer({antialias:true});
+        else
+            renderer = new THREE.CanvasRenderer();
+        renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        container = document.getElementById( 'ThreeJS' );
+        container.appendChild( renderer.domElement );
+        THREEx.WindowResize(renderer, camera);
+        THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
+//        controls = new THREE.OrbitControls( camera, renderer.domElement );
+        stats = new Stats();
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.bottom = '0px';
+        stats.domElement.style.zIndex = 100;
+        container.appendChild( stats.domElement );
+
+        var floorTexture = new THREE.ImageUtils.loadTexture( 'checkerboard.jpg' );
+        floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
+        floorTexture.repeat.set( 10, 10 );
+        var floorMaterial = new THREE.MeshBasicMaterial( { map: floorTexture, side: THREE.DoubleSide } );
+        var floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
+        var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+        floor.position.y = -0.5;
+        floor.rotation.x = Math.PI / 2;
+        scene.add(floor);
+    }
+
+    var shapeCoordArr = [];
+    var polygonContainer = new THREE.Object3D();
+    function createShapeGeometry (n, circumradius) {
+
+        // Calculate the vertices of the n-gon.
+        for (x = 1; x <= n; x++) {
+            var geometry = new THREE.SphereGeometry( 5, 32, 32 );
+            var material = new THREE.MeshBasicMaterial( { color: 0xff00ff } );
+            var mesh = new THREE.Mesh( geometry, material );
+//            vertices.push([
+//                circumradius * Math.sin((Math.PI / n) + (x * ((2 * Math.PI)/ n))),
+//                circumradius * Math.cos((Math.PI / n) + (x * ((2 * Math.PI)/ n)))
+//            ]);
+            var x1 = circumradius * Math.sin((Math.PI / n) + (x * ((2 * Math.PI)/ n)));
+            var z1 = circumradius * Math.cos((Math.PI / n) + (x * ((2 * Math.PI)/ n)));
+            if(x==n){
+                var x2 = circumradius * Math.sin((Math.PI / n) + (1 * ((2 * Math.PI)/ n)));
+                var z2 = circumradius * Math.cos((Math.PI / n) + (1 * ((2 * Math.PI)/ n)));
+            } else {
+                var x2 = circumradius * Math.sin((Math.PI / n) + ((x+1) * ((2 * Math.PI)/ n)));
+                var z2 = circumradius * Math.cos((Math.PI / n) + ((x+1) * ((2 * Math.PI)/ n)));
+            }
+            mesh.position.set(x1,0,  z1);
+            shapeCoordArr.push({x: x1, z: z1, x2: x2, z2: z2});
+            scene.add(mesh);
+        }
+        shapeCoordArr.forEach(function(elm, i, arr){
+
+            var point1 = new THREE.Vector3( elm.x, 0, elm.z );
+            var point2 = new THREE.Vector3( elm.x2, 0, elm.z2 );
+
+            var vector12 = new THREE.Vector3().copy( point2 ).sub( point1 );
+            var point3 = new THREE.Vector3().copy( vector12 ).multiplyScalar( 0.5 ).add( point1 );
+
+            var plane = new THREE.PlaneGeometry( 1,1, 1 );
+
+            var wall = new THREE.Mesh( plane, new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.DoubleSide } ) );
+            wall.position.copy( point3 );
+            wall.position.y = 10;
+            wall.scale.x = vector12.length();
+            wall.scale.y = wall.position.y * 2;
+            wall.rotation.y = - Math.atan2( vector12.z, vector12.x );
+            polygonContainer.add( wall );
+        });
+        scene.add(polygonContainer);
+        camera.lookAt(polygonContainer.children[0].position)
+    }
+
+    var numberOfConstellation = 5;
+    var geometry = createShapeGeometry( numberOfConstellation, 50 );
+    var material = new THREE.MeshBasicMaterial( {color: 0x000f00, side: THREE.DoubleSide} );
+    var pentagone = new THREE.Mesh( geometry, material );
+    scene.add( pentagone );
+
+    function animate() {
+        requestAnimationFrame( animate );
+        render();
+        update();
+
+    }
+    var newRotation = camera.rotation.y;
+document.addEventListener('keypress', function(e){
+    console.log(e)
+    if(e.charCode === 65) {
+        console.log('tata')
+        newRotation = camera.rotation.y + 360/numberOfConstellation;
+    } else if (e.charCode === 90) {
+        newRotation = camera.rotation.y - 360/numberOfConstellation;
+    }
+})
+    var actualLook = 1;
+    function update()
+    {
+        //controls.update();
+        stats.update();
+        console.log(camera.rotation.y, newRotation)
+        if(Math.floor(camera.rotation.y) != Math.floor(newRotation)) {
+            camera.rotation.y = camera.rotation.y+.1;
+        }
+    }
+
+    function render()
+    {
+        renderer.render( scene, camera );
+    }
+</script>
