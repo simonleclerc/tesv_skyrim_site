@@ -62,7 +62,6 @@ ul, ol {
 }
 .hoverblureffect {
     opacity: 0;
-    -webkit-transition: all .1s linear;
     transition: all .1s linear;
 }
 .menu-container {
@@ -160,5 +159,46 @@ ul, ol {
 .itemModal {
     position: absolute;
     top: 0;
+    left: calc(15.625% + 12.5% + 40px + 40px);
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 33%;
+    color: #858A89;
+    text-align: center;
+}
+.itemModal--bg {
+    position: absolute;
     left: 0;
+    top: 0;
+}
+.itemModal--infos {
+    position: relative;
+    padding-top: 40px;
+}
+.itemModal--txt {
+    position: relative;
+}
+.itemModal--title {
+    color: #ffffff;
+    width: 69%;
+    margin: 0 auto 19px;
+    border-bottom: 2px solid #858A89;
+    font-size: 2vw;
+    line-height: 2.2vw;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.itemModal--adj {
+    font-size: 1vw;
+    text-transform: uppercase;
+    margin: 0 10px;
+}
+.itemModal--adjValue {
+    color: #ffffff;
+    font-size: 1.8vw;
+    vertical-align: middle;
+}
+.itemModal--desc {
+    font-size: 1.1vw;
 }
