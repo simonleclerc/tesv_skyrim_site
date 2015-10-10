@@ -102,7 +102,7 @@ function Particle() {
     this.way = Math.random() > .8 ? -1 : 1;
 
     this.angle = particlesData.angle;
-    this.modifyAngle = rand(getPercentage(2*Math.PI, -1.5), getPercentage(2*Math.PI, 1.5))
+    this.modifyAngle = rand(getPercentage(2*Math.PI, -1.5), getPercentage(2*Math.PI, 1.5));
 
     if(this.way < 0) {
         this.initialVx =  rand(-2, 2);
@@ -244,18 +244,8 @@ function resize () {
 var hoverblureffectPath = document.querySelectorAll('.hoverblureffect');
 var hoverblureffectPathLength = hoverblureffectPath.length;
 
-function hoverCanvas(e){
-    //RIGHT
-    c.beginPath();
-    c.moveTo(canvas.width/2,canvas.height/2);
-    c.lineTo(canvas.width/100*65,canvas.height/100*38);
-    c.lineTo(canvas.width/100*85,canvas.height/100*38);
-    c.lineTo(canvas.width/100*85,canvas.height/100*62);
-    c.lineTo(canvas.width/100*65,canvas.height/100*62);
-    c.lineTo(canvas.width/2,canvas.height/2);
-    c.closePath();
-
-    if (c.isPointInPath(e.offsetX, e.offsetY)) {
+var hoverMenuAction= {
+    right: function() {
         particlesData.angle = Math.PI*2;
         particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100*7 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().height/100*-0.5 + canvas.height/2)];
         particlesData.visible = true;
@@ -270,19 +260,8 @@ function hoverCanvas(e){
         menuItemRightElm.classList.add('select');
         menuSelectorSvgElm.style.opacity = '1';
         menuSelectorSvgElm.style.transform = 'translateX('+Math.round(menuElmSize.width/2+menuItemRightElmSize.width + menuElmSize.width/100 + menuSelectorSvgSize.width)+'px) rotate(-90deg)';
-        return;
-    }
-    //LEFT
-    c.beginPath();
-    c.moveTo(canvas.width/2,canvas.height/2);
-    c.lineTo(canvas.width/100*35,canvas.height/100*38);
-    c.lineTo(canvas.width/100*15,canvas.height/100*38);
-    c.lineTo(canvas.width/100*15,canvas.height/100*62);
-    c.lineTo(canvas.width/100*35,canvas.height/100*62);
-    c.lineTo(canvas.width/2,canvas.height/2);
-    c.closePath();
-
-    if (c.isPointInPath(e.offsetX, e.offsetY)) {
+    },
+    left: function() {
         particlesData.angle = Math.PI;
         particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100*-7 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().height/100*-0.5 + canvas.height/2)];
         particlesData.visible = true;
@@ -297,19 +276,8 @@ function hoverCanvas(e){
         menuItemLeftElm.classList.add('select');
         menuSelectorSvgElm.style.opacity = '1';
         menuSelectorSvgElm.style.transform = 'translateX(-'+Math.round(menuElmSize.width/2+menuItemLeftElmSize.width + menuElmSize.width/100 + menuSelectorSvgSize.width)+'px) rotate(90deg)';
-        return;
-    }
-    //BOTTOM
-    c.beginPath();
-    c.moveTo(canvas.width/2,canvas.height/2);
-    c.lineTo(canvas.width/100*38,canvas.height/100*65);
-    c.lineTo(canvas.width/100*38,canvas.height/100*85);
-    c.lineTo(canvas.width/100*62,canvas.height/100*85);
-    c.lineTo(canvas.width/100*62,canvas.height/100*65);
-    c.lineTo(canvas.width/2,canvas.height/2);
-    c.closePath();
-
-    if (c.isPointInPath(e.offsetX, e.offsetY)) {
+    },
+    bottom: function() {
         particlesData.angle = Math.PI*0.5;
         particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100* -.2 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().width/100*7 + canvas.height/2)];
         particlesData.visible = true;
@@ -324,19 +292,8 @@ function hoverCanvas(e){
         menuItemBottomElm.classList.add('select');
         menuSelectorSvgElm.style.opacity = '1';
         menuSelectorSvgElm.style.transform = 'translateY('+Math.round(menuElmSize.height/2 +menuItemBottomElmSize.height + menuSelectorSvgSize.height )+'px) rotate(0deg)';
-        return;
-    }
-    //TOP
-    c.beginPath();
-    c.moveTo(canvas.width/2,canvas.height/2);
-    c.lineTo(canvas.width/100*38,canvas.height/100*35);
-    c.lineTo(canvas.width/100*38,canvas.height/100*15);
-    c.lineTo(canvas.width/100*62,canvas.height/100*15);
-    c.lineTo(canvas.width/100*62,canvas.height/100*35);
-    c.lineTo(canvas.width/2,canvas.height/2);
-    c.closePath();
-
-    if (c.isPointInPath(e.offsetX, e.offsetY)) {
+    },
+    top: function() {
         particlesData.angle = Math.PI*1.5;
         particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100* -.2 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().width/100*-7.5 + canvas.height/2)];
         particlesData.visible = true;
@@ -351,19 +308,129 @@ function hoverCanvas(e){
         menuItemTopElm.classList.add('select');
         menuSelectorSvgElm.style.opacity = '1';
         menuSelectorSvgElm.style.transform = 'translateY(-'+Math.round(menuElmSize.height/2 +menuItemTopElmSize.height + menuSelectorSvgSize.height)+'px) rotate(180deg)';
+    }
+};
+
+function mousePositionOnMenuCanvas(e, actions, callback){
+    //RIGHT
+    c.beginPath();
+    c.moveTo(canvas.width/2,canvas.height/2);
+    c.lineTo(canvas.width/100*65,canvas.height/100*38);
+    c.lineTo(canvas.width/100*85,canvas.height/100*38);
+    c.lineTo(canvas.width/100*85,canvas.height/100*62);
+    c.lineTo(canvas.width/100*65,canvas.height/100*62);
+    c.lineTo(canvas.width/2,canvas.height/2);
+    c.closePath();
+
+    if (c.isPointInPath(e.offsetX, e.offsetY)) {
+        actions.right();
         return;
     }
+    //LEFT
+    c.beginPath();
+    c.moveTo(canvas.width/2,canvas.height/2);
+    c.lineTo(canvas.width/100*35,canvas.height/100*38);
+    c.lineTo(canvas.width/100*15,canvas.height/100*38);
+    c.lineTo(canvas.width/100*15,canvas.height/100*62);
+    c.lineTo(canvas.width/100*35,canvas.height/100*62);
+    c.lineTo(canvas.width/2,canvas.height/2);
+    c.closePath();
 
-    particlesData.visible = false;
-    for(var i = 0; i < hoverblureffectPathLength; i++) {
-        hoverblureffectPath[i].style.opacity = '0';
-        menuSelectorSvgElm.style.opacity = '0';
+    if (c.isPointInPath(e.offsetX, e.offsetY)) {
+        actions.left();
+        return;
     }
-    menuItemLeftElm.classList.remove('select');
-    menuItemTopElm.classList.remove('select');
-    menuItemBottomElm.classList.remove('select');
-    menuItemRightElm.classList.remove('select');
+    //BOTTOM
+    c.beginPath();
+    c.moveTo(canvas.width/2,canvas.height/2);
+    c.lineTo(canvas.width/100*38,canvas.height/100*65);
+    c.lineTo(canvas.width/100*38,canvas.height/100*85);
+    c.lineTo(canvas.width/100*62,canvas.height/100*85);
+    c.lineTo(canvas.width/100*62,canvas.height/100*65);
+    c.lineTo(canvas.width/2,canvas.height/2);
+    c.closePath();
+
+    if (c.isPointInPath(e.offsetX, e.offsetY)) {
+        actions.bottom();
+        return;
+    }
+    //TOP
+    c.beginPath();
+    c.moveTo(canvas.width/2,canvas.height/2);
+    c.lineTo(canvas.width/100*38,canvas.height/100*35);
+    c.lineTo(canvas.width/100*38,canvas.height/100*15);
+    c.lineTo(canvas.width/100*62,canvas.height/100*15);
+    c.lineTo(canvas.width/100*62,canvas.height/100*35);
+    c.lineTo(canvas.width/2,canvas.height/2);
+    c.closePath();
+
+    if (c.isPointInPath(e.offsetX, e.offsetY)) {
+        actions.top();
+        return;
+    }
+    callback();
 }
 resize();
 E.addHandler(window, 'resize', resize);
-E.addHandler(canvas, 'mousemove', function(e){hoverCanvas(e)});
+E.addHandler(canvas, 'mousemove', function(e){
+    mousePositionOnMenuCanvas(
+        e,
+        hoverMenuAction,
+        function() {
+            particlesData.visible = false;
+            for(var i = 0; i < hoverblureffectPathLength; i++) {
+                hoverblureffectPath[i].style.opacity = '0';
+                menuSelectorSvgElm.style.opacity = '0';
+            }
+            menuItemLeftElm.classList.remove('select');
+            menuItemTopElm.classList.remove('select');
+            menuItemBottomElm.classList.remove('select');
+            menuItemRightElm.classList.remove('select');
+
+        }
+    );
+});
+var _menu = document.querySelector('.menu-container');
+var clickMenuAction = {
+    disapearMenu: function() {
+        TweenMax.fromTo(_menu,.15, {autoAlpha: 1}, {autoAlpha: 0});
+    },
+    right: function() {
+        var _pan = document.getElementById('itemPan');
+        TweenMax.fromTo(_pan,.4, {x: _pan.offsetWidth*-1, autoAlpha: 0}, {x: 0, autoAlpha: 1});
+        this.disapearMenu();
+    },
+    left: function() {
+        var _pan = document.getElementById('projectPan');
+        TweenMax.fromTo(_pan,.4, {x: _pan.offsetWidth, autoAlpha: 0}, {x: 0, autoAlpha: 1});
+        this.disapearMenu();
+    }
+};
+E.addHandler(canvas, 'click', function(e){
+    mousePositionOnMenuCanvas(
+        e,
+        clickMenuAction,
+        function() {
+
+        }
+    )
+});
+
+var forEach = function (array, callback, scope) {
+    for (var i = 0; i < array.length; i++) {
+        callback.call(scope, i, array[i]);
+    }
+};
+var searchParent = function(_elm, selector) {
+    while(_elm) {
+
+    }
+};
+
+
+var _panListItems = document.querySelectorAll('.pan--listItem');
+forEach(_panListItems, function (index, _elm) {
+    E.addHandler(canvas, 'click', function(e){
+        _elm.querySelector()
+    });
+});
