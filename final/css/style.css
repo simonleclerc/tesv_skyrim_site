@@ -20,13 +20,35 @@ html {
 body{
     margin: 0;
     padding: 0;
-    background: #000000 url(../images/rpgskyrimscreenshotart1.png) no-repeat center center;
-    background-size: cover;
     cursor: url(../images/cursor.png), auto;
     color: #ffffff;
     font-family: 'Futura-Condensed-Normal', Helvetica, Arial, sans-serif ;
     height: 100%;
     overflow: hidden;
+}
+body:before {
+    position: absolute;
+    content: '';
+    height: 108%;
+    width: 105%;
+    top: -4%;
+    left: -2.5%;
+    background: #000000 url(../images/rpgskyrimscreenshotart1.png) no-repeat center center;
+    background-size: cover;
+    z-index: -1;
+    transition: all 1s  ease-out;
+}
+body.go-left:before {
+    transform: translate(-1.5%, 0);
+}
+body.go-right:before {
+    transform: translate(1.5%, 0);
+}
+body.go-bottom:before {
+    transform: translate(0, 2.5%);
+}
+body.go-top:before {
+    transform: translate(0, -2.5%);
 }
 body:after {
     position: absolute;

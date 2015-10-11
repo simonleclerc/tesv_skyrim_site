@@ -246,6 +246,10 @@ var hoverblureffectPathLength = hoverblureffectPath.length;
 
 var hoverMenuAction= {
     right: function() {
+        document.body.classList.remove('go-left');
+        document.body.classList.add('go-right');
+        document.body.classList.remove('go-top');
+        document.body.classList.remove('go-bottom');
         particlesData.angle = Math.PI*2;
         particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100*7 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().height/100*-0.5 + canvas.height/2)];
         particlesData.visible = true;
@@ -262,6 +266,10 @@ var hoverMenuAction= {
         menuSelectorSvgElm.style.transform = 'translateX('+Math.round(menuElmSize.width/2+menuItemRightElmSize.width + menuElmSize.width/100 + menuSelectorSvgSize.width)+'px) rotate(-90deg)';
     },
     left: function() {
+        document.body.classList.add('go-left');
+        document.body.classList.remove('go-right');
+        document.body.classList.remove('go-top');
+        document.body.classList.remove('go-bottom');
         particlesData.angle = Math.PI;
         particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100*-7 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().height/100*-0.5 + canvas.height/2)];
         particlesData.visible = true;
@@ -278,6 +286,10 @@ var hoverMenuAction= {
         menuSelectorSvgElm.style.transform = 'translateX(-'+Math.round(menuElmSize.width/2+menuItemLeftElmSize.width + menuElmSize.width/100 + menuSelectorSvgSize.width)+'px) rotate(90deg)';
     },
     bottom: function() {
+        document.body.classList.remove('go-left');
+        document.body.classList.remove('go-right');
+        document.body.classList.remove('go-top');
+        document.body.classList.add('go-bottom');
         particlesData.angle = Math.PI*0.5;
         particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100* -.2 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().width/100*7 + canvas.height/2)];
         particlesData.visible = true;
@@ -294,6 +306,10 @@ var hoverMenuAction= {
         menuSelectorSvgElm.style.transform = 'translateY('+Math.round(menuElmSize.height/2 +menuItemBottomElmSize.height + menuSelectorSvgSize.height )+'px) rotate(0deg)';
     },
     top: function() {
+        document.body.classList.remove('go-left');
+        document.body.classList.remove('go-right');
+        document.body.classList.add('go-top');
+        document.body.classList.remove('go-bottom');
         particlesData.angle = Math.PI*1.5;
         particlesData.position = [Math.floor(svgMenu.getBoundingClientRect().width/100* -.2 + canvas.width/2), Math.floor(svgMenu.getBoundingClientRect().width/100*-7.5 + canvas.height/2)];
         particlesData.visible = true;
@@ -308,6 +324,22 @@ var hoverMenuAction= {
         menuItemTopElm.classList.add('select');
         menuSelectorSvgElm.style.opacity = '1';
         menuSelectorSvgElm.style.transform = 'translateY(-'+Math.round(menuElmSize.height/2 +menuItemTopElmSize.height + menuSelectorSvgSize.height)+'px) rotate(180deg)';
+    },
+    none: function() {
+        document.body.classList.remove('go-left');
+        document.body.classList.remove('go-right');
+        document.body.classList.remove('go-top');
+        document.body.classList.remove('go-bottom');
+        //TweenMax.fromTo(_pan,.4, {x: _pan.offsetWidth, autoAlpha: 0}, {x: 0, autoAlpha: 1});
+        particlesData.visible = false;
+        for(var i = 0; i < hoverblureffectPathLength; i++) {
+            hoverblureffectPath[i].style.opacity = '0';
+            menuSelectorSvgElm.style.opacity = '0';
+        }
+        menuItemLeftElm.classList.remove('select');
+        menuItemTopElm.classList.remove('select');
+        menuItemBottomElm.classList.remove('select');
+        menuItemRightElm.classList.remove('select');
     }
 };
 
@@ -368,26 +400,14 @@ function mousePositionOnMenuCanvas(e, actions, callback){
         actions.top();
         return;
     }
-    callback();
+    actions.none();
 }
 resize();
 E.addHandler(window, 'resize', resize);
 E.addHandler(canvas, 'mousemove', function(e){
     mousePositionOnMenuCanvas(
         e,
-        hoverMenuAction,
-        function() {
-            particlesData.visible = false;
-            for(var i = 0; i < hoverblureffectPathLength; i++) {
-                hoverblureffectPath[i].style.opacity = '0';
-                menuSelectorSvgElm.style.opacity = '0';
-            }
-            menuItemLeftElm.classList.remove('select');
-            menuItemTopElm.classList.remove('select');
-            menuItemBottomElm.classList.remove('select');
-            menuItemRightElm.classList.remove('select');
-
-        }
+        hoverMenuAction
     );
 });
 var _menu = document.querySelector('.menu-container');
