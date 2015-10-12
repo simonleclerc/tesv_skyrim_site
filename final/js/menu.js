@@ -441,16 +441,16 @@ var forEach = function (array, callback, scope) {
         callback.call(scope, i, array[i]);
     }
 };
-var searchParent = function(_elm, selector) {
-    while(_elm) {
-
-    }
-};
 
 
 var _panListItems = document.querySelectorAll('.pan--listItem');
 forEach(_panListItems, function (index, _elm) {
-    E.addHandler(canvas, 'click', function(e){
-        _elm.querySelector()
+    E.addHandler(_elm, 'click', function() {
+        forEach(_elm.parentNode.childNodes, function(subIndex, _subElm) {
+            if(_subElm.nodeType !== 3) {
+                _subElm.classList.remove('pan--listItem_active');
+            }
+        });
+        _elm.classList.add('pan--listItem_active');
     });
 });
