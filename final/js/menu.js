@@ -410,20 +410,12 @@ E.addHandler(canvas, 'mousemove', function(e){
         hoverMenuAction
     );
 });
-var _menu = document.querySelector('.menu-container');
 var clickMenuAction = {
-    disapearMenu: function() {
-        TweenMax.fromTo(_menu,.15, {autoAlpha: 1}, {autoAlpha: 0});
-    },
     right: function() {
-        var _pan = document.getElementById('itemPan');
-        TweenMax.fromTo(_pan,.4, {x: _pan.offsetWidth*-1, autoAlpha: 0}, {x: 0, autoAlpha: 1});
-        this.disapearMenu();
+        menu.openLateral('left');
     },
     left: function() {
-        var _pan = document.getElementById('projectPan');
-        TweenMax.fromTo(_pan,.4, {x: _pan.offsetWidth, autoAlpha: 0}, {x: 0, autoAlpha: 1});
-        this.disapearMenu();
+        menu.openLateral('right');
     }
 };
 E.addHandler(canvas, 'click', function(e){
@@ -442,7 +434,29 @@ var forEach = function (array, callback, scope) {
     }
 };
 
+var Menu = function() {
+};
+Menu.prototype.disapearMenu = function() {
+    TweenMax.fromTo(_menu,.15, {autoAlpha: 1}, {autoAlpha: 0});
+};
+Menu.prototype.openLateral = function(way){
+    if(way === 'left') {
+        _lateralPan.classList.add('lateral-pan--left');
+        TweenMax.fromTo(_lateralPan,.4, {x: _lateralPan.offsetWidth*-1, autoAlpha: 0}, {x: 0, autoAlpha: 1});
+    } else if(way === 'right') {
+        _lateralPan.classList.add('lateral-pan--right');
+        TweenMax.fromTo(_lateralPan,.4, {x: _lateralPan.offsetWidth, autoAlpha: 0}, {x: 0, autoAlpha: 1});
+    } else {
+        console.error('Invalid parameter "' + way + '"');
+    }
+    this.disapearMenu();
+};
 
+var menu = new Menu();
+
+var _menu = document.querySelector('.menu-container');
+var _lateralPan = document.getElementById('lateral-pan');
+var _subLateralPan = document.getElementById('sub-lateral-pan');
 var _panListItems = document.querySelectorAll('.pan--listItem');
 forEach(_panListItems, function (index, _elm) {
     E.addHandler(_elm, 'click', function() {
