@@ -434,7 +434,12 @@ var forEach = function (array, callback, scope) {
     }
 };
 
+var _menu = document.querySelector('.menu-container');
+var _lateralPan = document.getElementById('lateral-pan');
+var _subLateralPan = document.getElementById('sub-lateral-pan');
+var _panListItems = document.querySelectorAll('.pan--listItem');
 var Menu = function() {
+    this.opened = null;
 };
 Menu.prototype.disapearMenu = function() {
     TweenMax.fromTo(_menu,.15, {autoAlpha: 1}, {autoAlpha: 0});
@@ -443,28 +448,43 @@ Menu.prototype.openLateral = function(way){
     if(way === 'left') {
         _lateralPan.classList.add('lateral-pan--left');
         TweenMax.fromTo(_lateralPan,.4, {x: _lateralPan.offsetWidth*-1, autoAlpha: 0}, {x: 0, autoAlpha: 1});
+        this.opened = 'left';
     } else if(way === 'right') {
         _lateralPan.classList.add('lateral-pan--right');
         TweenMax.fromTo(_lateralPan,.4, {x: _lateralPan.offsetWidth, autoAlpha: 0}, {x: 0, autoAlpha: 1});
+        this.opened = 'right';
     } else {
         console.error('Invalid parameter "' + way + '"');
     }
     this.disapearMenu();
 };
+Menu.prototype.openSubLateral = function(way){
+    if(way === 'left') {
+        _subLateralPan.classList.add('sub-lateral-pan--left');
+        TweenMax.fromTo(_subLateralPan,.4, {x: (_lateralPan.offsetWidth + _subLateralPan.offsetWidth )*-1, autoAlpha: 0}, {x: 0, autoAlpha: 1});
+    } else if(way === 'right') {
+        _subLateralPan.classList.add('sub-lateral-pan--right');
+        TweenMax.fromTo(_subLateralPan,.4, {x:     _lateralPan.offsetWidth + _subLateralPan.offsetWidth, autoAlpha: 0}, {x: 0, autoAlpha: 1});
+    } else {
+        console.error('Invalid parameter "' + way + '"');
+    }
+};
 
 var menu = new Menu();
 
-var _menu = document.querySelector('.menu-container');
-var _lateralPan = document.getElementById('lateral-pan');
-var _subLateralPan = document.getElementById('sub-lateral-pan');
-var _panListItems = document.querySelectorAll('.pan--listItem');
 forEach(_panListItems, function (index, _elm) {
     E.addHandler(_elm, 'click', function() {
+        var _exCurrent = [];
         forEach(_elm.parentNode.childNodes, function(subIndex, _subElm) {
-            if(_subElm.nodeType !== 3) {
-                _subElm.classList.remove('pan--listItem_active');
+            if(_subElm.nodeType !== 3 && _subElm.classList.contains('pan--listItem_active')) {
+                _exCurrent.push(_subElm);
             }
         });
+        if(_exCurrent.length >0) {
+            _exCurrent[0].classList.remove('pan--listItem_active');
+        } else {
+            menu.openSubLateral(menu.opened);
+        }
         _elm.classList.add('pan--listItem_active');
     });
 });

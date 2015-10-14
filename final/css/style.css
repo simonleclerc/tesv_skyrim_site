@@ -161,7 +161,6 @@ ul, ol {
 .sub-lateral-pan {
     position: absolute;
     width: 15.625%;
-    transition: all .3s ease-out;
 }
 .sub-lateral-pan--left {
     left: calc(12% + 40px + 40px);
