@@ -437,7 +437,9 @@ var forEach = function (array, callback, scope) {
 var _menu = document.querySelector('.menu-container');
 var _lateralPan = document.getElementById('lateral-pan');
 var _subLateralPan = document.getElementById('sub-lateral-pan');
-var _panListItems = document.querySelectorAll('.pan--listItem');
+var _panListItemsMain = document.querySelectorAll('.pan--listItemMain');
+var _panListItemsSub = document.querySelectorAll('.pan--listItemSub');
+var _itemModal = document.getElementById('itemModal');
 var Menu = function() {
     this.opened = null;
 };
@@ -461,10 +463,22 @@ Menu.prototype.openLateral = function(way){
 Menu.prototype.openSubLateral = function(way){
     if(way === 'left') {
         _subLateralPan.classList.add('sub-lateral-pan--left');
-        TweenMax.fromTo(_subLateralPan,.4, {x: (_lateralPan.offsetWidth + _subLateralPan.offsetWidth )*-1, autoAlpha: 0}, {x: 0, autoAlpha: 1});
+        TweenMax.fromTo(_subLateralPan,.4, {x: ( _subLateralPan.offsetWidth )*-1, autoAlpha: 0}, {x: 0, autoAlpha: 1});
     } else if(way === 'right') {
         _subLateralPan.classList.add('sub-lateral-pan--right');
-        TweenMax.fromTo(_subLateralPan,.4, {x:     _lateralPan.offsetWidth + _subLateralPan.offsetWidth, autoAlpha: 0}, {x: 0, autoAlpha: 1});
+        TweenMax.fromTo(_subLateralPan,.4, {x:  _subLateralPan.offsetWidth, autoAlpha: 0}, {x: 0, autoAlpha: 1});
+    } else {
+        console.error('Invalid parameter "' + way + '"');
+    }
+    _lateralPan.classList.add('lateral-pan_white-mask');
+};
+Menu.prototype.openModal = function(way){
+    if(way === 'left') {
+        _itemModal.classList.add('itemModal--left');
+        TweenMax.fromTo(_itemModal,.5, {autoAlpha: 0}, {autoAlpha: 1});
+    } else if(way === 'right') {
+        _itemModal.classList.add('itemModal--right');
+        TweenMax.fromTo(_itemModal,.5, {autoAlpha: 0}, {autoAlpha: 1});
     } else {
         console.error('Invalid parameter "' + way + '"');
     }
@@ -472,19 +486,35 @@ Menu.prototype.openSubLateral = function(way){
 
 var menu = new Menu();
 
-forEach(_panListItems, function (index, _elm) {
+forEach(_panListItemsMain, function (index, _elm) {
     E.addHandler(_elm, 'click', function() {
         var _exCurrent = [];
         forEach(_elm.parentNode.childNodes, function(subIndex, _subElm) {
-            if(_subElm.nodeType !== 3 && _subElm.classList.contains('pan--listItem_active')) {
+            if(_subElm.nodeType !== 3 && _subElm.classList.contains('pan--listItemMain_active')) {
                 _exCurrent.push(_subElm);
             }
         });
         if(_exCurrent.length >0) {
-            _exCurrent[0].classList.remove('pan--listItem_active');
+            _exCurrent[0].classList.remove('pan--listItemMain_active');
         } else {
             menu.openSubLateral(menu.opened);
         }
-        _elm.classList.add('pan--listItem_active');
+        _elm.classList.add('pan--listItemMain_active');
+    });
+});
+forEach(_panListItemsSub, function (index, _elm) {
+    E.addHandler(_elm, 'click', function() {
+        var _exCurrent = [];
+        forEach(_elm.parentNode.childNodes, function(subIndex, _subElm) {
+            if(_subElm.nodeType !== 3 && _subElm.classList.contains('pan--listItemSub_active')) {
+                _exCurrent.push(_subElm);
+            }
+        });
+        if(_exCurrent.length >0) {
+            _exCurrent[0].classList.remove('pan--listItemSub_active');
+        } else {
+            menu.openModal(menu.opened);
+        }
+        _elm.classList.add('pan--listItemSub_active');
     });
 });
