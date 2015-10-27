@@ -21,7 +21,7 @@ function realTimeDate() {
 }
 realTimeDate();
 
-var birthDate = new Date(1991, 04, 01);
+var birthDate = new Date(1991, 4, 1);
 
 var oneDay = 24*60*60*1000;	// hours*minutes*seconds*milliseconds
 var today = new Date();

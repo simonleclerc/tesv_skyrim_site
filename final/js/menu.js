@@ -413,6 +413,11 @@ E.addHandler(canvas, 'mousemove', function(e){
 var clickMenuAction = {
     right: function() {
         menu.openLateral('left');
+        var titles = [];
+        for(var i = 0, itemsDataLen = itemsData.length; i < itemsDataLen; i++) {
+            titles.push(itemsData[i].title);
+        }
+        menu.populateMainPan(titles);
     },
     left: function() {
         menu.openLateral('right');
@@ -440,8 +445,50 @@ var _subLateralPan = document.getElementById('sub-lateral-pan');
 var _panListItemsMain = document.querySelectorAll('.pan--listItemMain');
 var _panListItemsSub = document.querySelectorAll('.pan--listItemSub');
 var _itemModal = document.getElementById('itemModal');
+
 var Menu = function() {
-    this.opened = null;
+    this.openSide = null;
+
+};
+Menu.prototype.populateMainPan = function(itemArr) {
+    var that = this;
+    var _lateralPanList = _lateralPan.getElementsByTagName('UL');
+    while (_lateralPanList[0].firstChild) {
+        _lateralPanList[0].removeChild(_lateralPanList[0].firstChild);
+    }
+    for(var itemArrIter = 0, itemArrLen = itemArr.length; itemArrIter < itemArrLen; itemArrIter++) {
+        var _li = document.createElement('li');
+        _li.classList.add('pan--listItem');
+        _li.classList.add('pan--listItemMain');
+        var _span = document.createElement('span');
+        _span.classList.add('pan--listTitle');
+        var _txt = document.createTextNode(itemArr[itemArrIter]);
+        _span.appendChild(_txt);
+        _li.appendChild(_span);
+        E.addHandler(_li, 'click',that.openSubFromMain);
+        _lateralPanList[0].appendChild(_li);
+    }
+};
+Menu.prototype.openSubFromMain = function(e) {
+    var _exCurrent = [];
+    e = E.getEvent(e);
+    var _elm = E.getTarget(e);
+    while(!_elm.classList.contains('pan--listItemMain')) {
+        _elm = _elm.parentNode;
+    }
+    forEach(_elm.parentNode.childNodes, function(subIndex, _subElm) {
+        console.log(e, _elm);
+        if(_subElm.nodeType !== 3 && _subElm.classList.contains('pan--listItemMain_active')) {
+            _exCurrent.push(_subElm);
+        }
+    });
+    console.log(_exCurrent);
+    if(_exCurrent.length >0) {
+        _exCurrent[0].classList.remove('pan--listItemMain_active');
+    } else {
+        menu.openSubLateral(menu.openSide);
+    }
+    _elm.classList.add('pan--listItemMain_active');
 };
 Menu.prototype.disapearMenu = function() {
     TweenMax.fromTo(_menu,.15, {autoAlpha: 1}, {autoAlpha: 0});
@@ -450,11 +497,11 @@ Menu.prototype.openLateral = function(way){
     if(way === 'left') {
         _lateralPan.classList.add('lateral-pan--left');
         TweenMax.fromTo(_lateralPan,.4, {x: _lateralPan.offsetWidth*-1, autoAlpha: 0}, {x: 0, autoAlpha: 1});
-        this.opened = 'left';
+        this.openSide = 'left';
     } else if(way === 'right') {
         _lateralPan.classList.add('lateral-pan--right');
         TweenMax.fromTo(_lateralPan,.4, {x: _lateralPan.offsetWidth, autoAlpha: 0}, {x: 0, autoAlpha: 1});
-        this.opened = 'right';
+        this.openSide = 'right';
     } else {
         console.error('Invalid parameter "' + way + '"');
     }
@@ -486,22 +533,6 @@ Menu.prototype.openModal = function(way){
 
 var menu = new Menu();
 
-forEach(_panListItemsMain, function (index, _elm) {
-    E.addHandler(_elm, 'click', function() {
-        var _exCurrent = [];
-        forEach(_elm.parentNode.childNodes, function(subIndex, _subElm) {
-            if(_subElm.nodeType !== 3 && _subElm.classList.contains('pan--listItemMain_active')) {
-                _exCurrent.push(_subElm);
-            }
-        });
-        if(_exCurrent.length >0) {
-            _exCurrent[0].classList.remove('pan--listItemMain_active');
-        } else {
-            menu.openSubLateral(menu.opened);
-        }
-        _elm.classList.add('pan--listItemMain_active');
-    });
-});
 forEach(_panListItemsSub, function (index, _elm) {
     E.addHandler(_elm, 'click', function() {
         var _exCurrent = [];
@@ -513,7 +544,7 @@ forEach(_panListItemsSub, function (index, _elm) {
         if(_exCurrent.length >0) {
             _exCurrent[0].classList.remove('pan--listItemSub_active');
         } else {
-            menu.openModal(menu.opened);
+            menu.openModal(menu.openSide);
         }
         _elm.classList.add('pan--listItemSub_active');
     });
