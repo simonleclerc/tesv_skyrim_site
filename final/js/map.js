@@ -36,6 +36,5 @@ function erreurPosition(error) {
             info += "Erreur inconnue";
             break;
     }
-    document.getElementById("infoposition").innerHTML = info;
+    console.log(info);
 }
-

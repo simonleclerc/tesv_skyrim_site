@@ -421,6 +421,11 @@ var clickMenuAction = {
     },
     left: function() {
         menu.openLateral('right');
+    },
+    bottom: function() {
+        TweenMax.to('body',.3, {opacity: 0, onComplete: function() {
+            window.location.href = './map.html'
+        }});
     }
 };
 E.addHandler(canvas, 'click', function(e){

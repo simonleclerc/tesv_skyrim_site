@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Poolboy - map</title>
+    <link href="css/reset.css" media="all" rel="stylesheet"/>
+    <link href="css/style.css" media="all" rel="stylesheet"/>
+    <style>
+        html, body, #map-canvas {
+            height: 100%;
+            margin: 0px;
+            padding: 0px
+        }
+    </style>
+</head>
+<body style="background-color: #000000;">
+
+<div id="map-canvas"></div>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script>
+    var geocoder;
+    var map;
+    var infowindow = new google.maps.InfoWindow();
+    var marker;
+
+
+
+    function maPosition(pos){
+        var latlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        geocoder.geocode({'latLng': latlng}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                var mapOptions = {
+                    zoom: 8,
+                    center: latlng,
+                    mapTypeId: 'roadmap'
+                }
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+                var currentLocationMarkerIcon = {
+                    path: 'M 501.519,363.412 507.663,363.412 510.168,360.017 504.914,358.885 508.794,353.873 516.716,357.106 512,363.412 516.716,363.412 509.953,404.802 z',
+                    fillColor: 'yellow',
+                    fillOpacity: 0.8,
+                    scale: 5,
+                    strokeColor: 'gold',
+                    strokeWeight: 1
+                };
+
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map,
+                    icon: currentLocationMarkerIcon,
+                    title: 'Hello World!'
+                });
+//                if(results[1]) {
+//                    var location = document.getElementById('gmap-city');
+//                    location.innerHTML = results[1].formatted_address;
+//                }
+            } else {
+                alert('Geocoder failed due to: ' + status);
+            }
+        });
+    }
+
+    function erreurPosition(error) {
+        var info = "Erreur lors de la géolocalisation : ";
+        switch(error.code) {
+            case error.TIMEOUT:
+                info += "Timeout !";
+                break;
+            case error.PERMISSION_DENIED:
+                info += "Vous n’avez pas donné la permission";
+                break;
+            case error.POSITION_UNAVAILABLE:
+                info += "La position n’a pu être déterminée";
+                break;
+            case error.UNKNOWN_ERROR:
+                info += "Erreur inconnue";
+                break;
+        }
+        console.log(info);
+    }
+
+    function initialize() {
+        geocoder = new google.maps.Geocoder();
+        if(navigator.geolocation) {
+            survId = navigator.geolocation.getCurrentPosition(maPosition,erreurPosition);
+        } else {
+            alert("Ce navigateur ne supporte pas la géolocalisation");
+        }
+    }
+
+    function codeLatLng() {
+        var input = document.getElementById('latlng').value;
+        var latlngStr = input.split(',', 2);
+        var lat = parseFloat(latlngStr[0]);
+        var lng = parseFloat(latlngStr[1]);
+        var latlng = new google.maps.LatLng(lat, lng);
+        geocoder.geocode({'latLng': latlng}, function(results, status) {
+            console.log(results)
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                    map.setZoom(11);
+                    marker = new google.maps.Marker({
+                        position: latlng,
+                        map: map
+                    });
+                    infowindow.setContent(results[1].formatted_address);
+                    infowindow.open(map, marker);
+                } else {
+                    alert('No results found');
+                }
+            } else {
+                alert('Geocoder failed due to: ' + status);
+            }
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+</body>
+</html>
