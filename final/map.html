@@ -51,6 +51,16 @@
                     icon: currentLocationMarkerIcon,
                     title: 'Hello World!'
                 });
+                var parisMarker = new google.maps.Marker({
+                    position: new google.maps.LatLng(48.8566140,2.3522219),
+                    map: map,
+                    title: 'Hello World!',
+                    icon: {
+                        scaledSize: new google.maps.Size(50, 79),
+                        url: 'images/map/ico_Paris.png',
+                        anchor: new google.maps.Point(25, 40)
+                    }
+                });
 //                if(results[1]) {
 //                    var location = document.getElementById('gmap-city');
 //                    location.innerHTML = results[1].formatted_address;
