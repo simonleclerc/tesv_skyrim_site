@@ -16,7 +16,9 @@
 
 <div id="map-canvas"></div>
 
+<script type="text/javascript" src="js/greensock-js/src/minified/TweenMax.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script src="js/markerWithLabel.js"></script>
 <script>
     var geocoder;
     var map;
@@ -48,18 +50,29 @@
                 var marker = new google.maps.Marker({
                     position: latlng,
                     map: map,
-                    icon: currentLocationMarkerIcon,
                     title: 'Hello World!'
                 });
-                var parisMarker = new google.maps.Marker({
+                var parisMarker = new MarkerWithLabel({
                     position: new google.maps.LatLng(48.8566140,2.3522219),
                     map: map,
-                    title: 'Hello World!',
+                    labelContent: "Paris",
+                    labelAnchor: new google.maps.Point(42, -46),
+                    labelClass: "marker-label", // the CSS class for the label
                     icon: {
                         scaledSize: new google.maps.Size(50, 79),
                         url: 'images/map/ico_Paris.png',
                         anchor: new google.maps.Point(25, 40)
                     }
+                });
+
+                google.maps.event.addDomListener(parisMarker, 'mouseover', function(e) {
+                    parisMarker.set('labelClass', 'marker-label--active');
+                    TweenMax.to('.marker-label--active',.3, {x: 80, y: -60, opacity: 1, fontSize: '35px'});
+                });
+                google.maps.event.addDomListener(parisMarker, 'mouseout', function(e) {
+                    TweenMax.to('.marker-label--active',.3, {x: 0, y: 0, opacity: 0, fontSize: '0px', onComplete: function(){
+                        parisMarker.set('labelClass', 'marker-label');
+                    }});
                 });
 //                if(results[1]) {
 //                    var location = document.getElementById('gmap-city');

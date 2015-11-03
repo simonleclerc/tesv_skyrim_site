@@ -17,7 +17,7 @@ html {
 *, *:before, *:after {
     box-sizing: inherit;
 }
-body.home{
+body{
     margin: 0;
     padding: 0;
     cursor: url(../images/cursor.png), auto;
@@ -267,4 +267,18 @@ ul, ol {
 }
 .itemModal--desc {
     font-size: 1.1vw;
+}
+
+/************MAP*****************/
+.gm-style {
+    cursor: url(../images/cursor.png), auto;
+    color: #ffffff;
+    font-family: 'Futura-Condensed-Normal', Helvetica, Arial, sans-serif ;
+}
+.marker-label, .marker-label--active, .marker-label--inactive {
+    text-shadow: 3px 2px 0 #000000;
+    letter-spacing: 5px;
+    font-size: 0px;
+    text-transform: uppercase;
+    opacity: 0;
 }
