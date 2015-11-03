@@ -24,6 +24,8 @@
     var map;
     var infowindow = new google.maps.InfoWindow();
     var marker;
+    var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+    var directionsService = new google.maps.DirectionsService;
 
 
 
@@ -65,6 +67,13 @@
                     }
                 });
 
+                directionsDisplay.setMap(map);
+                calculateAndDisplayRoute(directionsService, directionsDisplay, {lat: pos.coords.latitude, lnt: pos.coords.longitude},
+//                        {lat: 43.529742, lnt: 5.447427} //Aix-en-Provence
+                        {lat: 48.8566140, lnt: 2.3522219} //Paris
+
+                );
+
                 google.maps.event.addDomListener(parisMarker, 'mouseover', function(e) {
                     parisMarker.set('labelClass', 'marker-label--active');
                     TweenMax.to('.marker-label--active',.3, {x: 80, y: -60, opacity: 1, fontSize: '35px'});
@@ -83,7 +92,19 @@
             }
         });
     }
-
+    function calculateAndDisplayRoute(directionsService, directionsDisplay, origin, destination) {
+        directionsService.route({
+            origin: {lat: origin.lat, lng: origin.lnt},
+            destination: {lat: destination.lat, lng: destination.lnt},
+            travelMode: google.maps.TravelMode['DRIVING']
+        }, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+            } else {
+                console.log('Directions request failed due to ' + status);
+            }
+        });
+    }
     function erreurPosition(error) {
         var info = "Erreur lors de la géolocalisation : ";
         switch(error.code) {
