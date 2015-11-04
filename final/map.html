@@ -43,6 +43,85 @@
     var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
     var directionsService = new google.maps.DirectionsService;
 
+var mapStyles = [
+    {
+        "elementType": "labels.icon",
+        "stylers": [
+            { "visibility": "off" }
+        ]
+    },{
+        "featureType": "landscape.natural",
+        "stylers": [
+            { "hue": "#0008ff" },
+            { "saturation": -43 },
+            { "gamma": 0.97 },
+            { "lightness": -4 }
+        ]
+    },{
+        "featureType": "water",
+        "stylers": [
+            { "saturation": -100 },
+            { "lightness": -51 },
+            { "gamma": 1.2 }
+        ]
+    },{
+        "featureType": "transit",
+        "stylers": [
+            { "visibility": "off" }
+        ]
+    },{
+        "featureType": "poi",
+        "stylers": [
+            { "saturation": -79 },
+            { "hue": "#0022ff" },
+            { "lightness": -17 }
+        ]
+    },{
+        "featureType": "road.highway",
+        "stylers": [
+            { "lightness": 100 },
+            { "weight": 0.3 }
+        ]
+    },{
+        "featureType": "road.arterial",
+        "stylers": [
+            { "visibility": "on" },
+            { "hue": "#ff0011" },
+            { "saturation": -100 },
+            { "lightness": 29 },
+            { "weight": 0.2 }
+        ]
+    },{
+        "featureType": "road.local",
+        "stylers": [
+            { "visibility": "off" }
+        ]
+    },{
+        "featureType": "administrative",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            { "visibility": "off" }
+        ]
+    },{
+        "elementType": "labels.text.fill",
+        "stylers": [
+            { "hue": "#00ccff" },
+            { "saturation": 100 },
+            { "lightness": 100 }
+        ]
+    },{
+        "featureType": "all",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            { "hue": "#00ff99" },
+            { "saturation": -100 },
+            { "lightness": -100 }
+        ]
+    },{
+    }
+];
+
+
 
 
     function maPosition(pos){
@@ -55,6 +134,7 @@
                     mapTypeId: 'roadmap'
                 }
                 map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                map.setOptions({styles: mapStyles});
 
                 var currentLocationMarkerIcon = {
                     path: 'M 501.519,363.412 507.663,363.412 510.168,360.017 504.914,358.885 508.794,353.873 516.716,357.106 512,363.412 516.716,363.412 509.953,404.802 z',
