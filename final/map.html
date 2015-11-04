@@ -23,6 +23,7 @@
     /*@TODO
     * change color map (blue/white/grey theme if possible
      * add button to : center on location, center on destination (Aix-en-Provence), display/hide travel direction
+     * onclick city -> travel from origin to city popup yes/no
      * add all city
      * create icon for minor city (mills, tower, anchor etc)
      * place all minors icons
@@ -121,7 +122,15 @@ var mapStyles = [
     }
 ];
 
-
+var cities = [
+    {label: 'Paris', labelXAnchor: 48, width: 100, height: 158, img: 'ico_paris', lat: 48.8566140, lnt: 2.3522219},
+    {label: 'Lyon', labelXAnchor: 30, width: 146, height: 158, img: 'ico_lyon', lat: 45.7640430, lnt: 4.8356590},
+    {label: 'Bordeaux', labelXAnchor: 10, width: 191, height: 158, img: 'ico_bordeaux', lat: 44.8377890, lnt: -0.5791800},
+    {label: 'Nantes', labelXAnchor: 28, width: 138, height: 158, img: 'ico_nantes', lat: 47.2183710, lnt: -1.5536210},
+    {label: 'Strasbourg', labelXAnchor: 40, width: 122, height: 158, img: 'ico_strasbourg', lat: 48.5734053, lnt: 7.7521113},
+    {label: 'Marseille', labelXAnchor: 40, width: 109, height: 158, img: 'ico_marseille', lat: 43.2964820, lnt: 5.3697800},
+    {label: 'Lille', labelXAnchor: 40, width: 114, height: 158, img: 'ico_lille', lat: 50.6292500, lnt: 3.0572560}
+];
 
 
     function maPosition(pos){
@@ -150,18 +159,47 @@ var mapStyles = [
                     map: map,
                     title: 'Hello World!'
                 });
-                var parisMarker = new MarkerWithLabel({
-                    position: new google.maps.LatLng(48.8566140,2.3522219),
-                    map: map,
-                    labelContent: "Paris",
-                    labelAnchor: new google.maps.Point(42, -46),
-                    labelClass: "marker-label", // the CSS class for the label
-                    icon: {
-                        scaledSize: new google.maps.Size(50, 79),
-                        url: 'images/map/ico_Paris.png',
-                        anchor: new google.maps.Point(25, 40)
-                    }
-                });
+                var citiesMarker = [];
+                for(var i = 0; i < cities.length; i++) {
+                    var cityMarker = new MarkerWithLabel({
+                        position: new google.maps.LatLng(cities[i].lat,cities[i].lnt),
+                        map: map,
+                        labelContent: cities[i].label,
+                        labelAnchor: new google.maps.Point(cities[i].labelXAnchor, -46),
+                        labelClass: "marker-label", // the CSS class for the label
+                        icon: {
+                            scaledSize: new google.maps.Size(cities[i].width/2, cities[i].height/2),
+                            url: 'images/map/'+cities[i].img+'.png',
+                            anchor: new google.maps.Point(25, 40)
+                        }
+                    });
+                    citiesMarker.push(cityMarker);
+                }
+                for(var i = 0; i < citiesMarker.length; i++) {
+                    (function(cityMarker){
+                        google.maps.event.addDomListener(cityMarker, 'mouseover', function(e) {
+                            for(var j = 0; j < citiesMarker.length; j++) {
+                                citiesMarker[j].set('labelClass', 'marker-label');
+                            }
+                            cityMarker.set('labelClass', 'marker-label--active');
+                            TweenMax.to('.marker-label--active',.3, {x: 80, y: -60, opacity: 1, fontSize: '35px'});
+                        });
+                        google.maps.event.addDomListener(cityMarker, 'mouseout', function(e) {
+                            TweenMax.to('.marker-label--active',.3, {x: 0, y: 0, opacity: 0, fontSize: '0px', onComplete: function(){
+                                for(var j = 0; j < citiesMarker.length; j++) {
+                                    citiesMarker[j].set('labelClass', 'marker-label');
+                                }
+                            }});
+                        });
+                        google.maps.event.addDomListener(cityMarker, 'click', function(e) {
+                            calculateAndDisplayRoute(directionsService, directionsDisplay, {lat: cityMarker.get('position').lat(), lnt: cityMarker.get('position').lng()},
+//                        {lat: 43.529742, lnt: 5.447427} //Aix-en-Provence
+                                    {lat: 48.8566140, lnt: 2.3522219} //Paris
+
+                            );
+                        });
+                    })(citiesMarker[i]);
+                }
 
                 directionsDisplay.setMap(map);
                 calculateAndDisplayRoute(directionsService, directionsDisplay, {lat: pos.coords.latitude, lnt: pos.coords.longitude},
@@ -169,20 +207,6 @@ var mapStyles = [
                         {lat: 48.8566140, lnt: 2.3522219} //Paris
 
                 );
-
-                google.maps.event.addDomListener(parisMarker, 'mouseover', function(e) {
-                    parisMarker.set('labelClass', 'marker-label--active');
-                    TweenMax.to('.marker-label--active',.3, {x: 80, y: -60, opacity: 1, fontSize: '35px'});
-                });
-                google.maps.event.addDomListener(parisMarker, 'mouseout', function(e) {
-                    TweenMax.to('.marker-label--active',.3, {x: 0, y: 0, opacity: 0, fontSize: '0px', onComplete: function(){
-                        parisMarker.set('labelClass', 'marker-label');
-                    }});
-                });
-//                if(results[1]) {
-//                    var location = document.getElementById('gmap-city');
-//                    location.innerHTML = results[1].formatted_address;
-//                }
             } else {
                 alert('Geocoder failed due to: ' + status);
             }
