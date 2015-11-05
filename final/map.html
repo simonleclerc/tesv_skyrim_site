@@ -12,16 +12,25 @@
         }
     </style>
 </head>
-<body style="background-color: #000000;">
+<body style="background-color: #000000;" class="map">
 
 <div id="map-canvas"></div>
-
+<div class="footer">
+    <div class="footer--buttons">
+        <div class="footer--button"><span class="footer--buttonKey">E</span><span class="footer--buttonLabel">Current Location</span></div>
+        <div class="footer--button"><span class="footer--buttonKey">Wheel</span><span class="footer--buttonLabel">Zoom</span></div>
+        <div class="footer--button"><span class="footer--buttonKey footer--buttonKey_leftMouse">M1</span><span class="footer--buttonLabel">Set Destination</span></div>
+    </div>
+    <div class="localisation-date">
+        <span><span id="gmap-city">Aix-en-Provence</span>, <span id="footer-date">20:49, 18 Mai, 2015</span></span>
+    </div>
+</div>
 <script type="text/javascript" src="js/greensock-js/src/minified/TweenMax.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 <script src="js/markerWithLabel.js"></script>
 <script>
     /*@TODO
-    * change color map (blue/white/grey theme if possible
+    * change color map (blue/white/grey theme if possible)
      * add button to : center on location, center on destination (Aix-en-Provence), display/hide travel direction
      * onclick city -> travel from origin to city popup yes/no
      * add all city
@@ -129,7 +138,11 @@ var cities = [
     {label: 'Nantes', labelXAnchor: 28, width: 138, height: 158, img: 'ico_nantes', lat: 47.2183710, lnt: -1.5536210},
     {label: 'Strasbourg', labelXAnchor: 40, width: 122, height: 158, img: 'ico_strasbourg', lat: 48.5734053, lnt: 7.7521113},
     {label: 'Marseille', labelXAnchor: 40, width: 109, height: 158, img: 'ico_marseille', lat: 43.2964820, lnt: 5.3697800},
-    {label: 'Lille', labelXAnchor: 40, width: 114, height: 158, img: 'ico_lille', lat: 50.6292500, lnt: 3.0572560}
+    {label: 'Lille', labelXAnchor: 40, width: 114, height: 158, img: 'ico_lille', lat: 50.6292500, lnt: 3.0572560},
+    {label: 'Aix-en-Provence', labelXAnchor: 40, width: 82, height: 110, img: 'ico_aixenprovence', lat: 43.529742, lnt: 5.447427},
+    {label: 'Saint Brieux', labelXAnchor: 40, width: 114, height: 162, img: 'ico_saintbrieuc', lat: 48.5141800, lnt: -2.7658350},
+    {label: 'Quimper', labelXAnchor: 40, width: 97, height: 152, img: 'ico_quimper', lat: 47.9975420, lnt: -4.0978990},
+    {label: 'Rennes', labelXAnchor: 40, width: 130, height: 166, img: 'ico_rennes', lat: 48.1172660, lnt: -1.6777926}
 ];
 
 
