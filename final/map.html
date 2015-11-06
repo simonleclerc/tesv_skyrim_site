@@ -30,20 +30,20 @@
 <script src="js/markerWithLabel.js"></script>
 <script>
     /*@TODO
-    * change color map (blue/white/grey theme if possible)
+     * //change color map (blue/white/grey theme if possible)
      * add button to : center on location, center on destination (Aix-en-Provence), display/hide travel direction
      * onclick city -> travel from origin to city popup yes/no
-     * add all city
-     * create icon for minor city (mills, tower, anchor etc)
-     * place all minors icons
+     * //add all city
+     * //create icon for minor city (mills, tower, anchor etc)
+     * //place all minors icons
      * max/min zoom level
      * on travel direction display, stop zoom
      * back button
-     * add footer with button + localisation
-     * add origin + destination markers
-     * add window info on cities related to me
+     * //add footer with button + localisation
+     * //add origin + destination markers
+     * (add window info on cities related to me)
      * add modal on localisation failed/denied with a city to choose
-    *
+     * why current location on Marseille ?!
     *
     */
     var geocoder;
@@ -170,7 +170,11 @@ var cities = [
                 var marker = new google.maps.Marker({
                     position: latlng,
                     map: map,
-                    title: 'Hello World!'
+                    icon: {
+                        scaledSize: new google.maps.Size(56/2, 124/2),
+                        url: 'images/map/current_location.png',
+                        anchor: new google.maps.Point(25, 40)
+                    }
                 });
                 var citiesMarker = [];
                 for(var i = 0; i < cities.length; i++) {
@@ -188,6 +192,25 @@ var cities = [
                     });
                     citiesMarker.push(cityMarker);
                 }
+                var destinationMarker;
+                google.maps.event.addDomListener(map, 'click', function(e) {
+                    if (destinationMarker !== undefined) {
+                        destinationMarker.set('map', null);
+                    }
+                    destinationMarker = new google.maps.Marker({
+                        position: e.latLng,
+                        map: map,
+                        icon: {
+                            scaledSize: new google.maps.Size(76/2, 138/2),
+                            url: 'images/map/destination.png',
+                            anchor: new google.maps.Point(23, 62)
+                        }
+                    });
+
+                    calculateAndDisplayRoute(directionsService, directionsDisplay, {lat: pos.coords.latitude, lnt: pos.coords.longitude},
+                            {lat: e.latLng.lat(), lnt: e.latLng.lng()}
+                    );
+                });
                 for(var i = 0; i < citiesMarker.length; i++) {
                     (function(cityMarker){
                         google.maps.event.addDomListener(cityMarker, 'mouseover', function(e) {
@@ -205,10 +228,8 @@ var cities = [
                             }});
                         });
                         google.maps.event.addDomListener(cityMarker, 'click', function(e) {
-                            calculateAndDisplayRoute(directionsService, directionsDisplay, {lat: cityMarker.get('position').lat(), lnt: cityMarker.get('position').lng()},
-//                        {lat: 43.529742, lnt: 5.447427} //Aix-en-Provence
-                                    {lat: 48.8566140, lnt: 2.3522219} //Paris
-
+                            calculateAndDisplayRoute(directionsService, directionsDisplay, {lat: pos.coords.latitude, lnt: pos.coords.longitude},
+                                {lat: cityMarker.get('position').lat(), lnt: cityMarker.get('position').lng()}
                             );
                         });
                     })(citiesMarker[i]);
