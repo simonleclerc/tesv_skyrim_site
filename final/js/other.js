@@ -29,12 +29,14 @@ var today = new Date();
 var diffDays = Math.abs((today.getTime() - birthDate.getTime())/(oneDay));
 
 var footerAgeElm = document.getElementById('footer-age');
-footerAgeElm.innerHTML = Math.floor(diffDays/365.25);
-
-
-var footerBarSvg = document.getElementById('footerBarSvg');
-var footerLevelBar = footerBarSvg.getElementsByClassName('levelBar');
-var footerLevelBarWidth = (diffDays/365.25 - Math.floor(diffDays/365.25)) * 263.756;
-for(var i= 0, fl =footerLevelBar.length; i<fl;i++) {
-    footerLevelBar[i].setAttributeNS(null, 'width', footerLevelBarWidth);
+if(footerAgeElm) {
+    footerAgeElm.innerHTML = Math.floor(diffDays/365.25);
+    var footerBarSvg = document.getElementById('footerBarSvg');
+    var footerLevelBar = footerBarSvg.getElementsByClassName('levelBar');
+    var footerLevelBarWidth = (diffDays/365.25 - Math.floor(diffDays/365.25)) * 263.756;
+    for(var i= 0, fl =footerLevelBar.length; i<fl;i++) {
+        footerLevelBar[i].setAttributeNS(null, 'width', footerLevelBarWidth);
+    }
 }
+
+

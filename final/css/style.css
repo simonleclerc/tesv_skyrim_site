@@ -115,7 +115,7 @@ ul, ol {
     text-align: center;
     font-size: 1.2vw;
     text-shadow: 2px 2px 0 #000000;
-    padding: .5% 3% 0 18%;
+    padding: .5% 3% 0;
     display: flex;
     float: left;
     flex-direction: row;
