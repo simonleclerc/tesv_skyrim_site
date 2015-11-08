@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Poolboy - map</title>
+    <title>Poolboy - Map</title>
     <link href="css/reset.css" media="all" rel="stylesheet"/>
     <link href="css/style.css" media="all" rel="stylesheet"/>
     <style>
@@ -35,7 +35,6 @@
 <script>
     /*@TODO
      * onclick city -> travel from origin to city popup yes/no
-     * max/min zoom level
      * on travel direction display, stop zoom
      * city icon smaller and opacity /2 when not hovered
      * back button
@@ -190,6 +189,17 @@ var cities = [
                     });
                     citiesMarker.push(cityMarker);
                 }
+                // Limit the zoom level
+                google.maps.event.addListener(map, 'zoom_changed', function() {
+                    console.log(map.getZoom());
+                    if (map.getZoom() < 3) {
+                        map.setZoom(3);
+                    } else if(map.getZoom() > 12) {
+                        map.setZoom(12);
+                    }
+                });
+
+
                 var destinationMarker;
                 google.maps.event.addDomListener(map, 'click', function(e) {
                     if (destinationMarker !== undefined) {
@@ -291,6 +301,8 @@ var cities = [
                 break;
         }
         console.log(info);
+
+        alert('This page use geolocalisation as it\'s a map and there was a problem geolocalisate you. You can delete your ')
     }
 
     function initialize() {
