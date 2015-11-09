@@ -324,3 +324,68 @@ ul, ol {
     border-top-left-radius: 20px;
     padding-right: 2px;
 }
+
+/****************SKILLS**********************/
+.page--skills .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.page--skills .header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.skill {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    margin: auto;
+    width: 20vw;
+    height:30vw;
+    background-color: rgba(255, 0, 0, .2);
+    perspective: 1000px;
+    transform-style: preserve-3d
+}
+.perks {
+    width: 0;
+    height: 0;
+    background-color: rgba(0, 255, 0, .2);
+    perspective: 1000px;
+    margin: auto;
+    left: 0; right: 0; top: 0; bottom: 0;
+    position: absolute;
+}
+.perk {
+    position: absolute;
+    width: 100%;
+}
+.perk--img {
+    width: 20px;
+    text-align: center;
+    height: 20px;
+    border-radius: 50%;
+    background-color: yellow;
+    margin: auto;
+}
+.perk--title,
+.perk--desc {
+    /*opacity: 0;*/
+    /*visibility: hidden;*/
+}
+.perk-to-perk {
+    position: absolute;
+    width: 1px;
+    height: 280px;
+    background-color: green;
+    transform: translate3d(0px, -340px, 0px) rotateX(70deg) rotateZ(-20deg);
+    transform-origin: bottom;
+}
+.perk-to-perk2 {
+    position: absolute;
+    width: 1px;
+    height: 515px;
+    background-color: green;
+    transform: translate3d(0px, -575px, 0px) rotateX(74deg) rotateZ(10deg);
+    transform-origin: bottom;
+}
