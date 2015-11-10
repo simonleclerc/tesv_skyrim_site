@@ -376,9 +376,9 @@ ul, ol {
 .perk-to-perk {
     position: absolute;
     width: 1px;
-    height: 280px;
+    height: 269px;
     background-color: green;
-    transform: translate3d(0px, -340px, 0px) rotateX(70deg) rotateZ(-20deg);
+    transform: translate3d(0px, -269px, 0px) rotateX(68deg) rotateZ(-24deg);
     transform-origin: bottom;
 }
 .perk-to-perk2 {

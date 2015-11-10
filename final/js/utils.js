@@ -66,3 +66,13 @@ window.requestAnimFrame = (function(){
         window.setTimeout(callback, 1000 / 60);
     };
 })();
+
+// Converts from degrees to radians.
+degToRadians = function(degrees) {
+    return degrees * Math.PI / 180;
+};
+
+// Converts from radians to degrees.
+radToDegrees = function(radians) {
+    return radians * 180 / Math.PI;
+};
