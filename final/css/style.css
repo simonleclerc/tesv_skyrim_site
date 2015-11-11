@@ -376,16 +376,18 @@ ul, ol {
 .perk-to-perk {
     position: absolute;
     width: 1px;
-    height: 269px;
+    height: 296px;
     background-color: green;
-    transform: translate3d(0px, -269px, 0px) rotateX(68deg) rotateZ(-24deg);
+    top: 0;
+    left: 0;
+    transform: translate3d(0px, -296px, 0px) rotateX(68deg) rotateZ(-25deg);
     transform-origin: bottom;
 }
-.perk-to-perk2 {
-    position: absolute;
-    width: 1px;
-    height: 515px;
-    background-color: green;
-    transform: translate3d(0px, -575px, 0px) rotateX(74deg) rotateZ(10deg);
-    transform-origin: bottom;
-}
+/*.perk-to-perk2 {*/
+    /*position: absolute;*/
+    /*width: 1px;*/
+    /*height: 515px;*/
+    /*background-color: green;*/
+    /*transform: translate3d(0px, -575px, 0px) rotateX(74deg) rotateZ(10deg);*/
+    /*transform-origin: bottom;*/
+/*}*/
