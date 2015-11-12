@@ -16,28 +16,6 @@
     <ul class="skills">
         <li class="skill">
             <ul class="perks">
-                <li class="perk" data-x="0" data-y="" data-z="0">
-                    <div class="perk--title">Novice</div>
-                    <div class="perk--img"></div>
-                    <div class="perk--desc">Write Novice Javascript</div>
-                    <div class="perk-to-perk"></div>
-                    <div class="perk-to-perk2"></div>
-                </li>
-                <li class="perk" data-x="-2.5" data-y="" data-z="5">
-                    <div class="perk--title">Medium</div>
-                    <div class="perk--img"></div>
-                    <div class="perk--desc">Write medium Javascript</div>
-                </li>
-                <li class="perk" data-x="2.5" data-y="" data-z="4">
-                    <div class="perk--title">Expert</div>
-                    <div class="perk--img"></div>
-                    <div class="perk--desc">Write expert Javascript</div>
-                </li>
-                <li class="perk" data-x="-1.5" data-y="" data-z="10">
-                    <div class="perk--title">Expert</div>
-                    <div class="perk--img"></div>
-                    <div class="perk--desc">Write expert Javascript</div>
-                </li>
             </ul>
             <br/>
             <span class="skill--title"><span class="skill--name">Javascript</span> <span class="skill--level"></span></span>
@@ -98,61 +76,98 @@
 <script type="text/javascript" src="js/greensock-js/src/minified/TweenMax.min.js"></script>
 <script type="text/javascript" src="js/other.js"></script>
 <script type="text/javascript">
-    var perspectiveScale = 50;
+    var perks = [
+        {
+            title: 'Novice',
+            desc: 'Write novice javascript',
+            x: 5,
+            y: 0
+        },
+        {
+            title: 'Medium',
+            desc: 'Write medium javascript',
+            x: 0,
+            y: 5
+        },
+        {
+            title: 'Expert',
+            desc: 'Write expert javascript',
+            x: 10,
+            y: 10
+        }
+    ];
+    perks.map(function(elm, index){
+        var title = document.createElement('div');
+        var img = document.createElement('div');
+        var desc = document.createElement('div');
+        title.classList.add('perk--title');
+        img.classList.add('perk--img');
+        desc.classList.add('perk--desc');
+        title.innerHTML = elm.title;
+        desc.innerHTML = elm.desc;
+        var li = document.createElement('li');
+        li.classList.add('perk');
+        li.appendChild(title);
+        li.appendChild(img);
+        li.appendChild(desc);
+        TweenMax.to(li, 0, {bottom: elm.y * 10+'%', left: elm.x * 10+'%'});
+        var ul = document.querySelector('.perks');
+        ul.appendChild(li);
+    });
     $('.perk').each(function(iter, elm){
         (function(elm){
-            TweenMax.to(elm, 0, {z: $(elm).attr('data-z')*-perspectiveScale, x: $(elm).attr('data-x')*perspectiveScale, y: ($(elm).attr('data-z')/5)*-(perspectiveScale*2)});
+//            TweenMax.to(elm, 0, {bottom:0, $(elm).attr('e')});
         })(elm);
     });
-var perkToPerk =[
-    {from: [$('.perk').eq(0).attr('data-x'), 0, $('.perk').eq(0).attr('data-z')], to: [$('.perk').eq(1).attr('data-x')*perspectiveScale, $('.perk').eq(1).attr('data-z')/5*-(perspectiveScale*2), $('.perk').eq(1).attr('data-z')*perspectiveScale]},
-    {from: [$('.perk').eq(0).attr('data-x'), 0, $('.perk').eq(0).attr('data-z')], to: [$('.perk').eq(2).attr('data-x')*perspectiveScale, $('.perk').eq(2).attr('data-z')/5*-(perspectiveScale*2), $('.perk').eq(2).attr('data-z')*perspectiveScale]},
-    {from: [$('.perk').eq(0).attr('data-x'), 0, $('.perk').eq(0).attr('data-z')], to: [$('.perk').eq(3).attr('data-x')*perspectiveScale, $('.perk').eq(3).attr('data-z')/5*-(perspectiveScale*2), $('.perk').eq(3).attr('data-z')*perspectiveScale]}
-];
-    var vectorForce = function(vector){
-        var vectorSquareSum = 0;
-        vector.map(function(elm, index){
-            vectorSquareSum = vectorSquareSum + elm*elm;
-        });
-        return Math.sqrt(vectorSquareSum);
-    };
-    var vectorDotProduct = function(vector1, vector2){
-        var vectorDotSum = 0;
-        vector1.map(function(elm, index){
-            vectorDotSum = vectorDotSum + vector1[index]*vector2[index];
-        });
-        return vectorDotSum;
-    };
-    var vectorsAngle = function (vector1, vector2) {
-        var dot = vectorDotProduct(vector1, vector2);
-        var angle = Math.acos(dot/(vectorForce(vector1)*vectorForce(vector2)));
-        var degreeAngle = radToDegrees(angle);
-        if(dot < 0) {
-            degreeAngle = 180 - degreeAngle;
-        } else if(dot == 0) {
-            degreeAngle = 90;
-        }
-        return degreeAngle;
-    };
-    var getAngleOfRectTriangle = function(oppose, adjacent) {
-        return radToDegrees(Math.atan(oppose/adjacent));
-    }
-    perkToPerk.map(function(elm, index){
-        var perk = $('<div class="perk-to-perk"></div>');
-        $('.perk').eq(0).append(perk);
-        //transform: translate3d(0px, -269px, 0px) rotateX(68deg) rotateZ(-24deg);
-        console.log(vectorsAngle([0,1,0], (elm.to)));
-        console.log(vectorsAngle([1,0,0], (elm.to)));
-        console.log(vectorsAngle([0,0,1], (elm.to)));
-//        TweenMax.to(perk, 0, {height: vectorForce(elm.to), y: -vectorForce(elm.to), rotationX: vectorsAngle([1,0,0], (elm.to)), rotationY: vectorsAngle([0,1,0], (elm.to)), rotationZ: vectorsAngle([0,0,1], (elm.to))});
-        TweenMax.to(perk, 0, {height: vectorForce(elm.to), y: -vectorForce(elm.to)});
-        console.log(elm.to[2]); //rotateY('+ vectorsAngle([1,0,0], (elm.to)) +'deg)
-//        $(perk)[0].style.transform = 'translate3d(0px, -'+ vectorForce(elm.to) +'px, 0px) rotateX('+ vectorsAngle([0,1,0], (elm.to)) +'deg) rotateZ('+ (elm.to[0] < 0 ? '-':'') + (90 - vectorsAngle([0,1,0], (elm.to))) +'deg)';
-        $(perk)[0].style.transform = 'translate3d(0px, -'+ vectorForce(elm.to) +'px, 0px) rotateX('+ getAngleOfRectTriangle(elm.to[2], elm.to[1]) +'deg) rotateZ('+ ((elm.to[1]/-100) < 1 ? (((elm.to[0]/perspectiveScale)*10)/(elm.to[1]/-100)) : ((elm.to[0]/perspectiveScale)*10)/(elm.to[1]/-100)) +'deg)';
-        console.log(elm.to[0]/perspectiveScale*10);
-        console.log(elm.to[1]/-100);
-        console.log('--');
-    });
+//var perkToPerk =[
+//    {from: [$('.perk').eq(0).attr('data-x'), 0, $('.perk').eq(0).attr('data-z')], to: [$('.perk').eq(1).attr('data-x')*perspectiveScale, $('.perk').eq(1).attr('data-z')/5*-(perspectiveScale*2), $('.perk').eq(1).attr('data-z')*perspectiveScale]},
+//    {from: [$('.perk').eq(0).attr('data-x'), 0, $('.perk').eq(0).attr('data-z')], to: [$('.perk').eq(2).attr('data-x')*perspectiveScale, $('.perk').eq(2).attr('data-z')/5*-(perspectiveScale*2), $('.perk').eq(2).attr('data-z')*perspectiveScale]},
+//    {from: [$('.perk').eq(0).attr('data-x'), 0, $('.perk').eq(0).attr('data-z')], to: [$('.perk').eq(3).attr('data-x')*perspectiveScale, $('.perk').eq(3).attr('data-z')/5*-(perspectiveScale*2), $('.perk').eq(3).attr('data-z')*perspectiveScale]}
+//];
+//    var vectorForce = function(vector){
+//        var vectorSquareSum = 0;
+//        vector.map(function(elm, index){
+//            vectorSquareSum = vectorSquareSum + elm*elm;
+//        });
+//        return Math.sqrt(vectorSquareSum);
+//    };
+//    var vectorDotProduct = function(vector1, vector2){
+//        var vectorDotSum = 0;
+//        vector1.map(function(elm, index){
+//            vectorDotSum = vectorDotSum + vector1[index]*vector2[index];
+//        });
+//        return vectorDotSum;
+//    };
+//    var vectorsAngle = function (vector1, vector2) {
+//        var dot = vectorDotProduct(vector1, vector2);
+//        var angle = Math.acos(dot/(vectorForce(vector1)*vectorForce(vector2)));
+//        var degreeAngle = radToDegrees(angle);
+//        if(dot < 0) {
+//            degreeAngle = 180 - degreeAngle;
+//        } else if(dot == 0) {
+//            degreeAngle = 90;
+//        }
+//        return degreeAngle;
+//    };
+//    var getAngleOfRectTriangle = function(oppose, adjacent) {
+//        return radToDegrees(Math.atan(oppose/adjacent));
+//    }
+//    perkToPerk.map(function(elm, index){
+//        var perk = $('<div class="perk-to-perk"></div>');
+//        $('.perks').eq(0).append(perk);
+//        //transform: translate3d(0px, -269px, 0px) rotateX(68deg) rotateZ(-24deg);
+//        console.log(vectorsAngle([0,1,0], (elm.to)));
+//        console.log(vectorsAngle([1,0,0], (elm.to)));
+//        console.log(vectorsAngle([0,0,1], (elm.to)));
+////        TweenMax.to(perk, 0, {height: vectorForce(elm.to), y: -vectorForce(elm.to), rotationX: vectorsAngle([1,0,0], (elm.to)), rotationY: vectorsAngle([0,1,0], (elm.to)), rotationZ: vectorsAngle([0,0,1], (elm.to))});
+//        TweenMax.to(perk, 0, {height: vectorForce(elm.to), y: -vectorForce(elm.to)});
+//        console.log(elm.to[2]); //rotateY('+ vectorsAngle([1,0,0], (elm.to)) +'deg)
+////        $(perk)[0].style.transform = 'translate3d(0px, -'+ vectorForce(elm.to) +'px, 0px) rotateX('+ vectorsAngle([0,1,0], (elm.to)) +'deg) rotateZ('+ (elm.to[0] < 0 ? '-':'') + (90 - vectorsAngle([0,1,0], (elm.to))) +'deg)';
+//        $(perk)[0].style.transform = 'translate3d(0px, -'+ vectorForce(elm.to) +'px, 0px) rotateX('+ getAngleOfRectTriangle(elm.to[2], elm.to[1]) +'deg) rotateZ('+ ((elm.to[1]/-100) < 1 ? (((elm.to[0]/perspectiveScale)*10)/(elm.to[1]/-100)) : ((elm.to[0]/perspectiveScale)*10)/(elm.to[1]/-100)) +'deg)';
+//        console.log(elm.to[0]/perspectiveScale*10);
+//        console.log(elm.to[1]/-100);
+//        console.log('--');
+//    });
 //    console.log(radToDegrees(Math.atan((5*50)/100)));
 //    console.log(radToDegrees(Math.atan((-125)/269)));
 </script>
