@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+
     <title>Poolboy - Skills</title>
     <link href="css/reset.css" media="all" rel="stylesheet"/>
     <link href="css/style.css" media="all" rel="stylesheet"/>
@@ -81,7 +85,8 @@
             title: 'Novice',
             desc: 'Write novice javascript',
             x: 5,
-            y: 0
+            y: 0,
+            linkTo: [[10,1], [0,5]]
         },
         {
             title: 'Medium',
@@ -94,26 +99,112 @@
             desc: 'Write expert javascript',
             x: 10,
             y: 10
+        },
+        {
+            title: 'Expert',
+            desc: 'Write expert javascript',
+            x: 10,
+            y: 1,
+            linkTo: [[10,10]]
         }
     ];
-    perks.map(function(elm, index){
-        var title = document.createElement('div');
-        var img = document.createElement('div');
-        var desc = document.createElement('div');
-        title.classList.add('perk--title');
-        img.classList.add('perk--img');
-        desc.classList.add('perk--desc');
-        title.innerHTML = elm.title;
-        desc.innerHTML = elm.desc;
-        var li = document.createElement('li');
-        li.classList.add('perk');
-        li.appendChild(title);
-        li.appendChild(img);
-        li.appendChild(desc);
-        TweenMax.to(li, 0, {bottom: elm.y * 10+'%', left: elm.x * 10+'%'});
-        var ul = document.querySelector('.perks');
-        ul.appendChild(li);
-    });
+    var ul = document.querySelector('.perks');
+    var ulH = ul.offsetHeight;
+    var ulW = ul.offsetWidth;
+//    TweenMax.to(ul, 0, {transform: 'rotateX(60deg) translateY(50%)'});
+    var style = document.createElement('style');
+    style.innerHTML = '.perks.y1 {transform: rotateX(60deg) translate3d(0,50%,0);';
+    document.head.appendChild(style);
+
+    function resizePerkToPerk () {
+        var perkToPerks = document.querySelectorAll('.perkToPerk');
+        for (var i = 0; i < perkToPerks.length; i++) {
+            ul.removeChild(perkToPerks[i]);
+        }
+        perks.map(function (elm, index) {
+            if (elm.linkTo) {
+                elm.linkTo.map(function (elm2, index) {
+                    var verticalLength = (ulH / 100) * (elm2[1] * 10 - elm.y * 10);
+                    var horizontalLength = (ulW / 100) * (elm2[0] * 10 - elm.x * 10);
+                    var li2 = document.createElement('li');
+                    li2.classList.add('perkToPerk');
+                    TweenMax.to(li2, 0, {
+                        bottom: elm.y * 10 + '%',
+                        left: elm.x * 10 + '%',
+                        rotationZ: radToDegrees(Math.atan(horizontalLength / verticalLength)),
+                        height: Math.sqrt(verticalLength * verticalLength + horizontalLength * horizontalLength)
+                    });
+                    ul.appendChild(li2);
+                });
+            }
+        });
+    }
+    function init() {
+        perks.map(function(elm, index){
+            var title = document.createElement('div');
+            var img = document.createElement('div');
+            var desc = document.createElement('div');
+            title.classList.add('perk--title');
+            img.classList.add('perk--img');
+            desc.classList.add('perk--desc');
+            title.innerHTML = elm.title;
+            desc.innerHTML = elm.desc;
+            var li = document.createElement('li');
+            li.classList.add('perk');
+            li.setAttribute('data-x', elm.x);
+            li.setAttribute('data-y', elm.y);
+            li.appendChild(title);
+            li.appendChild(img);
+            li.appendChild(desc);
+            TweenMax.to(li, 0, {bottom: elm.y * 10+'%', left: elm.x * 10+'%'});
+            E.addHandler(li, 'click', function(){
+                style.innerHTML = '.perks.y1 {transform: rotateX(60deg) translate3d('+ (elm.x*-10+50) +'%,'+ (elm.y*10-3) +'%,0);';
+                ul.classList.add('y1');
+//            ul.style.transform = 'rotate(60deg) translate3d(0, 50%, 0)';
+//            TweenMax.to(ul, 1, {rotationX: 30, force3D:true});
+//            TweenMax.to(ul, 1, {z: 3840/2, y: '50%', force3D:true});
+//            TweenMax.to(ul, 1, {rotationX: 60, force3D:true});
+            });
+            ul.appendChild(li);
+//        bottom: 0;
+//        left: 50%;
+//        height: 692px;
+//        transform: rotateZ(-56deg) translateZ(1vw);
+            if(elm.linkTo) {
+                elm.linkTo.map(function (elm2, index) {
+                    var verticalLength = (ulH/100)*(elm2[1]*10 - elm.y*10);
+                    var horizontalLength = (ulW/100)*(elm2[0]*10 - elm.x*10);
+                    var li2 = document.createElement('li');
+                    li2.classList.add('perkToPerk');
+                    TweenMax.to(li2, 0, {
+                        bottom: elm.y * 10 + '%',
+                        left: elm.x * 10 + '%',
+                        rotationZ: radToDegrees(Math.atan(horizontalLength/verticalLength)),
+                        height: Math.sqrt(verticalLength*verticalLength + horizontalLength*horizontalLength)
+                    });
+                    ul.appendChild(li2);
+                });
+            }
+        });
+    }
+    init();
+
+    window.onresize = function(){
+        ulH = ul.offsetHeight;
+        ulW = ul.offsetWidth;
+        resizePerkToPerk();
+    };
+    setTimeout(function(){
+//        TweenMax.to('.perks', 2, {rotationX: 0});
+        TweenMax.to('.skill', 1, {perspective: 10000, ease: Power4.easeIn});
+        TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.3, { autoAlpha: 0});
+        TweenMax.to('.skill', 1, {height: '4vw', width: '16vw', onComplete: function(){
+            TweenMax.to('.perkToPerk',.5, { autoAlpha: 1});
+            ulH = ul.offsetHeight;
+            ulW = ul.offsetWidth;
+            resizePerkToPerk();
+        }});
+    }, 500);
     $('.perk').each(function(iter, elm){
         (function(elm){
 //            TweenMax.to(elm, 0, {bottom:0, $(elm).attr('e')});

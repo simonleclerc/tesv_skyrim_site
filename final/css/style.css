@@ -345,32 +345,61 @@ ul, ol {
     bottom: 0;
     margin: auto;
     width: 60vw;
-    height: 200vw;
+    height: 20vw;
     perspective: 650px;
     transform-style: preserve-3d;
 }
+/*.perks {*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*background-color: rgba(0, 255, 0, .2);*/
+    /*perspective: 50000000px;*/
+    /*margin: auto;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*top: -93vw;*/
+    /* bottom: 0; */
+    /*position: absolute;*/
+    /*transform: rotateX(60deg) translate3d(0,0%,0);*/
+    /*transform: rotateX(0deg) translate3d(0,0%,0);*/
+    /*transform-origin: bottom;*/
+    /*transform-style: preserve-3d;*/
+    /*transition: all 1s ease-out;*/
+/*}*/
 .perks {
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 255, 0, .2);
-    perspective: 50000000px;
+    height: 1000%;
+    background-color: rgba(0, 255, 0, 0.2);
+    perspective: 5e+7px;
     margin: auto;
-    left: 0;
-    right: 0;
-    top: -93vw;
-    /* bottom: 0; */
+    left: 0px;
+    right: 0px;
+    top: -900%;
     position: absolute;
-    transform: rotateX(60deg) translate3d(0vw,0vw,0vw);
-    transform-origin: bottom;
+    transform: rotateX(60deg) translate3d(0px, 0%, 0px);
+    transform-origin: center bottom 0px;
     transform-style: preserve-3d;
+    transition: all 1s ease-out 0s;
 }
+.perks.y0 {
+    transform: rotateX(60deg) translate3d(0, 50%, 0);
+}
+/*.perk {*/
+    /*position: absolute;*/
+    /*width: 16vw;*/
+    /*margin-left: -8vw;*/
+    /*transform-origin: bottom;*/
+    /*animation: front-back 2s infinite alternate linear;*/
+    /*transform: rotateX(-60deg);*/
+    /*text-align: center;*/
+    /*font-size: 3vw;*/
+/*}*/
 .perk {
     position: absolute;
     width: 16vw;
     margin-left: -8vw;
-    transform-origin: bottom;
-    animation: front-back 2s infinite alternate linear;
-    transform: rotateX(-60deg);
+    transform-origin: center bottom 0px;
+    transform: rotateX(-60deg) translateY(1vw);
     text-align: center;
     font-size: 3vw;
 }
@@ -385,7 +414,7 @@ ul, ol {
 }
 .perk--title {
     position: absolute;
-    top: -2.5vw;
+    top: -3.5vw;
     left: 0;
     right: 0;
     margin: auto;
@@ -398,47 +427,12 @@ ul, ol {
     margin: auto;
     width: auto;
 }
-/*.perks {*/
-    /*width: 0;*/
-    /*height: 0;*/
-    /*background-color: rgba(0, 255, 0, .2);*/
-    /*perspective: 1000px;*/
-    /*margin: auto;*/
-    /*left: 0; right: 0; top: 0; bottom: 0;*/
-    /*position: absolute;*/
-/*}*/
-/*.perk {*/
-    /*position: absolute;*/
-    /*width: 100%;*/
-/*}*/
-/*.perk--img {*/
-    /*width: 20px;*/
-    /*text-align: center;*/
-    /*height: 20px;*/
-    /*border-radius: 50%;*/
-    /*background-color: yellow;*/
-    /*margin: auto;*/
-/*}*/
-/*.perk--title,*/
-/*.perk--desc {*/
-    /*opacity: 0;*/
-    /*visibility: hidden;*/
-/*}*/
-/*.perk-to-perk {*/
-    /*position: absolute;*/
-    /*width: 1px;*/
-    /*height: 296px;*/
-    /*background-color: green;*/
-    /*top: 0;*/
-    /*left: 0;*/
-    /*transform: translate3d(0px, -296px, 0px) rotateX(68deg) rotateZ(-25deg);*/
-    /*transform-origin: bottom;*/
-/*}*/
-/*.perk-to-perk2 {*/
-    /*position: absolute;*/
-    /*width: 1px;*/
-    /*height: 515px;*/
-    /*background-color: green;*/
-    /*transform: translate3d(0px, -575px, 0px) rotateX(74deg) rotateZ(10deg);*/
-    /*transform-origin: bottom;*/
-/*}*/
+.perkToPerk {
+    position: absolute;
+    width: 3px;
+    background: red;
+    transform-origin: center bottom 0px;
+    text-align: center;
+    font-size: 3vw;
+    /*transform: translateZ(1vw);*/
+}
