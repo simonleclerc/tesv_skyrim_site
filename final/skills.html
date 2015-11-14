@@ -17,14 +17,30 @@
 </div>
 
 <div class="content">
+    <button id="togglezoom" style="position: absolute; z-index: 10;">zoom</button>
     <ul class="skills">
-        <li class="skill">
-            <ul class="perks">
-            </ul>
-            <br/>
-            <span class="skill--title"><span class="skill--name">Javascript</span> <span class="skill--level"></span></span>
-            <div class="skill--progress">70%</div>
-        </li>
+
+        <!--<li class="skill">-->
+            <!--<ul class="perks">-->
+            <!--</ul>-->
+            <!--<br/>-->
+            <!--<span class="skill--title"><span class="skill--name">Javascript</span> <span class="skill--level"></span></span>-->
+            <!--<div class="skill--progress">70%</div>-->
+        <!--</li>-->
+        <!--<li class="skill">-->
+            <!--<ul class="perks">-->
+            <!--</ul>-->
+            <!--<br/>-->
+            <!--<span class="skill--title"><span class="skill--name">Javascript</span> <span class="skill--level"></span></span>-->
+            <!--<div class="skill--progress">70%</div>-->
+        <!--</li>-->
+        <!--<li class="skill">-->
+            <!--<ul class="perks">-->
+            <!--</ul>-->
+            <!--<br/>-->
+            <!--<span class="skill--title"><span class="skill--name">Javascript</span> <span class="skill--level"></span></span>-->
+            <!--<div class="skill--progress">70%</div>-->
+        <!--</li>-->
     </ul>
     <div class="desc-skill"></div>
 </div>
@@ -80,40 +96,157 @@
 <script type="text/javascript" src="js/greensock-js/src/minified/TweenMax.min.js"></script>
 <script type="text/javascript" src="js/other.js"></script>
 <script type="text/javascript">
-    var perks = [
-        {
-            title: 'Novice',
-            desc: 'Write novice javascript',
-            x: 5,
-            y: 0,
-            linkTo: [[10,1], [0,5]]
-        },
-        {
-            title: 'Medium',
-            desc: 'Write medium javascript',
-            x: 0,
-            y: 5
-        },
-        {
-            title: 'Expert',
-            desc: 'Write expert javascript',
-            x: 10,
-            y: 10
-        },
-        {
-            title: 'Expert',
-            desc: 'Write expert javascript',
-            x: 10,
-            y: 1,
-            linkTo: [[10,10]]
-        }
-    ];
+var skills = [
+    {
+        title: 'Javascript',
+        level: '70',
+        levelProgress: '50%',
+        perks: [
+            {
+                title: 'Novice',
+                desc: 'Write novice javascript',
+                x: 5,
+                y: 0,
+                linkTo: [[10,1], [0,5]]
+            },
+            {
+                title: 'Medium',
+                desc: 'Write medium javascript',
+                x: 0,
+                y: 5
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 10
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 1,
+                y: 7
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 1,
+                linkTo: [[10,10]]
+            }
+        ]
+    },
+    {
+        title: 'Javascript',
+        level: '70',
+        levelProgress: '50%',
+        perks: [
+            {
+                title: 'Novice',
+                desc: 'Write novice javascript',
+                x: 5,
+                y: 0,
+                linkTo: [[10,1], [0,5]]
+            },
+            {
+                title: 'Medium',
+                desc: 'Write medium javascript',
+                x: 0,
+                y: 5
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 10
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 1,
+                y: 7
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 1,
+                linkTo: [[10,10]]
+            }
+        ]
+    },
+    {
+        title: 'Javascript',
+        level: '70',
+        levelProgress: '50%',
+        perks: [
+            {
+                title: 'Novice',
+                desc: 'Write novice javascript',
+                x: 5,
+                y: 0,
+                linkTo: [[10,1], [0,5]]
+            },
+            {
+                title: 'Medium',
+                desc: 'Write medium javascript',
+                x: 0,
+                y: 5
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 10
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 1,
+                y: 7
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 1,
+                linkTo: [[10,10]]
+            }
+        ]
+    }
+];
+var globalSkillUl = document.querySelector('.skills');
+    skills.map(function(skill, iterSkill){
+        var skillLi = document.createElement('li');
+        skillLi.classList.add('skill');
+        var skillUl = document.createElement('ul');
+        skillUl.classList.add('perks');
+        var skillSpanTitle = document.createElement('span');
+        skillSpanTitle.classList.add('skill--title');
+        var skillSpanName = document.createElement('span');
+        skillSpanName.classList.add('skill--name');
+        var skillSpanLevel = document.createElement('span');
+        skillSpanLevel.classList.add('skill--level');
+        skillSpanName.innerHTML = skill.title;
+        skillSpanLevel.innerHTML = skill.level;
+        var skillDiv = document.createElement('div');
+        skillDiv.classList.add('skill--progress');
+        skillDiv.innerHTML = skill.levelProgress;
+        skillSpanTitle.appendChild(skillSpanName);
+        skillSpanTitle.appendChild(document.createTextNode(' '));
+        skillSpanTitle.appendChild(skillSpanLevel);
+        skillLi.appendChild(skillUl);
+        skillLi.appendChild(skillSpanTitle);
+        skillLi.appendChild(skillDiv);
+
+        createPerks(skill.perks, skillUl);
+
+        globalSkillUl.appendChild(skillLi);
+    });
     var ul = document.querySelector('.perks');
-    var ulH = ul.offsetHeight;
-    var ulW = ul.offsetWidth;
 //    TweenMax.to(ul, 0, {transform: 'rotateX(60deg) translateY(50%)'});
     var style = document.createElement('style');
-    style.innerHTML = '.perks.y1 {transform: rotateX(60deg) translate3d(0,50%,0);';
+    style.innerHTML = '.perks.transform {transform: rotateX(60deg) translate3d(0,50%,0);';
     document.head.appendChild(style);
 
     function resizePerkToPerk () {
@@ -139,7 +272,9 @@
             }
         });
     }
-    function init() {
+    function createPerks(perks, ul) {
+        var ulH = ul.offsetHeight;
+        var ulW = ul.offsetWidth;
         perks.map(function(elm, index){
             var title = document.createElement('div');
             var img = document.createElement('div');
@@ -159,7 +294,7 @@
             TweenMax.to(li, 0, {bottom: elm.y * 10+'%', left: elm.x * 10+'%'});
             E.addHandler(li, 'click', function(){
                 style.innerHTML = '.perks.y1 {transform: rotateX(60deg) translate3d('+ (elm.x*-10+50) +'%,'+ (elm.y*10-3) +'%,0);';
-                ul.classList.add('y1');
+                ul.classList.add('transform');
 //            ul.style.transform = 'rotate(60deg) translate3d(0, 50%, 0)';
 //            TweenMax.to(ul, 1, {rotationX: 30, force3D:true});
 //            TweenMax.to(ul, 1, {z: 3840/2, y: '50%', force3D:true});
@@ -176,6 +311,7 @@
                     var horizontalLength = (ulW/100)*(elm2[0]*10 - elm.x*10);
                     var li2 = document.createElement('li');
                     li2.classList.add('perkToPerk');
+                    console.log(ulH, ulW)
                     TweenMax.to(li2, 0, {
                         bottom: elm.y * 10 + '%',
                         left: elm.x * 10 + '%',
@@ -187,29 +323,53 @@
             }
         });
     }
-    init();
 
     window.onresize = function(){
         ulH = ul.offsetHeight;
         ulW = ul.offsetWidth;
         resizePerkToPerk();
     };
-    setTimeout(function(){
-//        TweenMax.to('.perks', 2, {rotationX: 0});
+    function zoomOutConstelation(){
         TweenMax.to('.skill', 1, {perspective: 10000, ease: Power4.easeIn});
         TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.3, { autoAlpha: 0});
         TweenMax.to('.skill', 1, {height: '4vw', width: '16vw', onComplete: function(){
+            this.target[0].style.height = this.vars.css.height;
+            this.target[0].style.width = this.vars.css.width;
             TweenMax.to('.perkToPerk',.5, { autoAlpha: 1});
             ulH = ul.offsetHeight;
             ulW = ul.offsetWidth;
             resizePerkToPerk();
         }});
-    }, 500);
-    $('.perk').each(function(iter, elm){
-        (function(elm){
-//            TweenMax.to(elm, 0, {bottom:0, $(elm).attr('e')});
-        })(elm);
+    }
+    function zoomInConstelation(){
+        TweenMax.to('.skill', 1, {perspective: 650, ease: Power4.easeOut});
+        TweenMax.to('.perkToPerk',.3, { autoAlpha: 0});
+        TweenMax.to('.skill', 1, {height: '20vw', width: '60vw', onComplete: function(){
+            ulH = ul.offsetHeight;
+            ulW = ul.offsetWidth;
+            resizePerkToPerk();
+            this.target[0].style.height = this.vars.css.height ;
+            this.target[0].style.width = this.vars.css.width ;
+            TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.5, { autoAlpha: 1});
+        }});
+    }
+    var skillsState = {
+        zoomConstelation: true
+    };
+    E.addHandler(document.getElementById('togglezoom'), 'click', function(){
+        if(!skillsState.zoomConstelation) {
+            skillsState.zoomConstelation = true;
+            zoomInConstelation();
+        } else {
+            skillsState.zoomConstelation = false;
+            zoomOutConstelation()
+        }
     });
+//    $('.perk').each(function(iter, elm){
+//        (function(elm){
+////            TweenMax.to(elm, 0, {bottom:0, $(elm).attr('e')});
+//        })(elm);
+//    });
 //var perkToPerk =[
 //    {from: [$('.perk').eq(0).attr('data-x'), 0, $('.perk').eq(0).attr('data-z')], to: [$('.perk').eq(1).attr('data-x')*perspectiveScale, $('.perk').eq(1).attr('data-z')/5*-(perspectiveScale*2), $('.perk').eq(1).attr('data-z')*perspectiveScale]},
 //    {from: [$('.perk').eq(0).attr('data-x'), 0, $('.perk').eq(0).attr('data-z')], to: [$('.perk').eq(2).attr('data-x')*perspectiveScale, $('.perk').eq(2).attr('data-z')/5*-(perspectiveScale*2), $('.perk').eq(2).attr('data-z')*perspectiveScale]},

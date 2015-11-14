@@ -326,6 +326,9 @@ ul, ol {
 }
 
 /****************SKILLS**********************/
+.content {
+    height: 100%;
+}
 .page--skills .footer {
     position: absolute;
     bottom: 0;
@@ -336,18 +339,18 @@ ul, ol {
     top: 0;
     width: 100%;
 }
-
+.skills {
+    overflow: hidden;
+    height: 100%;
+}
 .skill {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
     width: 60vw;
     height: 20vw;
     perspective: 650px;
     transform-style: preserve-3d;
+    float: left;
+    transform: translateX(100%) translateY(21vw);
+    margin: 0 3vw;
 }
 /*.perks {*/
     /*width: 100%;*/
