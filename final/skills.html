@@ -19,28 +19,6 @@
 <div class="content">
     <button id="togglezoom" style="position: absolute; z-index: 10;">zoom</button>
     <ul class="skills">
-
-        <!--<li class="skill">-->
-            <!--<ul class="perks">-->
-            <!--</ul>-->
-            <!--<br/>-->
-            <!--<span class="skill--title"><span class="skill--name">Javascript</span> <span class="skill--level"></span></span>-->
-            <!--<div class="skill--progress">70%</div>-->
-        <!--</li>-->
-        <!--<li class="skill">-->
-            <!--<ul class="perks">-->
-            <!--</ul>-->
-            <!--<br/>-->
-            <!--<span class="skill--title"><span class="skill--name">Javascript</span> <span class="skill--level"></span></span>-->
-            <!--<div class="skill--progress">70%</div>-->
-        <!--</li>-->
-        <!--<li class="skill">-->
-            <!--<ul class="perks">-->
-            <!--</ul>-->
-            <!--<br/>-->
-            <!--<span class="skill--title"><span class="skill--name">Javascript</span> <span class="skill--level"></span></span>-->
-            <!--<div class="skill--progress">70%</div>-->
-        <!--</li>-->
     </ul>
     <div class="desc-skill"></div>
 </div>
@@ -107,7 +85,9 @@ var skills = [
                 desc: 'Write novice javascript',
                 x: 5,
                 y: 0,
-                linkTo: [[10,1], [0,5]]
+                linkTo: [
+                    {x: 10, y: 1}, {x: 0, y: 5}
+                ]
             },
             {
                 title: 'Medium',
@@ -132,295 +112,184 @@ var skills = [
                 desc: 'Write expert javascript',
                 x: 10,
                 y: 1,
-                linkTo: [[10,10]]
-            }
-        ]
-    },
-    {
-        title: 'Javascript',
-        level: '70',
-        levelProgress: '50%',
-        perks: [
-            {
-                title: 'Novice',
-                desc: 'Write novice javascript',
-                x: 5,
-                y: 0,
-                linkTo: [[10,1], [0,5]]
-            },
-            {
-                title: 'Medium',
-                desc: 'Write medium javascript',
-                x: 0,
-                y: 5
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 10,
-                y: 10
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 1,
-                y: 7
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 10,
-                y: 1,
-                linkTo: [[10,10]]
-            }
-        ]
-    },
-    {
-        title: 'Javascript',
-        level: '70',
-        levelProgress: '50%',
-        perks: [
-            {
-                title: 'Novice',
-                desc: 'Write novice javascript',
-                x: 5,
-                y: 0,
-                linkTo: [[10,1], [0,5]]
-            },
-            {
-                title: 'Medium',
-                desc: 'Write medium javascript',
-                x: 0,
-                y: 5
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 10,
-                y: 10
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 1,
-                y: 7
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 10,
-                y: 1,
-                linkTo: [[10,10]]
+                linkTo: [
+                    {x: 10, y: 10}
+                ]
             }
         ]
     }
 ];
-var globalSkillUl = document.querySelector('.skills');
-    skills.map(function(skill, iterSkill){
-        var skillLi = document.createElement('li');
-        skillLi.classList.add('skill');
-        var skillUl = document.createElement('ul');
-        skillUl.classList.add('perks');
-        var skillSpanTitle = document.createElement('span');
-        skillSpanTitle.classList.add('skill--title');
-        var skillSpanName = document.createElement('span');
-        skillSpanName.classList.add('skill--name');
-        var skillSpanLevel = document.createElement('span');
-        skillSpanLevel.classList.add('skill--level');
-        skillSpanName.innerHTML = skill.title;
-        skillSpanLevel.innerHTML = skill.level;
-        var skillDiv = document.createElement('div');
-        skillDiv.classList.add('skill--progress');
-        skillDiv.innerHTML = skill.levelProgress;
-        skillSpanTitle.appendChild(skillSpanName);
-        skillSpanTitle.appendChild(document.createTextNode(' '));
-        skillSpanTitle.appendChild(skillSpanLevel);
-        skillLi.appendChild(skillUl);
-        skillLi.appendChild(skillSpanTitle);
-        skillLi.appendChild(skillDiv);
 
-        createPerks(skill.perks, skillUl);
-
-        globalSkillUl.appendChild(skillLi);
+function addIdOnSkillsItem(skills){
+    skills.map(function(skill, index_skill){
+        skill.id = index_skill+'';
+        skill.perks.map(function(perk, index_perk){
+            perk.id = index_skill+'_'+index_perk;
+            if(perk.linkTo) {
+                perk.linkTo.map(function (link, index_link) {
+                    link.id = index_skill + '_' + index_perk + '_' + index_link;
+                });
+            }
+        });
     });
-    var ul = document.querySelector('.perks');
-//    TweenMax.to(ul, 0, {transform: 'rotateX(60deg) translateY(50%)'});
-    var style = document.createElement('style');
-    style.innerHTML = '.perks.transform {transform: rotateX(60deg) translate3d(0,50%,0);';
-    document.head.appendChild(style);
+}
+addIdOnSkillsItem(skills);
+var globalSkillUl = document.querySelector('.skills');
 
-    function resizePerkToPerk () {
-        var perkToPerks = document.querySelectorAll('.perkToPerk');
-        for (var i = 0; i < perkToPerks.length; i++) {
-            ul.removeChild(perkToPerks[i]);
-        }
-        perks.map(function (elm, index) {
-            if (elm.linkTo) {
-                elm.linkTo.map(function (elm2, index) {
-                    var verticalLength = (ulH / 100) * (elm2[1] * 10 - elm.y * 10);
-                    var horizontalLength = (ulW / 100) * (elm2[0] * 10 - elm.x * 10);
-                    var li2 = document.createElement('li');
-                    li2.classList.add('perkToPerk');
-                    TweenMax.to(li2, 0, {
-                        bottom: elm.y * 10 + '%',
-                        left: elm.x * 10 + '%',
-                        rotationZ: radToDegrees(Math.atan(horizontalLength / verticalLength)),
-                        height: Math.sqrt(verticalLength * verticalLength + horizontalLength * horizontalLength)
-                    });
-                    ul.appendChild(li2);
-                });
-            }
-        });
+skills.map(function(skill, iterSkill){
+    var skillLi = document.createElement('li');
+    skillLi.classList.add('skill');
+    skillLi.setAttribute('id', skill.id);
+    var skillUl = document.createElement('ul');
+    skillUl.classList.add('perks');
+    var skillSpanTitle = document.createElement('span');
+    skillSpanTitle.classList.add('skill--title');
+    var skillSpanName = document.createElement('span');
+    skillSpanName.classList.add('skill--name');
+    var skillSpanLevel = document.createElement('span');
+    skillSpanLevel.classList.add('skill--level');
+    skillSpanName.innerHTML = skill.title;
+    skillSpanLevel.innerHTML = skill.level;
+    var skillDiv = document.createElement('div');
+    skillDiv.classList.add('skill--progress');
+    skillDiv.innerHTML = skill.levelProgress;
+    skillSpanTitle.appendChild(skillSpanName);
+    skillSpanTitle.appendChild(document.createTextNode(' '));
+    skillSpanTitle.appendChild(skillSpanLevel);
+    skillLi.appendChild(skillUl);
+    skillLi.appendChild(skillSpanTitle);
+    skillLi.appendChild(skillDiv);
+
+    createPerks(skill.perks, skillUl);
+
+    globalSkillUl.appendChild(skillLi);
+});
+//@todo loop over all perks
+resizePerkToPerk(document.querySelector('.perks'));
+var style = document.createElement('style');
+style.innerHTML = '.perks.transform {transform: rotateX(60deg) translate3d(0,50%,0);';
+document.head.appendChild(style);
+
+//@todo adapt for one skill
+function resizePerkToPerk (ul) {
+    var perkToPerks = document.querySelectorAll('.perkToPerk');
+    var ulH = ul.offsetHeight;
+    var ulW = ul.offsetWidth;
+    for (var i = 0; i < perkToPerks.length; i++) {
+        var parentPerk = perkToPerks[i].parentElement;
+        parentPerk.removeChild(perkToPerks[i]);
     }
-    function createPerks(perks, ul) {
-        var ulH = ul.offsetHeight;
-        var ulW = ul.offsetWidth;
-        perks.map(function(elm, index){
-            var title = document.createElement('div');
-            var img = document.createElement('div');
-            var desc = document.createElement('div');
-            title.classList.add('perk--title');
-            img.classList.add('perk--img');
-            desc.classList.add('perk--desc');
-            title.innerHTML = elm.title;
-            desc.innerHTML = elm.desc;
-            var li = document.createElement('li');
-            li.classList.add('perk');
-            li.setAttribute('data-x', elm.x);
-            li.setAttribute('data-y', elm.y);
-            li.appendChild(title);
-            li.appendChild(img);
-            li.appendChild(desc);
-            TweenMax.to(li, 0, {bottom: elm.y * 10+'%', left: elm.x * 10+'%'});
-            E.addHandler(li, 'click', function(){
-                style.innerHTML = '.perks.y1 {transform: rotateX(60deg) translate3d('+ (elm.x*-10+50) +'%,'+ (elm.y*10-3) +'%,0);';
-                ul.classList.add('transform');
-//            ul.style.transform = 'rotate(60deg) translate3d(0, 50%, 0)';
-//            TweenMax.to(ul, 1, {rotationX: 30, force3D:true});
-//            TweenMax.to(ul, 1, {z: 3840/2, y: '50%', force3D:true});
-//            TweenMax.to(ul, 1, {rotationX: 60, force3D:true});
+    //@todo find with id of ul the good skill
+    skills[0].perks.map(function (elm, index) {
+        if (elm.linkTo) {
+            elm.linkTo.map(function (elm2, index) {
+                var verticalLength = (ulH / 100) * (elm2.y * 10 - elm.y * 10);
+                var horizontalLength = (ulW / 100) * (elm2.x * 10 - elm.x * 10);
+                var li2 = document.createElement('li');
+                li2.classList.add('perkToPerk');
+                TweenMax.to(li2, 0, {
+                    bottom: elm.y * 10 + '%',
+                    left: elm.x * 10 + '%',
+                    rotationZ: radToDegrees(Math.atan(horizontalLength / verticalLength)),
+                    height: Math.sqrt(verticalLength * verticalLength + horizontalLength * horizontalLength)
+                });
+                //@todo update instead of recreate
+                ul.appendChild(li2);
             });
-            ul.appendChild(li);
-//        bottom: 0;
-//        left: 50%;
-//        height: 692px;
-//        transform: rotateZ(-56deg) translateZ(1vw);
-            if(elm.linkTo) {
-                elm.linkTo.map(function (elm2, index) {
-                    var verticalLength = (ulH/100)*(elm2[1]*10 - elm.y*10);
-                    var horizontalLength = (ulW/100)*(elm2[0]*10 - elm.x*10);
-                    var li2 = document.createElement('li');
-                    li2.classList.add('perkToPerk');
-                    console.log(ulH, ulW)
-                    TweenMax.to(li2, 0, {
-                        bottom: elm.y * 10 + '%',
-                        left: elm.x * 10 + '%',
-                        rotationZ: radToDegrees(Math.atan(horizontalLength/verticalLength)),
-                        height: Math.sqrt(verticalLength*verticalLength + horizontalLength*horizontalLength)
-                    });
-                    ul.appendChild(li2);
-                });
-            }
+        }
+    });
+}
+function createPerks(perks, ul) {
+    var ulH = ul.offsetHeight;
+    var ulW = ul.offsetWidth;
+    perks.map(function(elm, index){
+        var title = document.createElement('div');
+        var img = document.createElement('div');
+        var desc = document.createElement('div');
+        title.classList.add('perk--title');
+        img.classList.add('perk--img');
+        desc.classList.add('perk--desc');
+        title.innerHTML = elm.title;
+        desc.innerHTML = elm.desc;
+        var li = document.createElement('li');
+        li.classList.add('perk');
+        li.setAttribute('id', elm.id);
+        li.setAttribute('data-x', elm.x);
+        li.setAttribute('data-y', elm.y);
+        li.appendChild(title);
+        li.appendChild(img);
+        li.appendChild(desc);
+        TweenMax.to(li, 0, {bottom: elm.y * 10+'%', left: elm.x * 10+'%'});
+        E.addHandler(li, 'click', function(){
+            style.innerHTML = '.perks.y1 {transform: rotateX(60deg) translate3d('+ (elm.x*-10+50) +'%,'+ (elm.y*10-3) +'%,0);';
+            ul.classList.add('transform');
         });
-    }
+        ul.appendChild(li);
+        if(elm.linkTo) {
+            elm.linkTo.map(function (elm2, index) {
+                ul.appendChild(createPerkToPerk(elm, elm2, ulH, ulW))
+            });
+        }
+    });
+}
+function createPerkToPerk(elm, elm2, ulH, ulW) {
+    var verticalLength = (ulH/100)*(elm2.y*10 - elm.y*10);
+    var horizontalLength = (ulW/100)*(elm2.x*10 - elm.x*10);
+    var li2 = document.createElement('li');
+    li2.setAttribute('id', elm2.id);
+    li2.classList.add('perkToPerk');
+    TweenMax.to(li2, 0, {
+        bottom: elm.y * 10 + '%',
+        left: elm.x * 10 + '%',
+        rotationZ: radToDegrees(Math.atan(horizontalLength/verticalLength)),
+        height: Math.sqrt(verticalLength*verticalLength + horizontalLength*horizontalLength)
+    });
+    console.log(li2)
+    return li2;
+}
 
-    window.onresize = function(){
+window.onresize = function(){
+    var perks = document.getElementsByClassName('.perks');
+    for(var i = 0; i < perks.length; i++) {
+        resizePerkToPerk(perks[i]);
+    }
+};
+function zoomOutConstelation(ul){
+    TweenMax.to('.skill', 1, {perspective: 10000, ease: Power4.easeIn});
+    TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.3, { autoAlpha: 0});
+    TweenMax.to('.skill', 1, {height: '4vw', width: '16vw', onComplete: function(){
         ulH = ul.offsetHeight;
         ulW = ul.offsetWidth;
-        resizePerkToPerk();
-    };
-    function zoomOutConstelation(){
-        TweenMax.to('.skill', 1, {perspective: 10000, ease: Power4.easeIn});
-        TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.3, { autoAlpha: 0});
-        TweenMax.to('.skill', 1, {height: '4vw', width: '16vw', onComplete: function(){
-            this.target[0].style.height = this.vars.css.height;
-            this.target[0].style.width = this.vars.css.width;
-            TweenMax.to('.perkToPerk',.5, { autoAlpha: 1});
-            ulH = ul.offsetHeight;
-            ulW = ul.offsetWidth;
-            resizePerkToPerk();
-        }});
+        this.target[0].style.height = this.vars.css.height;
+        this.target[0].style.width = this.vars.css.width;
+        TweenMax.to('.perkToPerk',.5, { autoAlpha: 1});
+        resizePerkToPerk(ul.querySelector('.perks'));
+    }});
+}
+function zoomInConstelation(ul){
+    TweenMax.to('.skill', 1, {perspective: 650, ease: Power4.easeOut});
+    TweenMax.to('.perkToPerk',.3, { autoAlpha: 0});
+    TweenMax.to('.skill', 1, {height: '20vw', width: '60vw', onComplete: function(){
+        ulH = ul.offsetHeight;
+        ulW = ul.offsetWidth;
+        resizePerkToPerk(ul.querySelector('.perks'));
+        this.target[0].style.height = this.vars.css.height ;
+        this.target[0].style.width = this.vars.css.width ;
+        TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.5, { autoAlpha: 1});
+    }});
+}
+var skillsState = {
+    zoomConstelation: true
+};
+E.addHandler(document.getElementById('togglezoom'), 'click', function(){
+    if(!skillsState.zoomConstelation) {
+        skillsState.zoomConstelation = true;
+        zoomInConstelation(document.querySelector('.skills'));
+    } else {
+        skillsState.zoomConstelation = false;
+        zoomOutConstelation(document.querySelector('.skills'));
     }
-    function zoomInConstelation(){
-        TweenMax.to('.skill', 1, {perspective: 650, ease: Power4.easeOut});
-        TweenMax.to('.perkToPerk',.3, { autoAlpha: 0});
-        TweenMax.to('.skill', 1, {height: '20vw', width: '60vw', onComplete: function(){
-            ulH = ul.offsetHeight;
-            ulW = ul.offsetWidth;
-            resizePerkToPerk();
-            this.target[0].style.height = this.vars.css.height ;
-            this.target[0].style.width = this.vars.css.width ;
-            TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.5, { autoAlpha: 1});
-        }});
-    }
-    var skillsState = {
-        zoomConstelation: true
-    };
-    E.addHandler(document.getElementById('togglezoom'), 'click', function(){
-        if(!skillsState.zoomConstelation) {
-            skillsState.zoomConstelation = true;
-            zoomInConstelation();
-        } else {
-            skillsState.zoomConstelation = false;
-            zoomOutConstelation()
-        }
-    });
-//    $('.perk').each(function(iter, elm){
-//        (function(elm){
-////            TweenMax.to(elm, 0, {bottom:0, $(elm).attr('e')});
-//        })(elm);
-//    });
-//var perkToPerk =[
-//    {from: [$('.perk').eq(0).attr('data-x'), 0, $('.perk').eq(0).attr('data-z')], to: [$('.perk').eq(1).attr('data-x')*perspectiveScale, $('.perk').eq(1).attr('data-z')/5*-(perspectiveScale*2), $('.perk').eq(1).attr('data-z')*perspectiveScale]},
-//    {from: [$('.perk').eq(0).attr('data-x'), 0, $('.perk').eq(0).attr('data-z')], to: [$('.perk').eq(2).attr('data-x')*perspectiveScale, $('.perk').eq(2).attr('data-z')/5*-(perspectiveScale*2), $('.perk').eq(2).attr('data-z')*perspectiveScale]},
-//    {from: [$('.perk').eq(0).attr('data-x'), 0, $('.perk').eq(0).attr('data-z')], to: [$('.perk').eq(3).attr('data-x')*perspectiveScale, $('.perk').eq(3).attr('data-z')/5*-(perspectiveScale*2), $('.perk').eq(3).attr('data-z')*perspectiveScale]}
-//];
-//    var vectorForce = function(vector){
-//        var vectorSquareSum = 0;
-//        vector.map(function(elm, index){
-//            vectorSquareSum = vectorSquareSum + elm*elm;
-//        });
-//        return Math.sqrt(vectorSquareSum);
-//    };
-//    var vectorDotProduct = function(vector1, vector2){
-//        var vectorDotSum = 0;
-//        vector1.map(function(elm, index){
-//            vectorDotSum = vectorDotSum + vector1[index]*vector2[index];
-//        });
-//        return vectorDotSum;
-//    };
-//    var vectorsAngle = function (vector1, vector2) {
-//        var dot = vectorDotProduct(vector1, vector2);
-//        var angle = Math.acos(dot/(vectorForce(vector1)*vectorForce(vector2)));
-//        var degreeAngle = radToDegrees(angle);
-//        if(dot < 0) {
-//            degreeAngle = 180 - degreeAngle;
-//        } else if(dot == 0) {
-//            degreeAngle = 90;
-//        }
-//        return degreeAngle;
-//    };
-//    var getAngleOfRectTriangle = function(oppose, adjacent) {
-//        return radToDegrees(Math.atan(oppose/adjacent));
-//    }
-//    perkToPerk.map(function(elm, index){
-//        var perk = $('<div class="perk-to-perk"></div>');
-//        $('.perks').eq(0).append(perk);
-//        //transform: translate3d(0px, -269px, 0px) rotateX(68deg) rotateZ(-24deg);
-//        console.log(vectorsAngle([0,1,0], (elm.to)));
-//        console.log(vectorsAngle([1,0,0], (elm.to)));
-//        console.log(vectorsAngle([0,0,1], (elm.to)));
-////        TweenMax.to(perk, 0, {height: vectorForce(elm.to), y: -vectorForce(elm.to), rotationX: vectorsAngle([1,0,0], (elm.to)), rotationY: vectorsAngle([0,1,0], (elm.to)), rotationZ: vectorsAngle([0,0,1], (elm.to))});
-//        TweenMax.to(perk, 0, {height: vectorForce(elm.to), y: -vectorForce(elm.to)});
-//        console.log(elm.to[2]); //rotateY('+ vectorsAngle([1,0,0], (elm.to)) +'deg)
-////        $(perk)[0].style.transform = 'translate3d(0px, -'+ vectorForce(elm.to) +'px, 0px) rotateX('+ vectorsAngle([0,1,0], (elm.to)) +'deg) rotateZ('+ (elm.to[0] < 0 ? '-':'') + (90 - vectorsAngle([0,1,0], (elm.to))) +'deg)';
-//        $(perk)[0].style.transform = 'translate3d(0px, -'+ vectorForce(elm.to) +'px, 0px) rotateX('+ getAngleOfRectTriangle(elm.to[2], elm.to[1]) +'deg) rotateZ('+ ((elm.to[1]/-100) < 1 ? (((elm.to[0]/perspectiveScale)*10)/(elm.to[1]/-100)) : ((elm.to[0]/perspectiveScale)*10)/(elm.to[1]/-100)) +'deg)';
-//        console.log(elm.to[0]/perspectiveScale*10);
-//        console.log(elm.to[1]/-100);
-//        console.log('--');
-//    });
-//    console.log(radToDegrees(Math.atan((5*50)/100)));
-//    console.log(radToDegrees(Math.atan((-125)/269)));
+});
 </script>
 </body>
 </html>
