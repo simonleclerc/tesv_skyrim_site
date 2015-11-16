@@ -160,9 +160,137 @@ var skills = [
                 ]
             }
         ]
+    },
+    {
+        title: 'Javascript',
+        level: '70',
+        levelProgress: '50%',
+        perks: [
+            {
+                title: 'Novice',
+                desc: 'Write novice javascript',
+                x: 5,
+                y: 0,
+                linkTo: [
+                    {x: 10, y: 1}, {x: 0, y: 5}
+                ]
+            },
+            {
+                title: 'Medium',
+                desc: 'Write medium javascript',
+                x: 0,
+                y: 5
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 10
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 1,
+                y: 7
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 1,
+                linkTo: [
+                    {x: 10, y: 10}
+                ]
+            }
+        ]
+    },
+    {
+        title: 'Javascript',
+        level: '70',
+        levelProgress: '50%',
+        perks: [
+            {
+                title: 'Novice',
+                desc: 'Write novice javascript',
+                x: 5,
+                y: 0,
+                linkTo: [
+                    {x: 10, y: 1}, {x: 0, y: 5}
+                ]
+            },
+            {
+                title: 'Medium',
+                desc: 'Write medium javascript',
+                x: 0,
+                y: 5
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 10
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 1,
+                y: 7
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 1,
+                linkTo: [
+                    {x: 10, y: 10}
+                ]
+            }
+        ]
+    },
+    {
+        title: 'Javascript',
+        level: '70',
+        levelProgress: '50%',
+        perks: [
+            {
+                title: 'Novice',
+                desc: 'Write novice javascript',
+                x: 5,
+                y: 0,
+                linkTo: [
+                    {x: 10, y: 1}, {x: 0, y: 5}
+                ]
+            },
+            {
+                title: 'Medium',
+                desc: 'Write medium javascript',
+                x: 0,
+                y: 5
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 10
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 1,
+                y: 7
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 1,
+                linkTo: [
+                    {x: 10, y: 10}
+                ]
+            }
+        ]
     }
 ];
-
 function addIdOnSkillsItem(skills){
     skills.map(function(skill, index_skill){
         skill.id = 'skill'+index_skill+'';
@@ -177,8 +305,14 @@ function addIdOnSkillsItem(skills){
     });
 }
 addIdOnSkillsItem(skills);
+var skillsState = {
+    zoomConstelation: false,
+    centered: skills[0].id
+};
+
 var globalSkillUl = document.querySelector('.skills');
 
+var skillsLength = skills.length;
 skills.map(function(skill, iterSkill){
     var skillLi = document.createElement('li');
     skillLi.classList.add('skill');
@@ -202,6 +336,16 @@ skills.map(function(skill, iterSkill){
     skillLi.appendChild(skillUl);
     skillLi.appendChild(skillSpanTitle);
     skillLi.appendChild(skillDiv);
+
+    var coeff = 120*iterSkill +40;
+    if(skillsLength/2 < iterSkill) {
+        coeff = (skillsLength - iterSkill)*-120 -40;
+    } else if(iterSkill === 0 ) {
+        coeff = 0;
+    }
+
+    TweenMax.to(skillLi, 0, {x: coeff+'%'});
+
 
     createPerks(skill.perks, skillUl);
 
@@ -325,9 +469,8 @@ function zoomInConstelation(ul){
         }
     }});
 }
-var skillsState = {
-    zoomConstelation: true
-};
+//@todo click sur constellation pour la faire grandir, passer le statut a zoomé.
+//@todo click sur autre constellation pour les déplacer, changer le statut centered/current, déplacer les extrémités.
 E.addHandler(document.getElementById('togglezoom'), 'click', function(){
     if(!skillsState.zoomConstelation) {
         skillsState.zoomConstelation = true;

@@ -344,13 +344,15 @@ ul, ol {
     height: 100%;
 }
 .skill {
-    width: 60vw;
-    height: 20vw;
-    perspective: 650px;
+    width: 16vw;
+    height: 4vw;
+    perspective: 10000px;
     transform-style: preserve-3d;
     float: left;
-    transform: translateX(100%) translateY(21vw);
-    margin: 0 3vw;
+    position: absolute;
+    top: 0; bottom: 0; right: 0; left: 0;
+    margin: auto;
+    /*transform: translateX(100%) translateY(21vw);*/
 }
 .perks {
     width: 100%;
@@ -404,6 +406,8 @@ ul, ol {
     left: 0;
     right: 0;
     margin: auto;
+    visibility: hidden;
+    opacity: 0;
 }
 .perk--desc {
     position: absolute;
@@ -412,6 +416,8 @@ ul, ol {
     right: 0;
     margin: auto;
     width: auto;
+    visibility: hidden;
+    opacity: 0;
 }
 .perkToPerk {
     position: absolute;
