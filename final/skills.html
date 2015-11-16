@@ -117,17 +117,60 @@ var skills = [
                 ]
             }
         ]
+    },
+    {
+        title: 'Javascript',
+        level: '70',
+        levelProgress: '50%',
+        perks: [
+            {
+                title: 'Novice',
+                desc: 'Write novice javascript',
+                x: 5,
+                y: 0,
+                linkTo: [
+                    {x: 10, y: 1}, {x: 0, y: 5}
+                ]
+            },
+            {
+                title: 'Medium',
+                desc: 'Write medium javascript',
+                x: 0,
+                y: 5
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 10
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 1,
+                y: 7
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 1,
+                linkTo: [
+                    {x: 10, y: 10}
+                ]
+            }
+        ]
     }
 ];
 
 function addIdOnSkillsItem(skills){
     skills.map(function(skill, index_skill){
-        skill.id = index_skill+'';
+        skill.id = 'skill'+index_skill+'';
         skill.perks.map(function(perk, index_perk){
-            perk.id = index_skill+'_'+index_perk;
+            perk.id = 'skill'+index_skill+'_'+index_perk;
             if(perk.linkTo) {
                 perk.linkTo.map(function (link, index_link) {
-                    link.id = index_skill + '_' + index_perk + '_' + index_link;
+                    link.id = 'skill'+index_skill + '_' + index_perk + '_' + index_link;
                 });
             }
         });
@@ -164,37 +207,32 @@ skills.map(function(skill, iterSkill){
 
     globalSkillUl.appendChild(skillLi);
 });
-//@todo loop over all perks
-resizePerkToPerk(document.querySelector('.perks'));
+
+var perks = document.getElementsByClassName('perks');
+for(var i = 0; i < perks.length; i++){
+    resizePerkToPerk(perks[i]);
+}
 var style = document.createElement('style');
 style.innerHTML = '.perks.transform {transform: rotateX(60deg) translate3d(0,50%,0);';
 document.head.appendChild(style);
 
-//@todo adapt for one skill
 function resizePerkToPerk (ul) {
-    var perkToPerks = document.querySelectorAll('.perkToPerk');
     var ulH = ul.offsetHeight;
     var ulW = ul.offsetWidth;
-    for (var i = 0; i < perkToPerks.length; i++) {
-        var parentPerk = perkToPerks[i].parentElement;
-        parentPerk.removeChild(perkToPerks[i]);
-    }
-    //@todo find with id of ul the good skill
-    skills[0].perks.map(function (elm, index) {
+    var skillElm = ul.parentElement;
+    var skillId = skillElm.getAttribute('id');
+    skills[skillId.substring(5)].perks.map(function (elm, index) {
         if (elm.linkTo) {
             elm.linkTo.map(function (elm2, index) {
                 var verticalLength = (ulH / 100) * (elm2.y * 10 - elm.y * 10);
                 var horizontalLength = (ulW / 100) * (elm2.x * 10 - elm.x * 10);
-                var li2 = document.createElement('li');
-                li2.classList.add('perkToPerk');
-                TweenMax.to(li2, 0, {
+                var elmToTween = document.getElementById(elm2.id);
+                TweenMax.to(elmToTween, 0, {
                     bottom: elm.y * 10 + '%',
                     left: elm.x * 10 + '%',
                     rotationZ: radToDegrees(Math.atan(horizontalLength / verticalLength)),
                     height: Math.sqrt(verticalLength * verticalLength + horizontalLength * horizontalLength)
                 });
-                //@todo update instead of recreate
-                ul.appendChild(li2);
             });
         }
     });
@@ -244,7 +282,6 @@ function createPerkToPerk(elm, elm2, ulH, ulW) {
         rotationZ: radToDegrees(Math.atan(horizontalLength/verticalLength)),
         height: Math.sqrt(verticalLength*verticalLength + horizontalLength*horizontalLength)
     });
-    console.log(li2)
     return li2;
 }
 
@@ -255,27 +292,37 @@ window.onresize = function(){
     }
 };
 function zoomOutConstelation(ul){
-    TweenMax.to('.skill', 1, {perspective: 10000, ease: Power4.easeIn});
+    TweenMax.to(ul, 1, {perspective: 10000, ease: Power4.easeIn});
     TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.3, { autoAlpha: 0});
-    TweenMax.to('.skill', 1, {height: '4vw', width: '16vw', onComplete: function(){
+    TweenMax.to(ul, 1, {height: '4vw', width: '16vw', onComplete: function(){
         ulH = ul.offsetHeight;
         ulW = ul.offsetWidth;
-        this.target[0].style.height = this.vars.css.height;
-        this.target[0].style.width = this.vars.css.width;
+        for(var i = 0; i < this.target.length; i++){
+            this.target[i].style.height = this.vars.css.height;
+            this.target[i].style.width = this.vars.css.width;
+        }
         TweenMax.to('.perkToPerk',.5, { autoAlpha: 1});
-        resizePerkToPerk(ul.querySelector('.perks'));
+        var perks = document.getElementsByClassName('perks');
+        for(var i = 0; i < perks.length; i++){
+            resizePerkToPerk(perks[i]);
+        }
     }});
 }
 function zoomInConstelation(ul){
-    TweenMax.to('.skill', 1, {perspective: 650, ease: Power4.easeOut});
+    TweenMax.to(ul, 1, {perspective: 650, ease: Power4.easeOut});
     TweenMax.to('.perkToPerk',.3, { autoAlpha: 0});
-    TweenMax.to('.skill', 1, {height: '20vw', width: '60vw', onComplete: function(){
+    TweenMax.to(ul, 1, {height: '20vw', width: '60vw', onComplete: function(){
         ulH = ul.offsetHeight;
         ulW = ul.offsetWidth;
-        resizePerkToPerk(ul.querySelector('.perks'));
-        this.target[0].style.height = this.vars.css.height ;
-        this.target[0].style.width = this.vars.css.width ;
+        for(var i = 0; i < this.target.length; i++){
+            this.target[i].style.height = this.vars.css.height;
+            this.target[i].style.width = this.vars.css.width;
+        }
         TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.5, { autoAlpha: 1});
+        var perks = document.getElementsByClassName('perks');
+        for(var i = 0; i < perks.length; i++){
+            resizePerkToPerk(perks[i]);
+        }
     }});
 }
 var skillsState = {
@@ -284,10 +331,16 @@ var skillsState = {
 E.addHandler(document.getElementById('togglezoom'), 'click', function(){
     if(!skillsState.zoomConstelation) {
         skillsState.zoomConstelation = true;
-        zoomInConstelation(document.querySelector('.skills'));
+        var skills = document.getElementsByClassName('skill');
+        for(var i = 0; i < skills.length; i++){
+            zoomInConstelation(skills[i]);
+        }
     } else {
         skillsState.zoomConstelation = false;
-        zoomOutConstelation(document.querySelector('.skills'));
+        var skills = document.getElementsByClassName('skill');
+        for(var i = 0; i < skills.length; i++){
+            zoomOutConstelation(skills[i]);
+        }
     }
 });
 </script>
