@@ -346,6 +346,43 @@ skills.map(function(skill, iterSkill){
 
     TweenMax.to(skillLi, 0, {x: coeff+'%'});
 
+    E.addHandler(skillLi, 'click', function(e){
+        var target = e.target;
+        while(!target.classList.contains('skill')) {
+            target = target.parentElement;
+        }
+        if(skillsState.centered === skill.id ) {
+            skillsState.zoomConstelation = true;
+            zoomInConstelation(skillLi);
+            var leftSkill = Math.floor((skillsLength - 1)/2);
+            var rightSkill = skillsLength - leftSkill -1 ;
+            var currentId = target.getAttribute('id');
+            var numId = currentId.substring(5, 6);
+            for(var i= rightSkill; i > numId;i--) {
+                TweenMax.to('#skill'+(i+parseInt(numId)), 2, {x: 2000});
+            }
+            for(var j = leftSkill; j > 0 ; j--) {
+                var idToMove = j + parseInt(rightSkill);
+                TweenMax.to('#skill'+idToMove, 2, {x: -2000});
+            }
+        } else {
+            var targetId = target.getAttribute('id');
+            var targetNumId = parseInt(targetId.substring(5,6));
+            var decalage;
+            if(skillsLength/2 < targetNumId) {
+                decalage = skillsLength-targetNumId;
+                TweenMax.to('.skill', 1, {x: '+='+(120*decalage)+'%'});
+                TweenMax.to(['#'+skillsState.centered, target], 1, {x: '+='+(120*decalage+40)+'%'});
+                skillsState.centered = targetId;
+            } else {
+                decalage = targetNumId - parseInt(skillsState.centered.substring(5,6));
+                TweenMax.to('.skill', 1, {x: '-='+(120*decalage)+'%'});
+                TweenMax.to(['#'+skillsState.centered, target], 1, {x: '-='+(120*decalage+40)+'%'});
+                skillsState.centered = targetId;
+            }
+        }
+    });
+
 
     createPerks(skill.perks, skillUl);
 
@@ -403,7 +440,7 @@ function createPerks(perks, ul) {
         li.appendChild(desc);
         TweenMax.to(li, 0, {bottom: elm.y * 10+'%', left: elm.x * 10+'%'});
         E.addHandler(li, 'click', function(){
-            style.innerHTML = '.perks.y1 {transform: rotateX(60deg) translate3d('+ (elm.x*-10+50) +'%,'+ (elm.y*10-3) +'%,0);';
+            style.innerHTML = '.perks.transform {transform: rotateX(60deg) translate3d('+ (elm.x*-10+50) +'%,'+ (elm.y*10-3) +'%,0);';
             ul.classList.add('transform');
         });
         ul.appendChild(li);
@@ -439,8 +476,6 @@ function zoomOutConstelation(ul){
     TweenMax.to(ul, 1, {perspective: 10000, ease: Power4.easeIn});
     TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.3, { autoAlpha: 0});
     TweenMax.to(ul, 1, {height: '4vw', width: '16vw', onComplete: function(){
-        ulH = ul.offsetHeight;
-        ulW = ul.offsetWidth;
         for(var i = 0; i < this.target.length; i++){
             this.target[i].style.height = this.vars.css.height;
             this.target[i].style.width = this.vars.css.width;
@@ -456,8 +491,6 @@ function zoomInConstelation(ul){
     TweenMax.to(ul, 1, {perspective: 650, ease: Power4.easeOut});
     TweenMax.to('.perkToPerk',.3, { autoAlpha: 0});
     TweenMax.to(ul, 1, {height: '20vw', width: '60vw', onComplete: function(){
-        ulH = ul.offsetHeight;
-        ulW = ul.offsetWidth;
         for(var i = 0; i < this.target.length; i++){
             this.target[i].style.height = this.vars.css.height;
             this.target[i].style.width = this.vars.css.width;
