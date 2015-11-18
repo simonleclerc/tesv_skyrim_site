@@ -290,49 +290,49 @@ var skills = [
             }
         ]
     },
-//    {
-//        title: 'Javascript',
-//        level: '70',
-//        levelProgress: '50%',
-//        perks: [
-//            {
-//                title: 'Novice',
-//                desc: 'Write novice javascript',
-//                x: 5,
-//                y: 0,
-//                linkTo: [
-//                    {x: 10, y: 1}, {x: 0, y: 5}
-//                ]
-//            },
-//            {
-//                title: 'Medium',
-//                desc: 'Write medium javascript',
-//                x: 0,
-//                y: 5
-//            },
-//            {
-//                title: 'Expert',
-//                desc: 'Write expert javascript',
-//                x: 10,
-//                y: 10
-//            },
-//            {
-//                title: 'Expert',
-//                desc: 'Write expert javascript',
-//                x: 1,
-//                y: 7
-//            },
-//            {
-//                title: 'Expert',
-//                desc: 'Write expert javascript',
-//                x: 10,
-//                y: 1,
-//                linkTo: [
-//                    {x: 10, y: 10}
-//                ]
-//            }
-//        ]
-//    }
+    {
+        title: 'Javascript',
+        level: '70',
+        levelProgress: '50%',
+        perks: [
+            {
+                title: 'Novice',
+                desc: 'Write novice javascript',
+                x: 5,
+                y: 0,
+                linkTo: [
+                    {x: 10, y: 1}, {x: 0, y: 5}
+                ]
+            },
+            {
+                title: 'Medium',
+                desc: 'Write medium javascript',
+                x: 0,
+                y: 5
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 10
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 1,
+                y: 7
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 1,
+                linkTo: [
+                    {x: 10, y: 10}
+                ]
+            }
+        ]
+    }
 ];
 function addIdOnSkillsItem(skills){
     skills.map(function(skill, index_skill){
@@ -401,12 +401,14 @@ skills.map(function(skill, iterSkill){
             var rightSkill = skillsLength - leftSkill -1 ;
             var currentId = target.getAttribute('id');
             var numId = currentId.substring(5, 6);
-            for(var i= rightSkill; i > numId;i--) {
-                TweenMax.to('#skill'+(i+parseInt(numId)), 2, {x: 2000});
+            for(var i = 0; i < leftSkill; i++) {
+                var newId = ((parseInt(skillsState.centered.substring(5,6)) - (leftSkill-i))%skillsLength);
+                newId = newId < 0 ? skillsLength +newId : newId;
+                TweenMax.to('#skill'+newId, 2, {x: '-=2000'});
             }
-            for(var j = leftSkill; j > 0 ; j--) {
-                var idToMove = j + parseInt(rightSkill);
-                TweenMax.to('#skill'+idToMove, 2, {x: -2000});
+            for(var i = 0; i < rightSkill; i++) {
+                var newId = (parseInt(skillsState.centered.substring(5,6)) + i +1)%skillsLength;
+                TweenMax.to('#skill'+newId, 2, {x: '+=2000'});
             }
         } else {
             var targetId = target.getAttribute('id');
@@ -423,7 +425,6 @@ skills.map(function(skill, iterSkill){
                 } else {
                     var idFromWhereToBeginMove = (parseInt(skillsState.centered.substring(5,6)) - Math.floor(skillsLength/2+1)) % skillsLength;
                     idFromWhereToBeginMove = idFromWhereToBeginMove < 0 ? skillsLength +idFromWhereToBeginMove : idFromWhereToBeginMove;
-                    console.log(parseInt(idFromWhereToBeginMove))
                     for(var i = 0; i < decalage*-1; i++) {
                         var newId = ((idFromWhereToBeginMove-i)%skillsLength);
                         newId = newId < 0 ? skillsLength +newId : newId;
@@ -572,8 +573,6 @@ function zoomInConstelation(ul){
         }
     }});
 }
-//@todo click sur constellation pour la faire grandir, passer le statut a zoomé.
-//@todo click sur autre constellation pour les déplacer, changer le statut centered/current, déplacer les extrémités.
 E.addHandler(document.getElementById('togglezoom'), 'click', function(){
     if(!skillsState.zoomConstelation) {
         skillsState.zoomConstelation = true;
