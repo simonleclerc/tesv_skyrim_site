@@ -289,7 +289,50 @@ var skills = [
                 ]
             }
         ]
-    }
+    },
+//    {
+//        title: 'Javascript',
+//        level: '70',
+//        levelProgress: '50%',
+//        perks: [
+//            {
+//                title: 'Novice',
+//                desc: 'Write novice javascript',
+//                x: 5,
+//                y: 0,
+//                linkTo: [
+//                    {x: 10, y: 1}, {x: 0, y: 5}
+//                ]
+//            },
+//            {
+//                title: 'Medium',
+//                desc: 'Write medium javascript',
+//                x: 0,
+//                y: 5
+//            },
+//            {
+//                title: 'Expert',
+//                desc: 'Write expert javascript',
+//                x: 10,
+//                y: 10
+//            },
+//            {
+//                title: 'Expert',
+//                desc: 'Write expert javascript',
+//                x: 1,
+//                y: 7
+//            },
+//            {
+//                title: 'Expert',
+//                desc: 'Write expert javascript',
+//                x: 10,
+//                y: 1,
+//                linkTo: [
+//                    {x: 10, y: 10}
+//                ]
+//            }
+//        ]
+//    }
 ];
 function addIdOnSkillsItem(skills){
     skills.map(function(skill, index_skill){
@@ -370,24 +413,42 @@ skills.map(function(skill, iterSkill){
             var targetNumId = parseInt(targetId.substring(5,6));
             var centeredId = parseInt(skillsState.centered.substring(5,6));
             var decalage = centeredId - targetNumId;
+            var tl = new TimelineMax({onComplete: function(){
+                skillsState.centered = targetId;
+                if(decalage > 0) {
+                    var idFromWhereToBeginMove = (parseInt(skillsState.centered.substring(5,6)) + (skillsLength%2 > 0 ? Math.ceil(skillsLength/2) : skillsLength/2+1)) % skillsLength;
+                    for(var i = 0; i < decalage; i++) {
+                        TweenMax.to('#skill'+((idFromWhereToBeginMove+i)%5), 0, {x: '-='+(120*skillsLength+ 80) +'%'})
+                    }
+                } else {
+                    var idFromWhereToBeginMove = (parseInt(skillsState.centered.substring(5,6)) - Math.floor(skillsLength/2+1)) % skillsLength;
+                    idFromWhereToBeginMove = idFromWhereToBeginMove < 0 ? skillsLength +idFromWhereToBeginMove : idFromWhereToBeginMove;
+                    console.log(parseInt(idFromWhereToBeginMove))
+                    for(var i = 0; i < decalage*-1; i++) {
+                        var newId = ((idFromWhereToBeginMove-i)%skillsLength);
+                        newId = newId < 0 ? skillsLength +newId : newId;
+                        TweenMax.to('#skill'+newId, 0, {x: '+='+(120*skillsLength+ 80) +'%'})
+                    }
+                }
+            }});
+            tl.addLabel('start');
             if((targetNumId > centeredId && Math.abs(decalage) > skillsLength/2) || (targetNumId < centeredId && Math.abs(decalage) <= skillsLength/2)) {
                 if(targetNumId > centeredId && Math.abs(decalage) > skillsLength/2) {
                     decalage = (skillsLength + decalage);
                 }
-                TweenMax.to('.skill', 1, {x: '+='+(120*decalage)+'%'});
+                tl.to('.skill', 1, {x: '+='+(120*decalage)+'%'}, 'start');
                 for (var b = 0; b <= decalage; b++) {
-                    TweenMax.to('#skill' + ((targetNumId + b) % skillsLength), 1, {x: '+=' + (120 * decalage + ((b === 0 || b === decalage) ? 40 : 80)) + '%'});
+                    tl.to('#skill' + ((targetNumId + b) % skillsLength), 1, {x: '+=' + (120 * decalage + ((b === 0 || b === decalage) ? 40 : 80)) + '%'}, 'start');
                 }
                 skillsState.centered = targetId;
             } else {
                 if(centeredId > targetNumId && Math.abs(decalage) > skillsLength/2) {
                     decalage = (skillsLength - decalage)*-1;
                 }
-                TweenMax.to('.skill', 1, {x: '+='+(120*decalage)+'%'});
+                tl.to('.skill', 1, {x: '+='+(120*decalage)+'%'}, 'start');
                 for (var b = 0; b <= decalage*-1; b++) {
-                    TweenMax.to('#skill' + ((centeredId + b) % skillsLength), 1, {x: '+=' + (120 * decalage - ((b === 0 || b === decalage*-1) ? 40 : 80)) + '%'});
+                    tl.to('#skill' + ((centeredId + b) % skillsLength), 1, {x: '+=' + (120 * decalage - ((b === 0 || b === decalage*-1) ? 40 : 80)) + '%'}, 'start');
                 }
-                skillsState.centered = targetId;
             }
         }
     });
