@@ -511,8 +511,10 @@ function createPerks(perks, ul) {
         li.appendChild(desc);
         TweenMax.to(li, 0, {bottom: elm.y * 10+'%', left: elm.x * 10+'%'});
         E.addHandler(li, 'click', function(){
-            style.innerHTML = '.perks.transform {transform: rotateX(60deg) translate3d('+ (elm.x*-10+50) +'%,'+ (elm.y*10-3) +'%,0);';
-            ul.classList.add('transform');
+            if(skillsState.zoomConstelation) {
+                style.innerHTML = '.perks.transform {transform: rotateX(60deg) translate3d(' + (elm.x * -10 + 50) + '%,' + (elm.y * 10 - 3) + '%,0);';
+                ul.classList.add('transform');
+            }
         });
         ul.appendChild(li);
         if(elm.linkTo) {
@@ -545,14 +547,14 @@ window.onresize = function(){
 };
 function zoomOutConstelation(ul){
     TweenMax.to(ul, 1, {perspective: 10000, ease: Power4.easeIn});
-    TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.3, { autoAlpha: 0});
+    TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.1, { autoAlpha: 0});
     TweenMax.to(ul, 1, {height: '4vw', width: '16vw', onComplete: function(){
         for(var i = 0; i < this.target.length; i++){
             this.target[i].style.height = this.vars.css.height;
             this.target[i].style.width = this.vars.css.width;
         }
-        TweenMax.to('.perkToPerk',.5, { autoAlpha: 1});
-        var perks = document.getElementsByClassName('perks');
+        TweenMax.to(ul.getElementsByClassName('perkToPerk'),.5, { autoAlpha: 1});
+        var perks = ul.getElementsByClassName('perks');
         for(var i = 0; i < perks.length; i++){
             resizePerkToPerk(perks[i]);
         }
@@ -560,14 +562,14 @@ function zoomOutConstelation(ul){
 }
 function zoomInConstelation(ul){
     TweenMax.to(ul, 1, {perspective: 650, ease: Power4.easeOut});
-    TweenMax.to('.perkToPerk',.3, { autoAlpha: 0});
+    TweenMax.to(ul.getElementsByClassName('perkToPerk'),.1, { autoAlpha: 0});
     TweenMax.to(ul, 1, {height: '20vw', width: '60vw', onComplete: function(){
         for(var i = 0; i < this.target.length; i++){
             this.target[i].style.height = this.vars.css.height;
             this.target[i].style.width = this.vars.css.width;
         }
         TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.5, { autoAlpha: 1});
-        var perks = document.getElementsByClassName('perks');
+        var perks = ul.getElementsByClassName('perks');
         for(var i = 0; i < perks.length; i++){
             resizePerkToPerk(perks[i]);
         }
