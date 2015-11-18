@@ -368,16 +368,25 @@ skills.map(function(skill, iterSkill){
         } else {
             var targetId = target.getAttribute('id');
             var targetNumId = parseInt(targetId.substring(5,6));
-            var decalage;
-            if(skillsLength/2 < targetNumId) {
-                decalage = skillsLength-targetNumId;
+            var centeredId = parseInt(skillsState.centered.substring(5,6));
+            var decalage = centeredId - targetNumId;
+            if((targetNumId > centeredId && Math.abs(decalage) > skillsLength/2) || (targetNumId < centeredId && Math.abs(decalage) <= skillsLength/2)) {
+                if(targetNumId > centeredId && Math.abs(decalage) > skillsLength/2) {
+                    decalage = (skillsLength + decalage);
+                }
                 TweenMax.to('.skill', 1, {x: '+='+(120*decalage)+'%'});
-                TweenMax.to(['#'+skillsState.centered, target], 1, {x: '+='+(120*decalage+40)+'%'});
+                for (var b = 0; b <= decalage; b++) {
+                    TweenMax.to('#skill' + ((targetNumId + b) % skillsLength), 1, {x: '+=' + (120 * decalage + ((b === 0 || b === decalage) ? 40 : 80)) + '%'});
+                }
                 skillsState.centered = targetId;
             } else {
-                decalage = targetNumId - parseInt(skillsState.centered.substring(5,6));
-                TweenMax.to('.skill', 1, {x: '-='+(120*decalage)+'%'});
-                TweenMax.to(['#'+skillsState.centered, target], 1, {x: '-='+(120*decalage+40)+'%'});
+                if(centeredId > targetNumId && Math.abs(decalage) > skillsLength/2) {
+                    decalage = (skillsLength - decalage)*-1;
+                }
+                TweenMax.to('.skill', 1, {x: '+='+(120*decalage)+'%'});
+                for (var b = 0; b <= decalage*-1; b++) {
+                    TweenMax.to('#skill' + ((centeredId + b) % skillsLength), 1, {x: '+=' + (120 * decalage - ((b === 0 || b === decalage*-1) ? 40 : 80)) + '%'});
+                }
                 skillsState.centered = targetId;
             }
         }
