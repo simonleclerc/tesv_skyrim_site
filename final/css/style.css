@@ -122,15 +122,16 @@ ul, ol {
     width: 100%;
     justify-content: space-between;
 }
-.level {
+.footer .level {
     display: block;
-    color: rgba(255,255,255,.7);
     width: 100%;
 }
-.level > span {
+.label {
+    text-shadow: 2px 2px 0 #000000;
     vertical-align: super;
+    color: rgba(255,255,255,.7);
 }
-.level span span{
+.label__content{
     font-size: 2.2vw;
     color: #ffffff;
     vertical-align: bottom;
@@ -326,6 +327,24 @@ ul, ol {
 }
 
 /****************SKILLS**********************/
+
+    /**header**/
+#bgSkillheader {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: -1;
+}
+.background-fullsize {
+    background: url('../images/nebula_medium_low_quality_repeatable.jpg') repeat-x 0 0 / cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
 .content {
     height: 100%;
 }
@@ -337,7 +356,15 @@ ul, ol {
 .page--skills .header {
     position: absolute;
     top: 0;
-    width: 100%;
+    left: 0; right: 0;
+    margin: auto;
+    width: 75%;
+    font-size: 1.2vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 150px;
 }
 .skills {
     overflow: hidden;

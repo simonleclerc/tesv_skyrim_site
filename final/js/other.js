@@ -19,7 +19,9 @@ function realTimeDate() {
     footerDateElm.innerHTML = d.getHours() +':'+d.getMinutes()+', '+ day+dateTxt + ' of ' + month[d.getMonth()]+', '+ d.getFullYear();
     setTimeout(realTimeDate, 60000);
 }
-realTimeDate();
+if(footerDateElm) {
+    realTimeDate();
+}
 
 var birthDate = new Date(1991, 4, 1);
 

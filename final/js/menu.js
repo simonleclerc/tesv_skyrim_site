@@ -359,6 +359,11 @@ var clickMenuAction = {
         TweenMax.to('body',.3, {opacity: 0, onComplete: function() {
             window.location.href = './map.html'
         }});
+    },
+    top: function() {
+        TweenMax.to('body',.3, {opacity: 0, onComplete: function() {
+            window.location.href = './skills.html'
+        }});
     }
 };
 E.addHandler(canvas, 'click', function(e){
