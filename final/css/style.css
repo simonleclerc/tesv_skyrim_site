@@ -379,6 +379,7 @@ ul, ol {
     position: absolute;
     top: 0; bottom: 0; right: 0; left: 0;
     margin: auto;
+    text-align: center;
     /*transform: translateX(100%) translateY(21vw);*/
 }
 .perks {
@@ -455,5 +456,20 @@ ul, ol {
     text-align: center;
     font-size: 3vw;
     /* transform: translateZ(1vw); */
-    box-shadow: 0px 0px 11px 3px rgba(10, 142, 255, .5);
+    box-shadow: 0 0 11px 3px rgba(10, 142, 255, .5);
+}
+.skill--title {
+    font-size: 2vw;
+    text-transform: uppercase;
+    text-shadow: 3px 3px 2px #000000;
+    display: block;
+    margin-top: 8vw;
+    margin-bottom: 0.5vw;
+}
+.skill--name {
+    color: #959796;
+}
+.skill--progress {
+    width: 80%;
+    margin: 0 auto;
 }

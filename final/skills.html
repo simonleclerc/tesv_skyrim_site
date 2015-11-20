@@ -235,7 +235,7 @@ var skills = [
     {
         title: 'Javascript',
         level: '70',
-        levelProgress: '50%',
+        levelProgress: 95,
         perks: [
             {
                 title: 'Novice',
@@ -278,7 +278,7 @@ var skills = [
     {
         title: 'Javascript',
         level: '70',
-        levelProgress: '50%',
+        levelProgress: 10,
         perks: [
             {
                 title: 'Novice',
@@ -321,7 +321,7 @@ var skills = [
     {
         title: 'Javascript',
         level: '70',
-        levelProgress: '50%',
+        levelProgress: 50,
         perks: [
             {
                 title: 'Novice',
@@ -364,7 +364,7 @@ var skills = [
     {
         title: 'Javascript',
         level: '70',
-        levelProgress: '50%',
+        levelProgress: 50,
         perks: [
             {
                 title: 'Novice',
@@ -407,7 +407,7 @@ var skills = [
     {
         title: 'Javascript',
         level: '70',
-        levelProgress: '50%',
+        levelProgress: 50,
         perks: [
             {
                 title: 'Novice',
@@ -450,7 +450,7 @@ var skills = [
     {
         title: 'Javascript',
         level: '70',
-        levelProgress: '50%',
+        levelProgress: 50,
         perks: [
             {
                 title: 'Novice',
@@ -530,7 +530,35 @@ skills.map(function(skill, iterSkill){
     skillSpanLevel.innerHTML = skill.level;
     var skillDiv = document.createElement('div');
     skillDiv.classList.add('skill--progress');
-    skillDiv.innerHTML = skill.levelProgress;
+    var progressWidth = (220.227-(2.20227*skill.levelProgress));
+    skillDiv.innerHTML = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"'+
+    'width="100%" viewBox="0 0 290.99 25.5" enable-background="new 0 0 290.99 25.5" xml:space="preserve">'+
+    '<defs>'+
+    '<linearGradient id="level_bg_progress" gradientUnits="userSpaceOnUse" x1="0" y1="9" x2="0" y2="16">'+
+    '<stop  offset="0.2" style="stop-color:#2d2b44;"/>'+
+    '<stop  offset="0.65" style="stop-color:#3e3c4e;"/>'+
+    '<stop  offset=".9" style="stop-color:#232135;"/>'+
+    '</linearGradient>'+
+    '<linearGradient id="level_progress" gradientUnits="userSpaceOnUse" x1="0" y1="9" x2="0" y2="16">'+
+    '<stop  offset="0.2" style="stop-color:#777f97;"/>'+
+    '<stop  offset="0.65" style="stop-color:#9aa0af;"/>'+
+    '<stop  offset=".9" style="stop-color:#5c6274;"/>'+
+    '</linearGradient>'+
+    '<mask id="progress_mask" maskUnits="objectBoundingBox">'+
+    '<polygon  fill="#ffffff" points="36.99,9 51.49,16.5 240.603,16.5 255.103,9 	"/>'+
+    '</mask>'+
+    '</defs>'+
+    '<g id="progress">'+
+    '<path id="mask_2_" fill="#101112" opacity="0.9" d="M290.99,0H0l46.656,25.5h198.417L290.99,0L290.99,0z"/>'+
+    '<path fill="#858A89" d="M15.157,4.318l32.071,17.016h197.096l31.938-17.016H15.157z M243.574,18.334h-195.6L27.212,7.318H264.25 L243.574,18.334z"/>'+
+    '<polygon fill="url(#level_bg_progress)" points="36.99,9 51.49,16.5 240.603,16.5 255.103,9 	"/>'+
+    '<g mask="url(#progress_mask)">'+
+    '<polygon transform="translate(-'+progressWidth+',0)" fill="url(#level_progress)" points="36.99,9 51.49,16.5 240.603,16.5 255.103,9 	"/>'+
+    '</g>'+
+    '</g>'+
+    '</svg>';
+    console.log(skill.levelProgress)
+    console.log((220.227-(2.20227*skill.levelProgress)))
     skillSpanTitle.appendChild(skillSpanName);
     skillSpanTitle.appendChild(document.createTextNode(' '));
     skillSpanTitle.appendChild(skillSpanLevel);
