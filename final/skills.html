@@ -41,9 +41,9 @@
 	</g>
 </g>
 </svg>
-    <div><span class="label">NAME&nbsp;<span class="label__content"> Simon</span></span></div>
-    <div class="level">
-        <span class="label">LEVEL <span id="footer-age" class="label__content"></span></span>
+    <div class="key-value"><span class="key-value__label key-value__label--middle">NAME&nbsp;</span><span class="key-value__content key-value__content--middle"> Simon</span></div>
+    <div class="level key-value">
+        <span class="key-value__label key-value__label--middle">LEVEL&nbsp;</span><span id="footer-age" class="key-value__content key-value__content--middle"></span>
 
         <svg version="1.1" id="footerBarSvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0"
                  width="330.036px" height="34px" viewBox="0 0 330.036 34" enable-background="new 0 0 330.036 34" xml:space="preserve">
@@ -85,7 +85,7 @@
                 </g>
             </svg>
         </div>
-    <div><span class="label">RACE&nbsp;<span class="label__content"> Homo Sapiens</span></span></div>
+    <div class="key-value"><span class="key-value__label key-value__label--middle">RACE&nbsp;</span><span class="key-value__content key-value__content--middle"> Homo Sapiens</span></div>
 </div>
 
 <div class="content">
@@ -96,7 +96,7 @@
 
 <div class="footer">
     <div class="level">
-    <span class="label">MOTIVATION <span class="label__content">290/290</span></span>
+    <span class="key-value__label">MOTIVATION </span><span class="key-value__content">290/290</span>
 
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0"
                  width="330.036px" height="34px" viewBox="0 0 330.036 34" enable-background="new 0 0 330.036 34" xml:space="preserve">
@@ -139,7 +139,7 @@
             </svg>
 </div>
     <div class="level">
-    <span class="label">HEALTH <span class="label__content">150/150</span></span>
+    <span class="label key-value__label">HEALTH </span><span class="key-value__content">150/150</span>
 
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0"
                  width="330.036px" height="34px" viewBox="0 0 330.036 34" enable-background="new 0 0 330.036 34" xml:space="preserve">
@@ -182,7 +182,7 @@
             </svg>
 </div>
     <div class="level">
-    <span class="label">ENERGY <span class="label__content">280/280</span></span>
+    <span class="label key-value__label">ENERGY <span class="key-value__content">280/280</span></span>
 
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0"
                  width="330.036px" height="34px" viewBox="0 0 330.036 34" enable-background="new 0 0 330.036 34" xml:space="preserve">
@@ -243,35 +243,69 @@ var skills = [
                 x: 5,
                 y: 0,
                 linkTo: [
-                    {x: 10, y: 1}, {x: 0, y: 5}
+                    {x: 4, y: 2.5},
+                    {x: 6, y: 2.5},
+                    {x: 2, y: 2},
+                    {x: 7.5, y: 1.5},
+                    {x: 9, y:0.5}
                 ]
             },
             {
                 title: 'Medium',
                 desc: 'Write medium javascript',
-                x: 0,
-                y: 5
+                x: 4,
+                y: 2.5
             },
             {
                 title: 'Expert',
                 desc: 'Write expert javascript',
-                x: 10,
-                y: 10
+                x: 6,
+                y: 2.5
             },
             {
                 title: 'Expert',
                 desc: 'Write expert javascript',
-                x: 1,
-                y: 7
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 10,
-                y: 1,
+                x: 2,
+                y: 2,
                 linkTo: [
-                    {x: 10, y: 10}
+                    {x: 1.5, y: 3}
                 ]
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 1.5,
+                y:3
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 7.5,
+                y:1.53,
+                linkTo: [
+                    {x: 7, y: 3}
+                ]
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 7,
+                y: 3
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 9,
+                y: 0.5,
+                linkTo: [
+                    {x: 10, y: 1.5}
+                ]
+            },
+            {
+                title: 'Expert',
+                desc: 'Write expert javascript',
+                x: 10,
+                y: 1.5
             }
         ]
     },
@@ -520,6 +554,8 @@ skills.map(function(skill, iterSkill){
     skillLi.setAttribute('id', skill.id);
     var skillUl = document.createElement('ul');
     skillUl.classList.add('perks');
+    var skillSeparator = document.createElement('div');
+    skillSeparator.classList.add('skill--separator');
     var skillSpanTitle = document.createElement('span');
     skillSpanTitle.classList.add('skill--title');
     var skillSpanName = document.createElement('span');
@@ -557,12 +593,11 @@ skills.map(function(skill, iterSkill){
     '</g>'+
     '</g>'+
     '</svg>';
-    console.log(skill.levelProgress)
-    console.log((220.227-(2.20227*skill.levelProgress)))
     skillSpanTitle.appendChild(skillSpanName);
     skillSpanTitle.appendChild(document.createTextNode(' '));
     skillSpanTitle.appendChild(skillSpanLevel);
     skillLi.appendChild(skillUl);
+    skillLi.appendChild(skillSeparator);
     skillLi.appendChild(skillSpanTitle);
     skillLi.appendChild(skillDiv);
 
@@ -584,6 +619,9 @@ skills.map(function(skill, iterSkill){
             target = target.parentElement;
         }
         if(skillsState.centered === skill.id ) {
+            if(skillsState.zoomConstelation) {
+                return;
+            }
             skillsState.zoomConstelation = true;
             zoomInConstelation(skillLi);
             var leftSkill = Math.floor((skillsLength - 1)/2);
@@ -655,13 +693,23 @@ skills.map(function(skill, iterSkill){
 
     globalSkillUl.appendChild(skillLi);
 });
-
+window.onresize = onResize;
+var SCREEN_H = window.innerHeight;
+var SCREEN_W = window.innerWidth;
+function onResize() {
+    SCREEN_H = window.innerHeight;
+    SCREEN_W = window.innerWidth;
+    var perks = document.getElementsByClassName('perks');
+    for(var i = 0; i < perks.length; i++) {
+        resizePerkToPerk(perks[i]);
+    }
+}
 var perks = document.getElementsByClassName('perks');
 for(var i = 0; i < perks.length; i++){
     resizePerkToPerk(perks[i]);
 }
 var style = document.createElement('style');
-style.innerHTML = '.perks.transform {transform: rotateX(60deg) translate3d(0,50%,0);';
+style.innerHTML = '.perks.transform {transform: rotateX(50deg) translate3d(0,50%,0);';
 document.head.appendChild(style);
 
 function resizePerkToPerk (ul) {
@@ -708,7 +756,7 @@ function createPerks(perks, ul) {
         TweenMax.to(li, 0, {bottom: elm.y * 10+'%', left: elm.x * 10+'%'});
         E.addHandler(li, 'click', function(){
             if(skillsState.zoomConstelation) {
-                style.innerHTML = '.perks.transform {transform: rotateX(60deg) translate3d(' + (elm.x * -10 + 50) + '%,' + (elm.y * 10 - 3) + '%,0);';
+                style.innerHTML = '.perks.transform {transform: rotateX(50deg) translate3d(' + (elm.x * -10 + 50) + '%,' + (elm.y * 10 - 3) + '%,0);';
                 ul.classList.add('transform');
             }
         });
@@ -735,16 +783,11 @@ function createPerkToPerk(elm, elm2, ulH, ulW) {
     return li2;
 }
 
-window.onresize = function(){
-    var perks = document.getElementsByClassName('.perks');
-    for(var i = 0; i < perks.length; i++) {
-        resizePerkToPerk(perks[i]);
-    }
-};
 function zoomOutConstelation(ul){
     skillsState.movingConstelation = true;
     TweenMax.to('.background-fullsize',1, {height: '100%', width: '100%', x: '0%', y : '0%'});
     TweenMax.to(ul, 1, {perspective: 10000, ease: Power4.easeIn});
+    TweenMax.to('.skill--separator', 1, {marginTop: '7vw', autoAlpha: 0});
     TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.1, { autoAlpha: 0});
     TweenMax.to(ul, 1, {height: '4vw', width: '16vw', onComplete: function(){
         for(var i = 0; i < this.target.length; i++){
@@ -764,8 +807,15 @@ function zoomInConstelation(ul){
     skillsState.movingConstelation = true;
     TweenMax.to('.background-fullsize',1, {height: '115%', width: '115%', x: '-7.5%', y : '-7.5%'});
     TweenMax.to(ul, 1, {perspective: 650, ease: Power4.easeOut});
-    TweenMax.to(ul.getElementsByClassName('perkToPerk'),.1, { autoAlpha: 0});
-    TweenMax.to(ul, 1, {height: '20vw', width: '60vw', onComplete: function(){
+    TweenMax.to('.perk', 1, {transform: 'rotateX(-50deg) translateY(5vw)'});
+    TweenMax.to('.perk--img', 1, {width: '10vw', height: '10vw'});
+    TweenMax.to('.skill--separator', 1, {marginTop: '35vw', autoAlpha: 1});
+    TweenMax.to([ul.getElementsByClassName('perkToPerk'), '.skill--progress'],.1, { autoAlpha: 0});
+    TweenMax.to(ul, 1, {height: '40vw', width: '130vw', ease: Power2.easeInOut, onUpdate: function(){
+        if(parseInt(this.target.offsetWidth) > SCREEN_W) {
+            TweenMax.to(this.target, 0, {x: '-'+(this.target.offsetWidth-SCREEN_W)/2+'px' });
+        }
+    }, onComplete: function(){
         for(var i = 0; i < this.target.length; i++){
             this.target[i].style.height = this.vars.css.height;
             this.target[i].style.width = this.vars.css.width;

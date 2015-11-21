@@ -87,7 +87,7 @@ ul, ol {
     transition: all .1s linear;
 }
 .menu-container {
-    height: 85%;
+    height: 90%;
     position: relative;
 }
 .menuItems {
@@ -108,7 +108,7 @@ ul, ol {
     opacity: 1;
 }
 .footer {
-    height: 15%;
+    height: 10%;
     background-color: rgba(0,0,0,0.6);
     border-top: 3px solid rgba(255,255,255,.7);
     box-shadow: 0 -5px 0 0 rgba(0,0,0,.6);
@@ -126,15 +126,22 @@ ul, ol {
     display: block;
     width: 100%;
 }
-.label {
+.key-value__label {
     text-shadow: 2px 2px 0 #000000;
-    vertical-align: super;
     color: rgba(255,255,255,.7);
 }
-.label__content{
-    font-size: 2.2vw;
+.key-value__content{
+    font-size: 1.9vw;
     color: #ffffff;
-    vertical-align: bottom;
+}
+.key-value__label--middle {
+    vertical-align: middle;
+}
+.key-value svg {
+    vertical-align: middle;
+}
+.key-value__content--middle {
+    vertical-align: middle;
 }
 .localisation-date {
     font-size: 1.9vw;
@@ -356,23 +363,25 @@ ul, ol {
 .page--skills .header {
     position: absolute;
     top: 0;
-    left: 0; right: 0;
+    left: 0;
+    right: 0;
     margin: auto;
-    width: 75%;
+    width: 66%;
     font-size: 1.2vw;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    height: 150px;
+    height: 176px;
 }
 .skills {
     overflow: hidden;
     height: 100%;
+    text-shadow: 3px 3px 2px #000000;
 }
 .skill {
     width: 16vw;
-    height: 4vw;
+    height: 6vw;
     perspective: 10000px;
     transform-style: preserve-3d;
     float: left;
@@ -388,34 +397,24 @@ ul, ol {
     /*background-color: rgba(0, 255, 0, 0.2);*/
     perspective: 5e+7px;
     margin: auto;
-    left: 0px;
-    right: 0px;
-    top: -900%;
+    left: 0;
+    right: 0;
+    top: -931%;
     position: absolute;
-    transform: rotateX(60deg) translate3d(0px, 0%, 0px);
+    transform: rotateX(50deg) translate3d(0px, 0%, 0px);
     transform-origin: center bottom 0px;
     transform-style: preserve-3d;
     transition: all 1s ease-out 0s;
 }
 .perks.y0 {
-    transform: rotateX(60deg) translate3d(0, 50%, 0);
+    transform: rotateX(50deg) translate3d(0, 50%, 0);
 }
-/*.perk {*/
-    /*position: absolute;*/
-    /*width: 16vw;*/
-    /*margin-left: -8vw;*/
-    /*transform-origin: bottom;*/
-    /*animation: front-back 2s infinite alternate linear;*/
-    /*transform: rotateX(-60deg);*/
-    /*text-align: center;*/
-    /*font-size: 3vw;*/
-/*}*/
 .perk {
     position: absolute;
     width: 16vw;
     margin-left: -8vw;
     transform-origin: center bottom 0px;
-    transform: rotateX(-60deg) translateY(1vw);
+    transform: rotateX(-50deg) translateY(1vw);
     text-align: center;
     font-size: 3vw;
 }
@@ -430,7 +429,7 @@ ul, ol {
 }
 .perk--title {
     position: absolute;
-    top: -3.5vw;
+    top: -3vw;
     left: 0;
     right: 0;
     margin: auto;
@@ -439,13 +438,14 @@ ul, ol {
 }
 .perk--desc {
     position: absolute;
-    top: 3vw;
+    top: 10vw;
     left: 0;
     right: 0;
     margin: auto;
     width: auto;
     visibility: hidden;
     opacity: 0;
+    font-size: 1.8vw;
 }
 .perkToPerk {
     position: absolute;
@@ -458,12 +458,21 @@ ul, ol {
     /* transform: translateZ(1vw); */
     box-shadow: 0 0 11px 3px rgba(10, 142, 255, .5);
 }
+.skill--separator {
+    width: 19vw;
+    height: 4px;
+    background: #88898A;
+    margin: 0 auto;
+    border: 1px solid #000000;
+    margin-top: 7vw;
+    opacity: 0;
+    visibility: hidden;
+}
 .skill--title {
     font-size: 2vw;
     text-transform: uppercase;
-    text-shadow: 3px 3px 2px #000000;
     display: block;
-    margin-top: 8vw;
+    margin-top: 1vw;
     margin-bottom: 0.5vw;
 }
 .skill--name {
