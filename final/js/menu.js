@@ -559,3 +559,10 @@ forEach(_panListItemsSub, function (index, _elm) {
 
     });
 });
+
+//@todo si click menu (pro/perso...) déjà selectionné, ne pas recréer le submenu
+//@todo bouton back
+//@todo navigation au clavier
+//@todo navigation à la manette
+//@todo mini menu explicatif/keymap clavier manette
+//@todo ajouter crédit a bethesda skyrim

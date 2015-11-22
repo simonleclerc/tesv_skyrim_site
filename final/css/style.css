@@ -424,7 +424,7 @@ ul, ol {
     text-align: center;
     height: 2vw;
     border-radius: 50%;
-    background-color: yellow;
+    background: url('../images/star.png') no-repeat 0 / cover;
     margin: auto;
 }
 .perk--title {
@@ -451,12 +451,16 @@ ul, ol {
     position: absolute;
     width: 3px;
     border-radius: 100%;
-    background: linear-gradient(to left, rgba(10,142,255,1) 0%, rgba(255,255,255,1) 50%, rgba(10,142,255,1) 100%);
+    /*background: linear-gradient(to left, rgba(10,142,255,1) 0%, rgba(255,255,255,1) 50%, rgba(10,142,255,1) 100%);*/
+    background-color: #FFFFFF;
     transform-origin: center bottom 0px;
     text-align: center;
     font-size: 3vw;
     /* transform: translateZ(1vw); */
-    box-shadow: 0 0 11px 3px rgba(10, 142, 255, .5);
+    /*box-shadow: 0 0 11px 3px rgba(10, 142, 255, .5);*/
+    box-shadow: 0 -20px 5px 3px #ffffff, 0 -20px 9px 5px rgba(0,173,255,1), 0 -20px 7px 12px rgba(32, 82, 193, 0.8);
+    -webkit-filter: brightness(0.9);
+    filter: brightness(0.9);
 }
 .skill--separator {
     width: 19vw;

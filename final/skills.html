@@ -692,6 +692,14 @@ skills.map(function(skill, iterSkill){
     createPerks(skill.perks, skillUl);
 
     globalSkillUl.appendChild(skillLi);
+var _perks = document.getElementsByClassName('perkToPerk');
+    for(var i = 0; i < _perks.length; i++) {
+        var obj = {a: 1};
+        TweenMax.fromTo(obj, (Math.random() * 4),{a: 1}, {a: (Math.random() + 1), repeat: -1, yoyo: true, onUpdateParams: [_perks[i]],onUpdate: function(elm){
+//            console.log(this);
+            elm.style.WebkitFilter = 'brightness('+this.vars.a+')';
+        }});
+    }
 });
 window.onresize = onResize;
 var SCREEN_H = window.innerHeight;
@@ -727,7 +735,7 @@ function resizePerkToPerk (ul) {
                     bottom: elm.y * 10 + '%',
                     left: elm.x * 10 + '%',
                     rotationZ: radToDegrees(Math.atan(horizontalLength / verticalLength)),
-                    height: Math.sqrt(verticalLength * verticalLength + horizontalLength * horizontalLength)
+                    height: Math.sqrt(verticalLength * verticalLength + horizontalLength * horizontalLength)/100*95
                 });
             });
         }
@@ -756,7 +764,9 @@ function createPerks(perks, ul) {
         TweenMax.to(li, 0, {bottom: elm.y * 10+'%', left: elm.x * 10+'%'});
         E.addHandler(li, 'click', function(){
             if(skillsState.zoomConstelation) {
-                style.innerHTML = '.perks.transform {transform: rotateX(50deg) translate3d(' + (elm.x * -10 + 50) + '%,' + (elm.y * 10 - 3) + '%,0);';
+                TweenMax.to(ul.getElementsByClassName('perk--desc'),.3, {autoAlpha: 0});
+                TweenMax.to(li.getElementsByClassName('perk--desc'),.3, {autoAlpha: 1});
+                style.innerHTML = '.perks.transform {transform: rotateX(50deg) translate3d(' + (elm.x * -10 + 50) + '%,' + (elm.y * 10) + '%,0);';
                 ul.classList.add('transform');
             }
         });
@@ -774,11 +784,12 @@ function createPerkToPerk(elm, elm2, ulH, ulW) {
     var li2 = document.createElement('li');
     li2.setAttribute('id', elm2.id);
     li2.classList.add('perkToPerk');
+    var height = Math.sqrt(verticalLength*verticalLength + horizontalLength*horizontalLength)
     TweenMax.to(li2, 0, {
         bottom: elm.y * 10 + '%',
         left: elm.x * 10 + '%',
         rotationZ: radToDegrees(Math.atan(horizontalLength/verticalLength)),
-        height: Math.sqrt(verticalLength*verticalLength + horizontalLength*horizontalLength)
+        height: (height/100)*50
     });
     return li2;
 }
@@ -820,7 +831,8 @@ function zoomInConstelation(ul){
             this.target[i].style.height = this.vars.css.height;
             this.target[i].style.width = this.vars.css.width;
         }
-        TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.5, { autoAlpha: 1, onComplete: function(){
+        TweenMax.to(ul.querySelector('.perk--desc'),.3, { autoAlpha: 1});
+        TweenMax.to('.perk--title, .perkToPerk',.5, { autoAlpha: 1, onComplete: function(){
             skillsState.movingConstelation = false;
         }});
         var perks = ul.getElementsByClassName('perks');
@@ -829,6 +841,11 @@ function zoomInConstelation(ul){
         }
     }});
 }
+//@todo ajouter tous les skills/perks
+//@todo ajouter image par dessus constelation
+//@todo styler étoiles des constelation
+//@todo restyler ligne entre étoiles avec svg filter
+
 </script>
 </body>
 </html>
