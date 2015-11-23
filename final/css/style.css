@@ -449,7 +449,8 @@ ul, ol {
 }
 .perkToPerk {
     position: absolute;
-    width: 3px;
+    width: 1px;
+    /*width: 3px;*/
     border-radius: 100%;
     /*background: linear-gradient(to left, rgba(10,142,255,1) 0%, rgba(255,255,255,1) 50%, rgba(10,142,255,1) 100%);*/
     background-color: #FFFFFF;
@@ -458,9 +459,13 @@ ul, ol {
     font-size: 3vw;
     /* transform: translateZ(1vw); */
     /*box-shadow: 0 0 11px 3px rgba(10, 142, 255, .5);*/
-    box-shadow: 0 -20px 5px 3px #ffffff, 0 -20px 9px 5px rgba(0,173,255,1), 0 -20px 7px 12px rgba(32, 82, 193, 0.8);
+    box-shadow: 0 -10px 0px 1px #ffffff, 0 -10px 1px 1px rgba(0,173,255,1), 0 -10px 3px 3px rgba(32, 82, 193, 0.8);
+    /*box-shadow: 0 -20px 5px 3px #ffffff, 0 -20px 9px 5px rgba(0,173,255,1), 0 -20px 7px 12px rgba(32, 82, 193, 0.8);*/
     -webkit-filter: brightness(0.9);
     filter: brightness(0.9);
+}
+.lock {
+    opacity: .3;
 }
 .skill--separator {
     width: 19vw;
