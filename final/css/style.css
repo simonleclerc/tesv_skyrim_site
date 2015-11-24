@@ -411,25 +411,25 @@ ul, ol {
 }
 .perk {
     position: absolute;
-    width: 16vw;
-    margin-left: -8vw;
+    width: 20vw;
+    margin-left: -10vw;
     transform-origin: center bottom 0px;
-    transform: rotateX(-50deg) translateY(1vw);
+    transform: rotateX(-50deg) translateY(2vw);
     text-align: center;
     font-size: 3vw;
 }
 
 .perk--img {
-    width: 2vw;
+    width: 4vw;
     text-align: center;
-    height: 2vw;
+    height: 4vw;
     border-radius: 50%;
     background: url('../images/star.png') no-repeat 0 / cover;
     margin: auto;
 }
 .perk--title {
     position: absolute;
-    top: -3vw;
+    top: 3vw;
     left: 0;
     right: 0;
     margin: auto;
@@ -438,7 +438,7 @@ ul, ol {
 }
 .perk--desc {
     position: absolute;
-    top: 10vw;
+    top: 14vw;
     left: 0;
     right: 0;
     margin: auto;
@@ -452,17 +452,51 @@ ul, ol {
     width: 1px;
     /*width: 3px;*/
     border-radius: 100%;
-    /*background: linear-gradient(to left, rgba(10,142,255,1) 0%, rgba(255,255,255,1) 50%, rgba(10,142,255,1) 100%);*/
-    background-color: #FFFFFF;
     transform-origin: center bottom 0px;
-    text-align: center;
-    font-size: 3vw;
-    /* transform: translateZ(1vw); */
-    /*box-shadow: 0 0 11px 3px rgba(10, 142, 255, .5);*/
+}
+.perkToPerk li {
+    -webkit-filter: brightness(1.4) blur(0px);
+    filter: brightness(1.4)  blur(0px);
+}
+.perkToPerk li:nth-child(3){
+    height: 100%;
+    /*width: 1px;*/
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    position: absolute;
+    top: 0;
+    left: 0;
     box-shadow: 0 -10px 0px 1px #ffffff, 0 -10px 1px 1px rgba(0,173,255,1), 0 -10px 3px 3px rgba(32, 82, 193, 0.8);
-    /*box-shadow: 0 -20px 5px 3px #ffffff, 0 -20px 9px 5px rgba(0,173,255,1), 0 -20px 7px 12px rgba(32, 82, 193, 0.8);*/
-    -webkit-filter: brightness(0.9);
-    filter: brightness(0.9);
+}
+.perkToPerk li:nth-child(1),
+.perkToPerk li:nth-child(4){
+    height: 33%;
+    width: 3px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+}
+.perkToPerk li:nth-child(2),
+.perkToPerk li:nth-child(5){
+    /*display: none;*/
+    height: 33%;
+    width: 3px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0 -10px 0px 1px #ffffff, 0 -10px 1px 1px rgba(0,173,255,1);
+    opacity: 0;
+    visibility: hidden;
+}
+.perkToPerk li:nth-child(1),
+.perkToPerk li:nth-child(2){
+    box-shadow: 0 -10px 0px 1px #ffffff, 0 -10px 1px 3px rgba(0,173,255,1), 0 -10px 3px 4px rgba(32, 82, 193, 0.8);
 }
 .lock {
     opacity: .3;
