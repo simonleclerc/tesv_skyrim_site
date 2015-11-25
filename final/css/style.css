@@ -418,7 +418,18 @@ ul, ol {
     text-align: center;
     font-size: 3vw;
 }
-
+.perks--above {
+    /*background-image: url(http://localhost:63342/skyrim/tesv_skyrim_site/final/images/perkAbove/javascript.png);*/
+    width: 100%;
+    height: 50%;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    position: absolute;
+    bottom: 3%;
+    transform: rotateX(-50deg);
+    opacity: 0;
+    visibility: hidden;
+}
 .perk--img {
     width: 4vw;
     text-align: center;
@@ -524,4 +535,8 @@ ul, ol {
 .skill--progress {
     width: 80%;
     margin: 0 auto;
+}
+.skill:first-child .perks--above {
+    opacity: 1;
+    visibility: visible;
 }

@@ -236,6 +236,7 @@ var skills = [
         title: 'Javascript',
         level: '70',
         levelProgress: 95,
+        perkAbove: 'javascript',
         perks: [
             {
                 title: 'Novice',
@@ -315,7 +316,7 @@ var skills = [
                 x: 10,
                 y: 1.5,
                 linkTo: [
-                    {x: 10, y: 3, lock: true}
+                    {x: 10, y: 5, lock: true}
                 ],
                 lock: false
             },
@@ -323,7 +324,7 @@ var skills = [
                 title: 'Expert',
                 desc: 'Write expert javascript',
                 x: 10,
-                y: 3,
+                y: 5,
                 lock: true
             }
 
@@ -333,6 +334,7 @@ var skills = [
         title: 'Javascript',
         level: '70',
         levelProgress: 10,
+        perkAbove: 'javascript',
         perks: [
             {
                 title: 'Novice',
@@ -381,6 +383,7 @@ var skills = [
         title: 'Javascript',
         level: '70',
         levelProgress: 10,
+        perkAbove: 'javascript',
         perks: [
             {
                 title: 'Novice',
@@ -429,6 +432,7 @@ var skills = [
         title: 'Javascript',
         level: '70',
         levelProgress: 10,
+        perkAbove: 'javascript',
         perks: [
             {
                 title: 'Novice',
@@ -477,6 +481,7 @@ var skills = [
         title: 'Javascript',
         level: '70',
         levelProgress: 10,
+        perkAbove: 'javascript',
         perks: [
             {
                 title: 'Novice',
@@ -525,6 +530,7 @@ var skills = [
         title: 'Javascript',
         level: '70',
         levelProgress: 10,
+        perkAbove: 'javascript',
         perks: [
             {
                 title: 'Novice',
@@ -599,6 +605,10 @@ skills.map(function(skill, iterSkill){
     skillLi.setAttribute('id', skill.id);
     var skillUl = document.createElement('ul');
     skillUl.classList.add('perks');
+    var aboveDiv = document.createElement('div');
+    aboveDiv.classList.add('perks--above');
+    aboveDiv.style.backgroundImage = 'url(images/perkAbove/'+skill.perkAbove+'.png)'
+    skillUl.appendChild(aboveDiv);
     var skillSeparator = document.createElement('div');
     skillSeparator.classList.add('skill--separator');
     var skillSpanTitle = document.createElement('span');
@@ -704,8 +714,10 @@ skills.map(function(skill, iterSkill){
                         TweenMax.to('#skill'+newId, 0, {x: '+='+(120*skillsLength+ 80) +'%'})
                     }
                 }
+                TweenMax.to(skillLi.getElementsByClassName('perks--above'),.3, {autoAlpha: 1});
                 skillsState.movingConstelation = false;
             }});
+            TweenMax.to(document.getElementsByClassName('perks--above'),.3, {autoAlpha: 0});
             tl.addLabel('start');
             if((targetNumId > centeredId && Math.abs(decalage) > skillsLength/2) || (targetNumId < centeredId && Math.abs(decalage) <= skillsLength/2)) {
                 if(targetNumId > centeredId && Math.abs(decalage) > skillsLength/2) {
@@ -727,9 +739,7 @@ skills.map(function(skill, iterSkill){
                 }
             }
 
-            TweenMax.to('.background-fullsize',1, {backgroundPosition: '+='+100*decalage+'px 0', onComplete: function(){
-
-            }});
+            TweenMax.to('.background-fullsize',1, {backgroundPosition: '+='+100*decalage+'px 0'});
         }
     });
 
@@ -873,6 +883,7 @@ function zoomOutConstelation(ul){
 }
 function zoomInConstelation(ul){
     skillsState.movingConstelation = true;
+    TweenMax.to(document.getElementsByClassName('perks--above'),.3, {autoAlpha: 0});
     TweenMax.to('.background-fullsize',1, {height: '115%', width: '115%', x: '-7.5%', y : '-7.5%'});
     TweenMax.to(ul, 1, {perspective: 650, ease: Power4.easeOut});
     TweenMax.to('.perk', 1, {transform: 'rotateX(-50deg) translateY(10vw)'});
@@ -921,9 +932,7 @@ function zoomInConstelation(ul){
     }});
 }
 //@todo ajouter tous les skills/perks
-//@todo ajouter image par dessus constelation
-//@todo styler étoiles des constelation
-//@todo restyler ligne entre étoiles avec svg filter
+//@todo styler perks non débloquées
 
 </script>
 </body>
