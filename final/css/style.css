@@ -438,6 +438,11 @@ ul, ol {
     background: url('../images/star.png') no-repeat 0 / cover;
     margin: auto;
 }
+.perk--img.lock {
+    background-image: url('../images/low_star.png');
+    background-size: 40%;
+    background-position: center;
+}
 .perk--title {
     position: absolute;
     top: 3vw;
@@ -465,11 +470,11 @@ ul, ol {
     border-radius: 100%;
     transform-origin: center bottom 0px;
 }
-.perkToPerk li {
+.perkToPerk:not(.lock) li {
     -webkit-filter: brightness(1.4) blur(0px);
     filter: brightness(1.4)  blur(0px);
 }
-.perkToPerk li:nth-child(3){
+.perkToPerk:not(.lock) li:nth-child(3){
     height: 100%;
     /*width: 1px;*/
     border-radius: 50%;
@@ -479,8 +484,8 @@ ul, ol {
     left: 0;
     box-shadow: 0 -10px 0px 1px #ffffff, 0 -10px 1px 1px rgba(0,173,255,1), 0 -10px 3px 3px rgba(32, 82, 193, 0.8);
 }
-.perkToPerk li:nth-child(1),
-.perkToPerk li:nth-child(4){
+.perkToPerk:not(.lock) li:nth-child(1),
+.perkToPerk:not(.lock) li:nth-child(4){
     height: 33%;
     width: 3px;
     border-radius: 50%;
@@ -491,8 +496,8 @@ ul, ol {
     opacity: 0;
     visibility: hidden;
 }
-.perkToPerk li:nth-child(2),
-.perkToPerk li:nth-child(5){
+.perkToPerk:not(.lock) li:nth-child(2),
+.perkToPerk:not(.lock) li:nth-child(5){
     /*display: none;*/
     height: 33%;
     width: 3px;
@@ -505,12 +510,20 @@ ul, ol {
     opacity: 0;
     visibility: hidden;
 }
-.perkToPerk li:nth-child(1),
-.perkToPerk li:nth-child(2){
+.perkToPerk:not(.lock) li:nth-child(1),
+.perkToPerk:not(.lock) li:nth-child(2){
     box-shadow: 0 -10px 0px 1px #ffffff, 0 -10px 1px 3px rgba(0,173,255,1), 0 -10px 3px 4px rgba(32, 82, 193, 0.8);
 }
-.lock {
-    opacity: .3;
+.perkToPerk.lock li {
+    display: none;
+}
+.perkToPerk.lock li:nth-child(3){
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0 -10px 3px 1px rgba(155, 178, 206, .2);
 }
 .skill--separator {
     width: 19vw;
