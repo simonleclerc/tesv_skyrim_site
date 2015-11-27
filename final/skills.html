@@ -598,6 +598,23 @@ var skillsState = {
 
 var globalSkillUl = document.querySelector('.skills');
 
+
+function moveConstellationsAway(){
+    var leftSkill = Math.floor((skillsLength - 1)/2);
+    var rightSkill = skillsLength - leftSkill -1 ;
+    for(var i = 0; i < leftSkill; i++) {
+        var newId = ((parseInt(skillsState.centered.substring(5,6)) - (leftSkill-i))%skillsLength);
+        newId = newId < 0 ? skillsLength +newId : newId;
+        TweenMax.to('#skill'+newId, 2, {x: '-=2000'});
+    }
+    for(var i = 0; i < rightSkill; i++) {
+        var newId = (parseInt(skillsState.centered.substring(5,6)) + i +1)%skillsLength;
+        TweenMax.to('#skill'+newId, 2, {x: '+=2000'});
+    }
+}
+function moveConstellationsCloser(){
+    TweenMax.to('.skill', 1, {x: 0});
+}
 var skillsLength = skills.length;
 skills.map(function(skill, iterSkill){
     var skillLi = document.createElement('li');
@@ -664,7 +681,6 @@ skills.map(function(skill, iterSkill){
     }
 
     TweenMax.to(skillLi, 0, {x: coeff+'%'});
-
     E.addHandler(skillLi, 'click', function(e){
         if(skillsState.movingConstelation) {
             return;
@@ -679,19 +695,8 @@ skills.map(function(skill, iterSkill){
             }
             skillsState.zoomConstelation = true;
             zoomInConstelation(skillLi);
-            var leftSkill = Math.floor((skillsLength - 1)/2);
-            var rightSkill = skillsLength - leftSkill -1 ;
-            var currentId = target.getAttribute('id');
-            var numId = currentId.substring(5, 6);
-            for(var i = 0; i < leftSkill; i++) {
-                var newId = ((parseInt(skillsState.centered.substring(5,6)) - (leftSkill-i))%skillsLength);
-                newId = newId < 0 ? skillsLength +newId : newId;
-                TweenMax.to('#skill'+newId, 2, {x: '-=2000'});
-            }
-            for(var i = 0; i < rightSkill; i++) {
-                var newId = (parseInt(skillsState.centered.substring(5,6)) + i +1)%skillsLength;
-                TweenMax.to('#skill'+newId, 2, {x: '+=2000'});
-            }
+            moveConstellationsAway();
+
         } else {
             skillsState.movingConstelation = true;
             var targetId = target.getAttribute('id');
@@ -823,6 +828,7 @@ function createPerks(perks, ul) {
         TweenMax.to(li, 0, {bottom: elm.y * 10+'%', left: elm.x * 10+'%'});
         E.addHandler(li, 'click', function(){
             if(skillsState.zoomConstelation) {
+                skillsState.zoomConstelationDeepPerk = true;
                 TweenMax.to(ul.getElementsByClassName('perk--desc'),.3, {autoAlpha: 0});
                 TweenMax.to(li.getElementsByClassName('perk--desc'),.3, {autoAlpha: 1});
                 style.innerHTML = '.perks.transform {transform: rotateX(50deg) translate3d(' + (elm.x * -10 + 50) + '%,' + (elm.y * 10) + '%,0);';
@@ -865,31 +871,51 @@ function zoomOutConstelation(ul){
     skillsState.movingConstelation = true;
     TweenMax.to('.background-fullsize',1, {height: '100%', width: '100%', x: '0%', y : '0%'});
     TweenMax.to(ul, 1, {perspective: 10000, ease: Power4.easeIn});
-    TweenMax.to('.skill--separator', 1, {marginTop: '7vw', autoAlpha: 0});
-    TweenMax.to('.perk--title, .perk--desc, .perkToPerk',.1, { autoAlpha: 0});
-    TweenMax.to(ul, 1, {height: '4vw', width: '16vw', onComplete: function(){
+    TweenMax.to(ul.querySelectorAll('.perk'), 1, {transform: 'rotateX(-50deg) translateY(2vw)'});
+    TweenMax.to(ul.querySelectorAll('.perk--img'), 1, {width: '4vw', height: '4vw'});
+    TweenMax.to(ul.querySelectorAll('.skill--separator'), 1, {marginTop: '7vw', autoAlpha: 0});
+    TweenMax.to(ul.querySelectorAll('.perk--title, .perk--desc, .perkToPerk'),.1, { autoAlpha: 0});
+    TweenMax.to(ul, 1, {height: '6vw', width: '16vw', ease: Power2.easeInOut, onUpdate: function(){
+        if(parseInt(this.target.offsetWidth) > SCREEN_W) {
+            TweenMax.to(this.target, 0, {x: '-'+(this.target.offsetWidth-SCREEN_W)/2+'px' });
+        } else {
+            TweenMax.to(this.target, 0, {x: '0px' });
+        }
+    }, onComplete: function(){
         for(var i = 0; i < this.target.length; i++){
             this.target[i].style.height = this.vars.css.height;
             this.target[i].style.width = this.vars.css.width;
         }
-        TweenMax.to(ul.querySelectorAll('.perkToPerk li:first-child'),.5, { boxShadow: '0 -10px 0px 1px #ffffff, 0 -10px 1px 1px rgba(0,173,255,1), 0 -10px 3px 3px rgba(32, 82, 193, 0.8)', autoAlpha: 1, onComplete: function(){
-            skillsState.movingConstelation = false;
-        }});
+
+        skillsState.perkToPerkAnimation.map(function(animation){
+            animation.kill();
+        });
+        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(1), .perkToPerk:not(.lock) li:nth-child(2)'),0, {autoAlpha: 0});
+        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(4), .perkToPerk:not(.lock) li:nth-child(5)'),0, {autoAlpha: 0});
+        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li'),0, {filter: 'brightness(1.5) blur(1px)', WebkitFilter: 'brightness(1.4) blur(0px)'});
+        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(3)'),0, {boxShadow: '0 -10px 0px 1px #ffffff, 0 -10px 1px 1px rgba(0,173,255,1), 0 -10px 3px 3px rgba(32, 82, 193, 0.8)', width: 1, autoAlpha: 1});
+        TweenMax.to('.perkToPerk.lock li:nth-child(3)',0, {autoAlpha:1, boxShadow: '0 -10px 3px 1px rgba(155, 178, 206, .2)'});
+
         var perks = ul.getElementsByClassName('perks');
         for(var i = 0; i < perks.length; i++){
             resizePerkToPerk(perks[i]);
         }
+        TweenMax.to([ul.querySelectorAll('.perkToPerk'), '.skill--progress'],.1, { autoAlpha: 1, onComplete: function(){
+            skillsState.movingConstelation = false;
+            TweenMax.to(ul.getElementsByClassName('perks--above'),.3, {autoAlpha: 1});
+        }});
     }});
 }
 function zoomInConstelation(ul){
     skillsState.movingConstelation = true;
-    TweenMax.to(document.getElementsByClassName('perks--above'),.3, {autoAlpha: 0});
+    skillsState.zoomedConstelation = ul;
+    TweenMax.to(ul.getElementsByClassName('perks--above'),.3, {autoAlpha: 0});
     TweenMax.to('.background-fullsize',1, {height: '115%', width: '115%', x: '-7.5%', y : '-7.5%'});
     TweenMax.to(ul, 1, {perspective: 650, ease: Power4.easeOut});
-    TweenMax.to('.perk', 1, {transform: 'rotateX(-50deg) translateY(10vw)'});
-    TweenMax.to('.perk--img', 1, {width: '20vw', height: '20vw'});
-    TweenMax.to('.skill--separator', 1, {marginTop: '35vw', autoAlpha: 1});
-    TweenMax.to([ul.querySelectorAll('.perkToPerk li'), '.skill--progress'],.1, { autoAlpha: 0});
+    TweenMax.to(ul.querySelectorAll('.perk'), 1, {transform: 'rotateX(-50deg) translateY(10vw)'});
+    TweenMax.to(ul.querySelectorAll('.perk--img'), 1, {width: '20vw', height: '20vw'});
+    TweenMax.to(ul.querySelectorAll('.skill--separator'), 1, {marginTop: '35vw', autoAlpha: 1});
+    TweenMax.to([ul.querySelectorAll('.perkToPerk li'), ul.querySelectorAll('.skill--progress')],.1, { autoAlpha: 0});
     TweenMax.to(ul, 1, {height: '40vw', width: '130vw', ease: Power2.easeInOut, onUpdate: function(){
         if(parseInt(this.target.offsetWidth) > SCREEN_W) {
             TweenMax.to(this.target, 0, {x: '-'+(this.target.offsetWidth-SCREEN_W)/2+'px' });
@@ -900,30 +926,31 @@ function zoomInConstelation(ul){
             this.target[i].style.width = this.vars.css.width;
         }
         TweenMax.to(ul.querySelector('.perk--desc'),.3, { autoAlpha: 1});
-        TweenMax.to('.perk--title',.5, { autoAlpha: 1});
+        TweenMax.to(ul.querySelectorAll('.perk--title'),.5, { autoAlpha: 1});
 
         var perkToPerk = ul.querySelectorAll('.perkToPerk:not(.lock)');
+        skillsState.perkToPerkAnimation = [];
         for(var i = 0; i < perkToPerk.length; i++){
             var perkObj ={taille:0, taille2: 200};
-            TweenMax.fromTo(perkObj, Math.random()+.8, {taille: 0}, {taille:200, yoyo: true, repeat: -1, ease: Power1.easeInOut, onUpdateParams:[i], onUpdate: function(i){
+            skillsState.perkToPerkAnimation.push(TweenMax.fromTo(perkObj, Math.random()+.8, {taille: 0}, {taille:200, yoyo: true, repeat: -1, ease: Power1.easeInOut, onUpdateParams:[i], onUpdate: function(i){
                 var newElm = perkToPerk[i].querySelectorAll('li:nth-child(1), li:nth-child(4)');
                 newElm[0].style.transform = 'translateY('+this.target.taille+'%)';
                 newElm[1].style.transform = 'translateY('+this.target.taille+'%)';
-            }});
-            TweenMax.fromTo(perkObj, Math.random()+.8, {taille2: 200}, {taille2:0, yoyo: true, repeat: -1, ease: Power1.easeInOut, onUpdateParams:[i], onUpdate: function(i){
+            }}));
+            skillsState.perkToPerkAnimation.push(TweenMax.fromTo(perkObj, Math.random()+.8, {taille2: 200}, {taille2:0, yoyo: true, repeat: -1, ease: Power1.easeInOut, onUpdateParams:[i], onUpdate: function(i){
                 var newElm = perkToPerk[i].querySelectorAll('li:nth-child(2), li:nth-child(5)');
                 newElm[0].style.transform = 'translateY('+this.target.taille2+'%)';
                 newElm[1].style.transform = 'translateY('+this.target.taille2+'%)';
-            }});
+            }}));
         }
 
 //        TweenMax.fromTo(ul.querySelectorAll('.perkToPerk li:nth-child(4)'), 1,{transform: 'translateY(0)'}, {transform: 'translateY(210px)', yoyo: true, repeat: -1});
-        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(1), .perkToPerk:not(.lock) li:nth-child(2)'),.5, {width: 10, left: -4, autoAlpha: 1});
-        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(4), .perkToPerk:not(.lock) li:nth-child(5)'),.5, {width: 10, left: -4, autoAlpha: 1});
-        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li'),0, {filter: 'brightness(1.5) blur(1px)', WebkitFilter: 'brightness(1.5) blut(1px)'});
+        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(1), .perkToPerk:not(.lock) li:nth-child(2)'),0, {autoAlpha: 1});
+        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(4), .perkToPerk:not(.lock) li:nth-child(5)'),0, {autoAlpha: 1});
+        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li'),0, {filter: 'brightness(1.5) blur(1px)', WebkitFilter: 'brightness(1.5) blur(1px)'});
         TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(3)'),.5, {boxShadow: '0 -20px 2px 1px #ffffff, 0 -20px 9px 3px rgba(0,173,255,1), 0 -20px 7px 9px rgba(32, 82, 193, 0.8)', width: 1, autoAlpha: 1});
-        TweenMax.to('.perkToPerk.lock li:nth-child(3)',.5, {autoAlpha:1, boxShadow: '0 -10px 50px 5px rgba(155, 178, 206, 1), 0 -10px 5px 2px rgba(155, 178, 206, .3)'});
-        TweenMax.to('.perkToPerk.lock',.5, {autoAlpha:1, onComplete: function(){
+        TweenMax.to(ul.querySelectorAll('.perkToPerk.lock li:nth-child(3)'),.5, {autoAlpha:1, boxShadow: '0 -10px 50px 5px rgba(155, 178, 206, 1), 0 -10px 5px 2px rgba(155, 178, 206, .3)'});
+        TweenMax.to(ul.querySelectorAll('.perkToPerk.lock'),.5, {autoAlpha:1, onComplete: function(){
             skillsState.movingConstelation = false;
         }});
         var perks = ul.getElementsByClassName('perks');
@@ -935,8 +962,30 @@ function zoomInConstelation(ul){
 //@todo ajouter tous les skills/perks
 //@todo ajouter brightness sur étoiles
 //@todo navigation clavier
-//@todo bouton previous
-//@todo maj zoomOut par rapport a zoomIn
+//@todo bouton previous (menu)
+//@todo ajouter cfleche pour naviguer
+//@todo séparer js de cette page
+var navigation = {
+    previousState: function(){
+        if(skillsState.zoomConstelationDeepPerk) {
+            skillsState.zoomConstelationDeepPerk = false;
+            TweenMax.to(skillsState.zoomedConstelation.getElementsByClassName('perk--desc'),.3, {autoAlpha: 0});
+            TweenMax.to(skillsState.zoomedConstelation.getElementsByClassName('perk--desc:first-child'),.3, {autoAlpha: 1});
+            var transformedPerk = skillsState.zoomedConstelation.querySelector('.perks.transform');
+            transformedPerk.classList.remove('transform');
+        } else if(skillsState.zoomConstelation) {
+            zoomOutConstelation(skillsState.zoomedConstelation);
+            skillsState.zoomedConstelation = undefined;
+            skillsState.zoomConstelation = false;
+            moveConstellationsCloser();
+        }
+    }
+};
+    E.addHandler(document, 'keyup', function(e) {
+        if(e.which ===  27) {
+            navigation.previousState();
+        }
+    });
 </script>
 </body>
 </html>
