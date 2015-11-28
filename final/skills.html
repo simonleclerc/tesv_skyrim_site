@@ -89,8 +89,7 @@
 </div>
 
 <div class="content">
-    <ul class="skills">
-    </ul>
+    <ul class="skills"></ul>
     <div class="desc-skill"></div>
 </div>
 
@@ -600,20 +599,73 @@ var globalSkillUl = document.querySelector('.skills');
 
 
 function moveConstellationsAway(){
-    var leftSkill = Math.floor((skillsLength - 1)/2);
-    var rightSkill = skillsLength - leftSkill -1 ;
+    var leftSkill = Math.floor((skillsLength - 1)/2),
+        rightSkill = skillsLength - leftSkill -1 ;
+    var newId;
     for(var i = 0; i < leftSkill; i++) {
-        var newId = ((parseInt(skillsState.centered.substring(5,6)) - (leftSkill-i))%skillsLength);
+        newId = ((parseInt(skillsState.centered.substring(5,6)) - (leftSkill-i))%skillsLength);
         newId = newId < 0 ? skillsLength +newId : newId;
         TweenMax.to('#skill'+newId, 2, {x: '-=2000'});
     }
-    for(var i = 0; i < rightSkill; i++) {
-        var newId = (parseInt(skillsState.centered.substring(5,6)) + i +1)%skillsLength;
+    for(var j = 0; j < rightSkill; j++) {
+        newId = (parseInt(skillsState.centered.substring(5,6)) + j +1)%skillsLength;
         TweenMax.to('#skill'+newId, 2, {x: '+=2000'});
     }
 }
 function moveConstellationsCloser(){
     TweenMax.to('.skill', 1, {x: 0});
+}
+function moveConstellationToCenter(target) {
+    skillsState.movingConstelation = true;
+    var targetId = target.getAttribute('id'),
+        targetNumId = parseInt(targetId.substring(5, 6)),
+        centeredId = parseInt(skillsState.centered.substring(5, 6)),
+        decalage = centeredId - targetNumId;
+    var tl = new TimelineMax({
+        onComplete: function () {
+            var idFromWhereToBeginMove;
+            skillsState.centered = targetId;
+            if (decalage > 0) {
+                idFromWhereToBeginMove = (parseInt(skillsState.centered.substring(5, 6)) + (skillsLength % 2 === 0 ? skillsLength / 2 + 1 : Math.ceil(skillsLength / 2))) % skillsLength;
+                for (var i = 0; i < decalage; i++) {
+                    TweenMax.to('#skill' + ((idFromWhereToBeginMove + i) % skillsLength), 0, {x: '-=' + (120 * skillsLength + 80) + '%'})
+                }
+            } else {
+                idFromWhereToBeginMove = (parseInt(skillsState.centered.substring(5, 6)) - Math.floor(skillsLength / 2 + (skillsLength % 2 === 1 ? 1 : 0))) % skillsLength;
+                idFromWhereToBeginMove = idFromWhereToBeginMove < 0 ? skillsLength + idFromWhereToBeginMove : idFromWhereToBeginMove;
+                for (var j = 0; j < decalage * -1; j++) {
+                    var newId = ((idFromWhereToBeginMove - j) % skillsLength);
+                    newId = newId < 0 ? skillsLength + newId : newId;
+                    TweenMax.to('#skill' + newId, 0, {x: '+=' + (120 * skillsLength + 80) + '%'})
+                }
+            }
+            TweenMax.to(target.getElementsByClassName('perks--above'), .3, {autoAlpha: 1});
+            skillsState.movingConstelation = false;
+        }
+    });
+    TweenMax.to(document.getElementsByClassName('perks--above'), .3, {autoAlpha: 0});
+    tl.addLabel('start');
+    if ((targetNumId > centeredId && Math.abs(decalage) > skillsLength / 2) || (targetNumId < centeredId && Math.abs(decalage) <= skillsLength / 2)) {
+        if (targetNumId > centeredId && Math.abs(decalage) > skillsLength / 2) {
+            decalage = (skillsLength + decalage);
+        }
+
+        tl.to('.skill', 1, {x: '+=' + (120 * decalage) + '%'}, 'start');
+        for (var b = 0; b <= decalage; b++) {
+            tl.to('#skill' + ((targetNumId + b) % skillsLength), 1, {x: '+=' + (120 * decalage + ((b === 0 || b === decalage) ? 40 : 80)) + '%'}, 'start');
+        }
+        skillsState.centered = targetId;
+    } else {
+        if (centeredId > targetNumId && Math.abs(decalage) > skillsLength / 2) {
+            decalage = (skillsLength - decalage) * -1;
+        }
+        tl.to('.skill', 1, {x: '+=' + (120 * decalage) + '%'}, 'start');
+        for (var b = 0; b <= decalage * -1; b++) {
+            tl.to('#skill' + ((centeredId + b) % skillsLength), 1, {x: '+=' + (120 * decalage - ((b === 0 || b === decalage * -1) ? 40 : 80)) + '%'}, 'start');
+        }
+    }
+
+    TweenMax.to('.background-fullsize', 1, {backgroundPosition: '+=' + 100 * decalage + 'px 0'});
 }
 var skillsLength = skills.length;
 skills.map(function(skill, iterSkill){
@@ -624,7 +676,7 @@ skills.map(function(skill, iterSkill){
     skillUl.classList.add('perks');
     var aboveDiv = document.createElement('div');
     aboveDiv.classList.add('perks--above');
-    aboveDiv.style.backgroundImage = 'url(images/perkAbove/'+skill.perkAbove+'.png)'
+    aboveDiv.style.backgroundImage = 'url(images/perkAbove/'+skill.perkAbove+'.png)';
     skillUl.appendChild(aboveDiv);
     var skillSeparator = document.createElement('div');
     skillSeparator.classList.add('skill--separator');
@@ -698,53 +750,7 @@ skills.map(function(skill, iterSkill){
             moveConstellationsAway();
 
         } else {
-            skillsState.movingConstelation = true;
-            var targetId = target.getAttribute('id');
-            var targetNumId = parseInt(targetId.substring(5,6));
-            var centeredId = parseInt(skillsState.centered.substring(5,6));
-            var decalage = centeredId - targetNumId;
-            var tl = new TimelineMax({onComplete: function(){
-                skillsState.centered = targetId;
-                if(decalage > 0) {
-                    var idFromWhereToBeginMove = (parseInt(skillsState.centered.substring(5,6)) + (skillsLength%2 === 0 ? skillsLength/2+1 :  Math.ceil(skillsLength/2))) % skillsLength;
-                    for(var i = 0; i < decalage; i++) {
-                        TweenMax.to('#skill'+((idFromWhereToBeginMove+i)% skillsLength), 0, {x: '-='+(120*skillsLength+ 80) +'%'})
-                    }
-                } else {
-                    var idFromWhereToBeginMove = (parseInt(skillsState.centered.substring(5,6)) - Math.floor(skillsLength/2+(skillsLength%2 === 1 ? 1 :0))) % skillsLength;
-                    idFromWhereToBeginMove = idFromWhereToBeginMove < 0 ? skillsLength +idFromWhereToBeginMove : idFromWhereToBeginMove;
-                    for(var i = 0; i < decalage*-1; i++) {
-                        var newId = ((idFromWhereToBeginMove-i)%skillsLength);
-                        newId = newId < 0 ? skillsLength +newId : newId;
-                        TweenMax.to('#skill'+newId, 0, {x: '+='+(120*skillsLength+ 80) +'%'})
-                    }
-                }
-                TweenMax.to(skillLi.getElementsByClassName('perks--above'),.3, {autoAlpha: 1});
-                skillsState.movingConstelation = false;
-            }});
-            TweenMax.to(document.getElementsByClassName('perks--above'),.3, {autoAlpha: 0});
-            tl.addLabel('start');
-            if((targetNumId > centeredId && Math.abs(decalage) > skillsLength/2) || (targetNumId < centeredId && Math.abs(decalage) <= skillsLength/2)) {
-                if(targetNumId > centeredId && Math.abs(decalage) > skillsLength/2) {
-                    decalage = (skillsLength + decalage);
-                }
-
-                tl.to('.skill', 1, {x: '+='+(120*decalage)+'%'}, 'start');
-                for (var b = 0; b <= decalage; b++) {
-                    tl.to('#skill' + ((targetNumId + b) % skillsLength), 1, {x: '+=' + (120 * decalage + ((b === 0 || b === decalage) ? 40 : 80)) + '%'}, 'start');
-                }
-                skillsState.centered = targetId;
-            } else {
-                if(centeredId > targetNumId && Math.abs(decalage) > skillsLength/2) {
-                    decalage = (skillsLength - decalage)*-1;
-                }
-                tl.to('.skill', 1, {x: '+='+(120*decalage)+'%'}, 'start');
-                for (var b = 0; b <= decalage*-1; b++) {
-                    tl.to('#skill' + ((centeredId + b) % skillsLength), 1, {x: '+=' + (120 * decalage - ((b === 0 || b === decalage*-1) ? 40 : 80)) + '%'}, 'start');
-                }
-            }
-
-            TweenMax.to('.background-fullsize',1, {backgroundPosition: '+='+100*decalage+'px 0'});
+            moveConstellationToCenter(target);
         }
     });
 
@@ -752,15 +758,6 @@ skills.map(function(skill, iterSkill){
     createPerks(skill.perks, skillUl);
 
     globalSkillUl.appendChild(skillLi);
-//    var _perks = document.getElementsByClassName('perkToPerk');
-//    for(var i = 0; i < _perks.length; i++) {
-//        var obj = {a: 1};
-//        TweenMax.fromTo(obj, (Math.random() * 4),{a: 1}, {a: (Math.random() + 1), repeat: -1, yoyo: true, onUpdateParams: [_perks[i]],onUpdate: function(elm){
-////            console.log(this);
-//            elm.style.WebkitFilter = 'brightness('+this.vars.a+')';
-//            elm.style.filter = 'brightness('+this.vars.a+')';
-//        }});
-//    }
 });
 window.onresize = onResize;
 var SCREEN_H = window.innerHeight;
@@ -782,16 +779,16 @@ style.innerHTML = '.perks.transform {transform: rotateX(50deg) translate3d(0,50%
 document.head.appendChild(style);
 
 function resizePerkToPerk (ul) {
-    var ulH = ul.offsetHeight;
-    var ulW = ul.offsetWidth;
-    var skillElm = ul.parentElement;
-    var skillId = skillElm.getAttribute('id');
+    var ulH = ul.offsetHeight,
+        ulW = ul.offsetWidth,
+        skillElm = ul.parentElement,
+        skillId = skillElm.getAttribute('id');
     skills[skillId.substring(5)].perks.map(function (elm, index) {
         if (elm.linkTo) {
             elm.linkTo.map(function (elm2, index) {
-                var verticalLength = (ulH / 100) * (elm2.y * 10 - elm.y * 10);
-                var horizontalLength = (ulW / 100) * (elm2.x * 10 - elm.x * 10);
-                var elmToTween = document.getElementById(elm2.id);
+                var verticalLength = (ulH / 100) * (elm2.y * 10 - elm.y * 10),
+                    horizontalLength = (ulW / 100) * (elm2.x * 10 - elm.x * 10),
+                    elmToTween = document.getElementById(elm2.id);
                 TweenMax.to(elmToTween, 0, {
                     bottom: elm.y * 10 + '%',
                     left: elm.x * 10 + '%',
@@ -803,8 +800,8 @@ function resizePerkToPerk (ul) {
     });
 }
 function createPerks(perks, ul) {
-    var ulH = ul.offsetHeight;
-    var ulW = ul.offsetWidth;
+    var ulH = ul.offsetHeight,
+        ulW = ul.offsetWidth;
     perks.map(function(elm, index){
         var title = document.createElement('div');
         var img = document.createElement('div');
@@ -844,9 +841,9 @@ function createPerks(perks, ul) {
     });
 }
 function createPerkToPerk(elm, elm2, ulH, ulW) {
-    var verticalLength = (ulH/100)*(elm2.y*10 - elm.y*10);
-    var horizontalLength = (ulW/100)*(elm2.x*10 - elm.x*10);
-    var li2 = document.createElement('li');
+    var verticalLength = (ulH/100)*(elm2.y*10 - elm.y*10),
+        horizontalLength = (ulW/100)*(elm2.x*10 - elm.x*10),
+        li2 = document.createElement('li');
     li2.setAttribute('id', elm2.id);
     li2.classList.add('perkToPerk');
     li2.appendChild(document.createElement('li'));
@@ -961,12 +958,10 @@ function zoomInConstelation(ul){
 }
 //@todo ajouter tous les skills/perks
 //@todo ajouter brightness sur étoiles
-//@todo navigation clavier
 //@todo bouton previous (menu)
-//@todo ajouter cfleche pour naviguer
 //@todo séparer js de cette page
 var navigation = {
-    previousState: function(){
+    previousDezoomState: function(){
         if(skillsState.zoomConstelationDeepPerk) {
             skillsState.zoomConstelationDeepPerk = false;
             TweenMax.to(skillsState.zoomedConstelation.getElementsByClassName('perk--desc'),.3, {autoAlpha: 0});
@@ -979,11 +974,58 @@ var navigation = {
             skillsState.zoomConstelation = false;
             moveConstellationsCloser();
         }
+    },
+        nextZoomState: function(){
+        skillsState.zoomConstelation = true;
+        zoomInConstelation(document.getElementById(skillsState.centered));
+        moveConstellationsAway();
+    },
+    goToLeftConstelation: function(){
+        if(!skillsState.zoomConstelation && !skillsState.movingConstelation) {
+            var target,
+                centered = document.getElementById(skillsState.centered);
+            if(centered.previousSibling) {
+                target = centered.previousSibling;
+            } else {
+                target = centered;
+                while(target.nextSibling) {
+                    target = target.nextSibling;
+                }
+            }
+            moveConstellationToCenter(target);
+        }
+    },
+    goTorightConstelation: function(){
+        if(!skillsState.zoomConstelation && !skillsState.movingConstelation) {
+            var target,
+                centered = document.getElementById(skillsState.centered);
+            if(centered.nextSibling) {
+                target = centered.nextSibling;
+            } else {
+                target = centered;
+                while(target.previousSibling) {
+                    target = target.previousSibling;
+                }
+            }
+            moveConstellationToCenter(target);
+        }
     }
 };
     E.addHandler(document, 'keyup', function(e) {
-        if(e.which ===  27) {
-            navigation.previousState();
+        switch(e.which) {
+            case 27:
+            case 40:
+                navigation.previousDezoomState();
+                break;
+            case 38:
+                navigation.nextZoomState();
+                break;
+            case 37:
+                navigation.goToLeftConstelation();
+                break;
+            case 39:
+                navigation.goTorightConstelation();
+                break;
         }
     });
 </script>
