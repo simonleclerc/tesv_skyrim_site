@@ -40,7 +40,6 @@
      * on travel direction display, stop zoom
      * city icon smaller and opacity /2 when not hovered
      * (add window info on cities related to me)
-     * add modal on localisation failed/denied with a city to choose
     */
     var geocoder;
     var map;
@@ -302,9 +301,33 @@ var cities = [
                 info += "Erreur inconnue";
                 break;
         }
-        console.log(info);
-
-        alert('This page use geolocalisation as it\'s a map and there was a problem geolocalisate you. You can delete your ')
+//        alert('This page use geolocalisation as it\'s a map and there was a problem geolocalisate you. You can delete your preference and try again.');
+        var popupContainer = document.createElement('div');
+        popupContainer.classList.add('popup-container');
+        var span = document.createElement('span');
+        span.appendChild(document.createTextNode('This page use geolocalisation as it\'s a map and there was a problem geolocalisate you. You can delete your preference and refresh your page or choose one of those cities :'));
+        var options = [{title: 'Paris', lat: 48.8566140, lnt: 2.3522219 }, {title: 'Marseille',  lat: 43.2964820, lnt: 5.3697800}, {title: 'London', lat: 51.507351, lnt: -0.127758}];
+        var select = document.createElement('select');
+        for(var i =0; i < options.length; i++) {
+            var option = document.createElement('option');
+            option.appendChild(document.createTextNode(options[i].title));
+            option.setAttribute('value', i);
+            select.appendChild(option);
+        }
+        popupContainer.appendChild(span);
+        popupContainer.appendChild(select);
+        var div = document.createElement('div');
+        var button = document.createElement('span');
+        button.classList.add('footer--buttonKey');
+        button.appendChild(document.createTextNode('Ok, use this city'));
+        E.addHandler(button, 'click', function(){
+            var selectValue = select.value;
+            maPosition({coords: {latitude: options[selectValue].lat, longitude: options[selectValue].lnt}})
+            popupContainer.remove();
+        });
+        div.appendChild(button);
+        popupContainer.appendChild(div);
+        document.body.appendChild(popupContainer);
     }
 
     function initialize() {
@@ -323,7 +346,6 @@ var cities = [
         var lng = parseFloat(latlngStr[1]);
         var latlng = new google.maps.LatLng(lat, lng);
         geocoder.geocode({'latLng': latlng}, function(results, status) {
-            console.log(results)
             if (status == google.maps.GeocoderStatus.OK) {
                 if (results[1]) {
                     map.setZoom(11);
