@@ -15,6 +15,8 @@
 <body style="background-color: #000000;" class="map">
 
 <div id="map-canvas"></div>
+<div class="buttons"><div class="footer--button"><a href="./index.html" class="footer--buttonKey">Menu</a></div><div class="footer--button"><span class="footer--buttonKey" id="dezoomConst">Dezoom</span></div></div>
+
 <div class="footer">
     <div class="footer--buttons">
         <div class="footer--button"><span class="footer--buttonKey">E</span><span class="footer--buttonLabel">Current Location</span></div>
@@ -35,10 +37,8 @@
 <script>
     /*@TODO
      * onclick city -> travel from origin to city popup yes/no
-     * cacher vue satellite/zoom etc (ui googlemap)
      * on travel direction display, stop zoom
      * city icon smaller and opacity /2 when not hovered
-     * back button
      * (add window info on cities related to me)
      * add modal on localisation failed/denied with a city to choose
     */
@@ -151,7 +151,8 @@ var cities = [
                 var mapOptions = {
                     zoom: 8,
                     center: latlng,
-                    mapTypeId: 'roadmap'
+                    mapTypeId: 'roadmap',
+                    disableDefaultUI: true
                 }
                 map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
                 map.setOptions({styles: mapStyles});

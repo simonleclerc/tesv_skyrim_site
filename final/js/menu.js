@@ -354,6 +354,11 @@ var clickMenuAction = {
     },
     left: function() {
         menu.openLateral('right');
+        var titles = [];
+        for(var i = 0, itemsDataLen = profileData.length; i < itemsDataLen; i++) {
+            titles.push(itemsData[i].title);
+        }
+        menu.populateMainPan(titles);
     },
     bottom: function() {
         TweenMax.to('body',.3, {opacity: 0, onComplete: function() {
@@ -511,8 +516,23 @@ Menu.prototype.getSubTitleList = function() {
     }
     return titles;
 };
-Menu.prototype.disapearMenu = function() {
+Menu.prototype.disappearMenu = function() {
     TweenMax.fromTo(_menu,.15, {autoAlpha: 1}, {autoAlpha: 0});
+};
+Menu.prototype.appearMenu = function() {
+    TweenMax.fromTo(_menu,.15, {autoAlpha: 0}, {autoAlpha: 1});
+};
+Menu.prototype.closeAllPan = function() {
+    TweenMax.to([_lateralPan, _subLateralPan, _itemModal],.4, {autoAlpha: 0});
+    TweenMax.to(_menu,.4, {autoAlpha: 1, onComplete: function(){
+        _lateralPan.classList.remove('lateral-pan--left');
+        _lateralPan.classList.remove('lateral-pan--right');
+        _lateralPan.classList.remove('lateral-pan_white-mask');
+        _subLateralPan.classList.remove('sub-lateral-pan--left');
+        _subLateralPan.classList.remove('sub-lateral-pan--right');
+        _itemModal.classList.remove('itemModal--left');
+        _itemModal.classList.remove('itemModal--right');
+    }});
 };
 Menu.prototype.openLateral = function(way){
     if(way === 'left') {
@@ -526,7 +546,7 @@ Menu.prototype.openLateral = function(way){
     } else {
         console.error('Invalid parameter "' + way + '"');
     }
-    this.disapearMenu();
+    this.disappearMenu();
 };
 Menu.prototype.openSubLateral = function(way){
     if(way === 'left') {
@@ -559,10 +579,19 @@ forEach(_panListItemsSub, function (index, _elm) {
 
     });
 });
+E.addHandler(document.getElementById('closePan'), 'click', menu.closeAllPan);
 
+E.addHandler(document, 'keyup', function(e) {
+    switch(e.which) {
+        case 27:
+            menu.closeAllPan();
+            break;
+    }
+});
 //@todo si click menu (pro/perso...) déjà selectionné, ne pas recréer le submenu
-//@todo bouton back
 //@todo navigation au clavier
 //@todo navigation à la manette
 //@todo mini menu explicatif/keymap clavier manette
 //@todo ajouter crédit a bethesda skyrim
+//@todo revoir contenu panneau item
+//@todo ajouter contenu profile

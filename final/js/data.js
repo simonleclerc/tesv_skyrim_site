@@ -1,6 +1,6 @@
 var itemsData = [
     {
-        title: 'Pro',
+        title: 'Professional',
         items: [
             {
                 name:'Psd Text extractor',
@@ -26,7 +26,7 @@ var itemsData = [
         ]
     },
     {
-        title: 'Perso',
+        title: 'Personal',
         items: [
             {
                 name:'Email Skeleton',
@@ -66,3 +66,31 @@ var itemsData = [
         ]
     }
 ];
+var profileData = [
+    {
+        title: 'Professional',
+        items: [
+            {
+                name:'Psd Text extractor',
+                urlImg: 'images/full_inventory.jpg',
+                desc: 'Extract text from psd with HTML structure',
+                weight: 10,
+                value: 1000
+            },
+            {
+                name:'React admin interface',
+                urlImg: 'images/full_inventory.jpg',
+                desc: 'A lot of form. Controlled or uncontrolled ?',
+                weight: 100,
+                value: 100
+            },
+            {
+                name:'App',
+                urlImg: 'images/full_inventory.jpg',
+                desc: 'Smartphone app proto with titanium',
+                weight: 20,
+                value: 520
+            }
+        ]
+    }
+]

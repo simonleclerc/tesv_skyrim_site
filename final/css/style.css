@@ -327,6 +327,7 @@ ul, ol {
     padding: 0 7px;
     margin-right: 7px;
     font-size: 25px;
+    text-decoration: none;
 }
 .footer--buttonKey_leftMouse {
     border-top-left-radius: 20px;
@@ -373,6 +374,7 @@ ul, ol {
     justify-content: space-around;
     align-items: center;
     height: 176px;
+    z-index: 1;
 }
 .skills {
     overflow: hidden;
@@ -536,7 +538,7 @@ ul, ol {
     visibility: hidden;
 }
 .skill--title {
-    font-size: 2vw;
+    font-size: 1.5vw;
     text-transform: uppercase;
     display: block;
     margin-top: 1vw;
@@ -546,10 +548,47 @@ ul, ol {
     color: #959796;
 }
 .skill--progress {
-    width: 80%;
+    width: 60%;
     margin: 0 auto;
 }
 .skill:first-child .perks--above {
     opacity: 1;
     visibility: visible;
+}
+.skill:first-child .skill--title {
+    font-size: 2vw;
+}
+.skill:first-child .skill--progress {
+    width: 80%;
+}
+.buttons {
+    position: absolute;
+    top: 130px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    z-index: 1;
+    width: 61%;
+}
+.home .buttons {
+    top: 1%;
+    justify-content: center;
+    width: 100%;
+}
+.map .buttons {
+    top: 1%;
+    width: 99%;
+}
+.buttons div {
+    cursor: inherit;
+}
+.buttons a {
+    cursor: inherit;
+}
+#dezoomConst {
+    visibility: hidden;
+    opacity: 0;
 }

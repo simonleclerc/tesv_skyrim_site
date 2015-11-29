@@ -87,7 +87,7 @@
         </div>
     <div class="key-value"><span class="key-value__label key-value__label--middle">RACE&nbsp;</span><span class="key-value__content key-value__content--middle"> Homo Sapiens</span></div>
 </div>
-
+<div class="buttons"><div class="footer--button"><a href="./index.html" class="footer--buttonKey">Menu</a></div><div class="footer--button"><span class="footer--buttonKey" id="dezoomConst">Dezoom</span></div></div>
 <div class="content">
     <ul class="skills"></ul>
     <div class="desc-skill"></div>
@@ -644,6 +644,8 @@ function moveConstellationToCenter(target) {
         }
     });
     TweenMax.to(document.getElementsByClassName('perks--above'), .3, {autoAlpha: 0});
+    TweenMax.to(document.getElementsByClassName('skill--progress'), .5, {width: '60%'});
+    TweenMax.to(document.getElementsByClassName('skill--title'),.5, {fontSize: '1.5vw'});
     tl.addLabel('start');
     if ((targetNumId > centeredId && Math.abs(decalage) > skillsLength / 2) || (targetNumId < centeredId && Math.abs(decalage) <= skillsLength / 2)) {
         if (targetNumId > centeredId && Math.abs(decalage) > skillsLength / 2) {
@@ -664,7 +666,8 @@ function moveConstellationToCenter(target) {
             tl.to('#skill' + ((centeredId + b) % skillsLength), 1, {x: '+=' + (120 * decalage - ((b === 0 || b === decalage * -1) ? 40 : 80)) + '%'}, 'start');
         }
     }
-
+    TweenMax.to(target.querySelector('.skill--progress'),.5, {width: '80%'});
+    TweenMax.to(target.querySelector('.skill--title'),.5, {fontSize: '2vw'});
     TweenMax.to('.background-fullsize', 1, {backgroundPosition: '+=' + 100 * decalage + 'px 0'});
 }
 var skillsLength = skills.length;
@@ -749,6 +752,7 @@ function createSkills(){
                 skillsState.zoomConstelation = true;
                 zoomInConstelation(skillLi);
                 moveConstellationsAway();
+                TweenMax.to(document.getElementById('dezoomConst'),.3, {autoAlpha: 1});
 
             } else {
                 moveConstellationToCenter(target);
@@ -977,6 +981,7 @@ function zoomInConstelation(ul){
 //@todo ajouter tous les skills/perks
 //@todo bouton previous (menu)
 //@todo séparer js de cette page
+//@todo dezoom bouton
 var navigation = {
     previousDezoomState: function(){
         if(skillsState.zoomConstelationDeepPerk) {
@@ -990,6 +995,7 @@ var navigation = {
             skillsState.zoomedConstelation = undefined;
             skillsState.zoomConstelation = false;
             moveConstellationsCloser();
+            TweenMax.to(document.getElementById('dezoomConst'),.3, {autoAlpha: 0});
         }
     },
     nextZoomState: function(){
@@ -997,6 +1003,7 @@ var navigation = {
             skillsState.zoomConstelation = true;
             zoomInConstelation(document.getElementById(skillsState.centered));
             moveConstellationsAway();
+            TweenMax.to(document.getElementById('dezoomConst'),.3, {autoAlpha: 1});
         }
     },
     goToLeftConstelation: function(){
@@ -1030,23 +1037,24 @@ var navigation = {
         }
     }
 };
-    E.addHandler(document, 'keyup', function(e) {
-        switch(e.which) {
-            case 27:
-            case 40:
-                navigation.previousDezoomState();
-                break;
-            case 38:
-                navigation.nextZoomState();
-                break;
-            case 37:
-                navigation.goToLeftConstelation();
-                break;
-            case 39:
-                navigation.goTorightConstelation();
-                break;
-        }
-    });
+E.addHandler(document.getElementById('dezoomConst'), 'click', navigation.previousDezoomState);
+E.addHandler(document, 'keyup', function(e) {
+    switch(e.which) {
+        case 27:
+        case 40:
+            navigation.previousDezoomState();
+            break;
+        case 38:
+            navigation.nextZoomState();
+            break;
+        case 37:
+            navigation.goToLeftConstelation();
+            break;
+        case 39:
+            navigation.goTorightConstelation();
+            break;
+    }
+});
 </script>
 </body>
 </html>
