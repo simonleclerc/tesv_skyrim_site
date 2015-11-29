@@ -668,97 +668,115 @@ function moveConstellationToCenter(target) {
     TweenMax.to('.background-fullsize', 1, {backgroundPosition: '+=' + 100 * decalage + 'px 0'});
 }
 var skillsLength = skills.length;
-skills.map(function(skill, iterSkill){
-    var skillLi = document.createElement('li');
-    skillLi.classList.add('skill');
-    skillLi.setAttribute('id', skill.id);
-    var skillUl = document.createElement('ul');
-    skillUl.classList.add('perks');
-    var aboveDiv = document.createElement('div');
-    aboveDiv.classList.add('perks--above');
-    aboveDiv.style.backgroundImage = 'url(images/perkAbove/'+skill.perkAbove+'.png)';
-    skillUl.appendChild(aboveDiv);
-    var skillSeparator = document.createElement('div');
-    skillSeparator.classList.add('skill--separator');
-    var skillSpanTitle = document.createElement('span');
-    skillSpanTitle.classList.add('skill--title');
-    var skillSpanName = document.createElement('span');
-    skillSpanName.classList.add('skill--name');
-    var skillSpanLevel = document.createElement('span');
-    skillSpanLevel.classList.add('skill--level');
-    skillSpanName.innerHTML = skill.title;
-    skillSpanLevel.innerHTML = skill.level;
-    var skillDiv = document.createElement('div');
-    skillDiv.classList.add('skill--progress');
-    var progressWidth = (220.227-(2.20227*skill.levelProgress));
-    skillDiv.innerHTML = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"'+
-    'width="100%" viewBox="0 0 290.99 25.5" enable-background="new 0 0 290.99 25.5" xml:space="preserve">'+
-    '<defs>'+
-    '<linearGradient id="level_bg_progress" gradientUnits="userSpaceOnUse" x1="0" y1="9" x2="0" y2="16">'+
-    '<stop  offset="0.2" style="stop-color:#2d2b44;"/>'+
-    '<stop  offset="0.65" style="stop-color:#3e3c4e;"/>'+
-    '<stop  offset=".9" style="stop-color:#232135;"/>'+
-    '</linearGradient>'+
-    '<linearGradient id="level_progress" gradientUnits="userSpaceOnUse" x1="0" y1="9" x2="0" y2="16">'+
-    '<stop  offset="0.2" style="stop-color:#777f97;"/>'+
-    '<stop  offset="0.65" style="stop-color:#9aa0af;"/>'+
-    '<stop  offset=".9" style="stop-color:#5c6274;"/>'+
-    '</linearGradient>'+
-    '<mask id="progress_mask" maskUnits="objectBoundingBox">'+
-    '<polygon  fill="#ffffff" points="36.99,9 51.49,16.5 240.603,16.5 255.103,9 	"/>'+
-    '</mask>'+
-    '</defs>'+
-    '<g id="progress">'+
-    '<path id="mask_2_" fill="#101112" opacity="0.9" d="M290.99,0H0l46.656,25.5h198.417L290.99,0L290.99,0z"/>'+
-    '<path fill="#858A89" d="M15.157,4.318l32.071,17.016h197.096l31.938-17.016H15.157z M243.574,18.334h-195.6L27.212,7.318H264.25 L243.574,18.334z"/>'+
-    '<polygon fill="url(#level_bg_progress)" points="36.99,9 51.49,16.5 240.603,16.5 255.103,9 	"/>'+
-    '<g mask="url(#progress_mask)">'+
-    '<polygon transform="translate(-'+progressWidth+',0)" fill="url(#level_progress)" points="36.99,9 51.49,16.5 240.603,16.5 255.103,9 	"/>'+
-    '</g>'+
-    '</g>'+
-    '</svg>';
-    skillSpanTitle.appendChild(skillSpanName);
-    skillSpanTitle.appendChild(document.createTextNode(' '));
-    skillSpanTitle.appendChild(skillSpanLevel);
-    skillLi.appendChild(skillUl);
-    skillLi.appendChild(skillSeparator);
-    skillLi.appendChild(skillSpanTitle);
-    skillLi.appendChild(skillDiv);
+function createSkills(){
+    skills.map(function(skill, iterSkill){
+        var skillLi = document.createElement('li');
+        skillLi.classList.add('skill');
+        skillLi.setAttribute('id', skill.id);
+        var skillUl = document.createElement('ul');
+        skillUl.classList.add('perks');
+        var aboveDiv = document.createElement('div');
+        aboveDiv.classList.add('perks--above');
+        aboveDiv.style.backgroundImage = 'url(images/perkAbove/'+skill.perkAbove+'.png)';
+        skillUl.appendChild(aboveDiv);
+        var skillSeparator = document.createElement('div');
+        skillSeparator.classList.add('skill--separator');
+        var skillSpanTitle = document.createElement('span');
+        skillSpanTitle.classList.add('skill--title');
+        var skillSpanName = document.createElement('span');
+        skillSpanName.classList.add('skill--name');
+        var skillSpanLevel = document.createElement('span');
+        skillSpanLevel.classList.add('skill--level');
+        skillSpanName.innerHTML = skill.title;
+        skillSpanLevel.innerHTML = skill.level;
+        var skillDiv = document.createElement('div');
+        skillDiv.classList.add('skill--progress');
+        var progressWidth = (220.227-(2.20227*skill.levelProgress));
+        skillDiv.innerHTML = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"'+
+        'width="100%" viewBox="0 0 290.99 25.5" enable-background="new 0 0 290.99 25.5" xml:space="preserve">'+
+        '<defs>'+
+        '<linearGradient id="level_bg_progress" gradientUnits="userSpaceOnUse" x1="0" y1="9" x2="0" y2="16">'+
+        '<stop  offset="0.2" style="stop-color:#2d2b44;"/>'+
+        '<stop  offset="0.65" style="stop-color:#3e3c4e;"/>'+
+        '<stop  offset=".9" style="stop-color:#232135;"/>'+
+        '</linearGradient>'+
+        '<linearGradient id="level_progress" gradientUnits="userSpaceOnUse" x1="0" y1="9" x2="0" y2="16">'+
+        '<stop  offset="0.2" style="stop-color:#777f97;"/>'+
+        '<stop  offset="0.65" style="stop-color:#9aa0af;"/>'+
+        '<stop  offset=".9" style="stop-color:#5c6274;"/>'+
+        '</linearGradient>'+
+        '<mask id="progress_mask" maskUnits="objectBoundingBox">'+
+        '<polygon  fill="#ffffff" points="36.99,9 51.49,16.5 240.603,16.5 255.103,9 	"/>'+
+        '</mask>'+
+        '</defs>'+
+        '<g id="progress">'+
+        '<path id="mask_2_" fill="#101112" opacity="0.9" d="M290.99,0H0l46.656,25.5h198.417L290.99,0L290.99,0z"/>'+
+        '<path fill="#858A89" d="M15.157,4.318l32.071,17.016h197.096l31.938-17.016H15.157z M243.574,18.334h-195.6L27.212,7.318H264.25 L243.574,18.334z"/>'+
+        '<polygon fill="url(#level_bg_progress)" points="36.99,9 51.49,16.5 240.603,16.5 255.103,9 	"/>'+
+        '<g mask="url(#progress_mask)">'+
+        '<polygon transform="translate(-'+progressWidth+',0)" fill="url(#level_progress)" points="36.99,9 51.49,16.5 240.603,16.5 255.103,9 	"/>'+
+        '</g>'+
+        '</g>'+
+        '</svg>';
+        skillSpanTitle.appendChild(skillSpanName);
+        skillSpanTitle.appendChild(document.createTextNode(' '));
+        skillSpanTitle.appendChild(skillSpanLevel);
+        skillLi.appendChild(skillUl);
+        skillLi.appendChild(skillSeparator);
+        skillLi.appendChild(skillSpanTitle);
+        skillLi.appendChild(skillDiv);
 
-    var coeff = 120*iterSkill +40;
-    if(skillsLength/2 < iterSkill) {
-        coeff = (skillsLength - iterSkill)*-120 -40;
-    } else if(iterSkill === 0 ) {
-        coeff = 0;
-    }
+        var coeff = 120*iterSkill +40;
+        if(skillsLength/2 < iterSkill) {
+            coeff = (skillsLength - iterSkill)*-120 -40;
+        } else if(iterSkill === 0 ) {
+            coeff = 0;
+        }
 
-    TweenMax.to(skillLi, 0, {x: coeff+'%'});
-    E.addHandler(skillLi, 'click', function(e){
-        if(skillsState.movingConstelation) {
-            return;
-        }
-        var target = e.target;
-        while(!target.classList.contains('skill')) {
-            target = target.parentElement;
-        }
-        if(skillsState.centered === skill.id ) {
-            if(skillsState.zoomConstelation) {
+        TweenMax.to(skillLi, 0, {x: coeff+'%'});
+        E.addHandler(skillLi, 'click', function(e){
+            if(skillsState.movingConstelation) {
                 return;
             }
-            skillsState.zoomConstelation = true;
-            zoomInConstelation(skillLi);
-            moveConstellationsAway();
+            var target = e.target;
+            while(!target.classList.contains('skill')) {
+                target = target.parentElement;
+            }
+            if(skillsState.centered === skill.id ) {
+                if(skillsState.zoomConstelation) {
+                    return;
+                }
+                skillsState.zoomConstelation = true;
+                zoomInConstelation(skillLi);
+                moveConstellationsAway();
 
-        } else {
-            moveConstellationToCenter(target);
-        }
+            } else {
+                moveConstellationToCenter(target);
+            }
+        });
+
+
+        createPerks(skill.perks, skillUl);
+
+        globalSkillUl.appendChild(skillLi);
     });
-
-
-    createPerks(skill.perks, skillUl);
-
-    globalSkillUl.appendChild(skillLi);
-});
+    var perkImg = document.getElementsByClassName('perk--img');
+    for(var i = 0, pkl = perkImg.length; i < pkl; i++) {
+        var obj = {bright: .5};
+        var tl = new TimelineMax({repeat: -1, repeatDelay:getRandomArbitrary(0.45,0.55), delay: Math.random()});
+        tl
+                .fromTo(obj,.08, {bright:1.1}, {bright: 1.05,onUpdateParams: [i], onUpdate: function(i){
+                    perkImg[i].style.WebkitFilter = 'brightness('+this.target.bright+')';
+                }})
+                .fromTo(obj,.15, {bright:1.05}, {bright:1.1,onUpdateParams: [i], onUpdate: function(i){
+                    perkImg[i].style.WebkitFilter = 'brightness('+this.target.bright+')';
+                }});
+    }
+}
+createSkills();
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
 window.onresize = onResize;
 var SCREEN_H = window.innerHeight;
 var SCREEN_W = window.innerWidth;
@@ -957,7 +975,6 @@ function zoomInConstelation(ul){
     }});
 }
 //@todo ajouter tous les skills/perks
-//@todo ajouter brightness sur étoiles
 //@todo bouton previous (menu)
 //@todo séparer js de cette page
 var navigation = {
@@ -975,10 +992,12 @@ var navigation = {
             moveConstellationsCloser();
         }
     },
-        nextZoomState: function(){
-        skillsState.zoomConstelation = true;
-        zoomInConstelation(document.getElementById(skillsState.centered));
-        moveConstellationsAway();
+    nextZoomState: function(){
+        if(!skillsState.zoomConstelation && !skillsState.movingConstelation) {
+            skillsState.zoomConstelation = true;
+            zoomInConstelation(document.getElementById(skillsState.centered));
+            moveConstellationsAway();
+        }
     },
     goToLeftConstelation: function(){
         if(!skillsState.zoomConstelation && !skillsState.movingConstelation) {
