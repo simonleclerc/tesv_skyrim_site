@@ -442,13 +442,29 @@ Menu.prototype.populateModal = function(itemData) {
         weight = _itemModal.querySelector('.itemModal--adjWeight .itemModal--adjVal'),
         value = _itemModal.querySelector('.itemModal--adjValue .itemModal--adjVal'),
         title = _itemModal.querySelector('.itemModal--title'),
-        desc = _itemModal.querySelector('.itemModal--desc');
+        desc = _itemModal.querySelector('.itemModal--desc'),
+        tags = _itemModal.querySelector('.itemModal--tags'),
+        links = _itemModal.querySelector('.itemModal--links');
 
     img.src = itemData.urlImg;
     weight.innerText = itemData.weight;
     value.innerText = itemData.value;
     desc.innerText = itemData.desc;
     title.innerText = itemData.name;
+    tags.innerText = itemData.tags;
+    while (links.firstChild) {
+        links.removeChild(links.firstChild);
+    }
+    if(itemData.links) {
+        for(var i=0; i < itemData.links.length; i++) {
+            var link = document.createElement('a');
+            link.classList.add('itemModal--link');
+            link.href = itemData.links[i].link;
+            link.setAttribute('target', '_BLANK');
+            link.appendChild(document.createTextNode(itemData.links[i].text));
+            links.appendChild(link);
+        }
+    }
 };
 Menu.prototype.openSubFromMain = function(e) {
     var _exCurrent = [];
@@ -595,3 +611,5 @@ E.addHandler(document, 'keyup', function(e) {
 //@todo ajouter crédit a bethesda skyrim
 //@todo revoir contenu panneau item
 //@todo ajouter contenu profile
+//@todo add link to content
+//@todo add images to content
