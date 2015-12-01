@@ -6,20 +6,23 @@ var itemsData = [
                 name:'Psd Text extractor to HTML',
                 urlImg: 'images/full_inventory.jpg',
                 desc: 'Creation of a script for Photoshop that parse the open .psd and write in a json file an object containing all the text with the HTML formating depending on the style pf the text.',
+                tags: 'Javascript / Photoshop Script',
                 weight: 10,
                 value: 1000
             },
             {
                 name:'React admin interface',
                 urlImg: 'images/full_inventory.jpg',
-                desc: 'Creation of multiple admin interface with React.js and Reflux.js.',
+                desc: 'Creation of multiple admin interface with ReactJs and RefluxJs.',
+                tags: 'HTML / Twig / Javascript / ReactJs / RefluxJs',
                 weight: 100,
                 value: 100
             },
             {
                 name:'Mobile application',
                 urlImg: 'images/full_inventory.jpg',
-                desc: 'Creation of a cross-platform prototype application with the Titanium technology.',
+                desc: 'Creation of a cross-platform prototype application with the Titanium Appcelerator technology.',
+                tags: 'JavaScript / Titanium Appcelerator',
                 weight: 20,
                 value: 520
             },
@@ -27,13 +30,38 @@ var itemsData = [
                 name:'ScratchPad.js',
                 urlImg: 'images/full_inventory.jpg',
                 desc: 'Based on the scratchpad.js lib, highly customizable scratch ticket.',
+                links: [
+                    {links: 'http://grattage.plein2kdo.com/', text: 'Grattage'},
+                    {links: 'http://penalty.plein2kdo.com/', text: 'Penalty'},
+                    {links: 'http://golden-parachute.plein2kdo.com/', text: 'Golden Parachute'},
+                    {links: 'http://coffre-fort.plein2kdo.com/', text: 'Coffre fort'}
+                ],
+                tags: 'Javascript',
                 weight: 20,
                 value: 520
             },
             {
-                name:'Fruits Saga',
+                name:'Animated Sweepstake',
                 urlImg: 'images/full_inventory.jpg',
-                desc: 'Creation of a game mechanic like candy crush. Animated with TweenMax.',
+                desc: 'Some animated sweepstakes among a long list',
+                links: [
+                    {links: 'http://computer3.plein2kdo.com/', text: 'Computer'},
+                    {links: 'http://phone10.prime4.plein2kdo.com/', text: 'Phone'},
+                    {links: 'http://genie.plein2kdo.com/', text: 'Génie'},
+                    {links: 'http://photo8.plein2kdo.com/', text: 'Photo'}
+                ],
+                tags: 'HTML / CSS / JavaScript / TweenMax',
+                weight: 20,
+                value: 520
+            },
+            {
+                name:'Juicy Fruits',
+                urlImg: 'images/full_inventory.jpg',
+                desc: 'Creation of a whole game mechanic like candy crush. Animated with TweenMax.',
+                links: [
+                    {links: 'http://juicy-fruits.plein2kdo.com/', text: 'Juicy-Fruits'}
+                ],
+                tags: 'HTML / CSS / JavaScript / TweenMax',
                 weight: 20,
                 value: 520
             },
@@ -75,6 +103,17 @@ var itemsData = [
                 tags: 'Twig / HTML / CSS /JavaScript',
                 weight: 100,
                 value: 100
+            },
+            {
+                name:'Sondage National',
+                urlImg: 'images/full_inventory.jpg',
+                desc: 'A site for work.',
+                links: [
+                    {link: 'http://www.sondagenational.com', text: 'Sondage National'}
+                ],
+                tags: 'Twig / HTML / CSS / JavaScript / Canvas',
+                weight: 100,
+                value: 100
             }
         ]
     },
@@ -85,6 +124,10 @@ var itemsData = [
                 name:'Email Skeleton',
                 urlImg: 'images/full_inventory.jpg',
                 desc: 'A tool to quickly create a skeleton of email. Build for speed up work process where I used to code a lot of email.',
+                links: [
+                    {link: 'https://github.com/simonleclerc/email_skeleton_grid', text: 'Github'}
+                ],
+                tags: 'HTML / CSS / JavaScript',
                 weight: 10,
                 value: 1000
             },
@@ -92,6 +135,7 @@ var itemsData = [
                 name:'Historic manager',
                 urlImg: 'images/full_inventory.jpg',
                 desc: 'Create for the email tool. Allow to create and manage an history. Add entry, go back/forward...',
+                tags: 'JavaScript',
                 weight: 10,
                 value: 1000
             },
@@ -99,6 +143,10 @@ var itemsData = [
                 name:'Skyrim',
                 urlImg: 'images/full_inventory.jpg',
                 desc: 'Recreate the UI of the Skyrim game for this portfolio.',
+                links: [
+                    {link: 'https://github.com/simonleclerc/tesv_skyrim_site', text: 'Github'}
+                ],
+                tags: 'HTML / CSS / JavaScript / SVG / Canvas',
                 weight: 100,
                 value: 100
             },
@@ -106,6 +154,7 @@ var itemsData = [
                 name:'Note maker',
                 urlImg: 'images/full_inventory.jpg',
                 desc: 'My future personal project, built a JS application to learn to read music sheet with a series of small and progressive exercises',
+                tags:'?',
                 weight: '?',
                 value: '?'
             }

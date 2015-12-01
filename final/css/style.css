@@ -280,8 +280,34 @@ ul, ol {
 }
 .itemModal--desc {
     font-size: 1.1vw;
+    padding: 0 50px;
+}
+.itemModal--links {
+    padding: 10px 50px;
 }
 
+.itemModal--link:first-child:before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: url('../images/link.svg') no-repeat 0 / 100%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.itemModal--link + .itemModal--link{
+    margin-left: 10px;
+}
+.itemModal--link {
+    color: #858A89;
+    transition: all .3s;
+}
+.itemModal--link:visited {
+    color: #656a69;
+}
+.itemModal--link:hover {
+    color: #ffffff;
+}
 /************MAP*****************/
 .map {
     background-color: #000000;
