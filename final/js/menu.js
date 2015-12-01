@@ -356,7 +356,7 @@ var clickMenuAction = {
         menu.openLateral('right');
         var titles = [];
         for(var i = 0, itemsDataLen = profileData.length; i < itemsDataLen; i++) {
-            titles.push(itemsData[i].title);
+            titles.push(profileData[i].title);
         }
         menu.populateMainPan(titles);
     },
@@ -441,14 +441,23 @@ Menu.prototype.populateModal = function(itemData) {
     var img = _itemModal.querySelector('.itemModal--img'),
         weight = _itemModal.querySelector('.itemModal--adjWeight .itemModal--adjVal'),
         value = _itemModal.querySelector('.itemModal--adjValue .itemModal--adjVal'),
+        weightAdj = _itemModal.querySelector('.itemModal--adjWeight'),
+        valueAdj = _itemModal.querySelector('.itemModal--adjValue'),
         title = _itemModal.querySelector('.itemModal--title'),
         desc = _itemModal.querySelector('.itemModal--desc'),
         tags = _itemModal.querySelector('.itemModal--tags'),
         links = _itemModal.querySelector('.itemModal--links');
 
     img.src = itemData.urlImg;
-    weight.innerText = itemData.weight;
-    value.innerText = itemData.value;
+    if(itemData.weight && itemData.value) {
+        weightAdj.classList.remove('itemModal__hide');
+        valueAdj.classList.remove('itemModal__hide');
+        weight.innerText = itemData.weight;
+        value.innerText = itemData.value;
+    } else {
+        weightAdj.classList.add('itemModal__hide');
+        valueAdj.classList.add('itemModal__hide');
+    }
     desc.innerText = itemData.desc;
     title.innerText = itemData.name;
     tags.innerText = itemData.tags;
@@ -517,6 +526,8 @@ Menu.prototype.getModalContent = function() {
     var data;
     if(this.openSide === 'left') {
         data = itemsData;
+    } else if(this.openSide === 'right') {
+        data = profileData;
     }
     return data[this.selectedMain].items[this.selectedSub];
 };
@@ -524,6 +535,8 @@ Menu.prototype.getSubTitleList = function() {
     var data;
     if(this.openSide === 'left') {
         data = itemsData;
+    } else if(this.openSide === 'right') {
+        data = profileData;
     }
 
     var titles = [];
@@ -609,7 +622,4 @@ E.addHandler(document, 'keyup', function(e) {
 //@todo navigation à la manette
 //@todo mini menu explicatif/keymap clavier manette
 //@todo ajouter crédit a bethesda skyrim
-//@todo revoir contenu panneau item
-//@todo ajouter contenu profile
-//@todo add link to content
 //@todo add images to content

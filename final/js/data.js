@@ -31,10 +31,10 @@ var itemsData = [
                 urlImg: 'images/full_inventory.jpg',
                 desc: 'Based on the scratchpad.js lib, highly customizable scratch ticket.',
                 links: [
-                    {links: 'http://grattage.plein2kdo.com/', text: 'Grattage'},
-                    {links: 'http://penalty.plein2kdo.com/', text: 'Penalty'},
-                    {links: 'http://golden-parachute.plein2kdo.com/', text: 'Golden Parachute'},
-                    {links: 'http://coffre-fort.plein2kdo.com/', text: 'Coffre fort'}
+                    {link: 'http://grattage.plein2kdo.com/', text: 'Grattage'},
+                    {link: 'http://penalty.plein2kdo.com/', text: 'Penalty'},
+                    {link: 'http://golden-parachute.plein2kdo.com/', text: 'Golden Parachute'},
+                    {link: 'http://coffre-fort.plein2kdo.com/', text: 'Coffre fort'}
                 ],
                 tags: 'Javascript',
                 weight: 20,
@@ -45,10 +45,10 @@ var itemsData = [
                 urlImg: 'images/full_inventory.jpg',
                 desc: 'Some animated sweepstakes among a long list',
                 links: [
-                    {links: 'http://computer3.plein2kdo.com/', text: 'Computer'},
-                    {links: 'http://phone10.prime4.plein2kdo.com/', text: 'Phone'},
-                    {links: 'http://genie.plein2kdo.com/', text: 'Génie'},
-                    {links: 'http://photo8.plein2kdo.com/', text: 'Photo'}
+                    {link: 'http://computer3.plein2kdo.com/', text: 'Computer'},
+                    {link: 'http://phone10.prime4.plein2kdo.com/', text: 'Phone'},
+                    {link: 'http://genie.plein2kdo.com/', text: 'Génie'},
+                    {link: 'http://photo8.plein2kdo.com/', text: 'Photo'}
                 ],
                 tags: 'HTML / CSS / JavaScript / TweenMax',
                 weight: 20,
@@ -59,7 +59,7 @@ var itemsData = [
                 urlImg: 'images/full_inventory.jpg',
                 desc: 'Creation of a whole game mechanic like candy crush. Animated with TweenMax.',
                 links: [
-                    {links: 'http://juicy-fruits.plein2kdo.com/', text: 'Juicy-Fruits'}
+                    {link: 'http://juicy-fruits.plein2kdo.com/', text: 'Juicy-Fruits'}
                 ],
                 tags: 'HTML / CSS / JavaScript / TweenMax',
                 weight: 20,
@@ -166,26 +166,88 @@ var profileData = [
         title: 'Identity',
         items: [
             {
-                name:'Psd Text extractor',
+                name:'Identity',
                 urlImg: 'images/full_inventory.jpg',
-                desc: 'Extract text from psd with HTML structure',
-                weight: 10,
-                value: 1000
+                desc: 'Name: LE CLERC Simon \n Birth: 1991, Saint Brieuc',
+                tags:''
+            }
+        ]
+    },
+    {
+        title: 'Scholarship',
+        items: [
+            {
+                name:'LP CIWM',
+                urlImg: 'images/full_inventory.jpg',
+                desc: 'Licence Professionnelle Conception Intégration Web et Multimédia,\n 2012-2013 Paris',
+                tags:''
             },
             {
-                name:'React admin interface',
+                name:'BTS CVM',
                 urlImg: 'images/full_inventory.jpg',
-                desc: 'A lot of form. Controlled or uncontrolled ?',
-                weight: 100,
-                value: 100
+                desc: 'Brevet Technicien Supérieur\nCommunication Visuelle - Multimédia\n 2010-2012, Rennes',
+                tags:''
             },
             {
-                name:'App',
+                name:'MANAA',
                 urlImg: 'images/full_inventory.jpg',
-                desc: 'Smartphone app proto with titanium',
-                weight: 20,
-                value: 520
+                desc: 'Mise A Niveau en Arts Appliqués\n 2009-2010, Quimper',
+                tags:''
+            },
+            {
+                name:'Bac S',
+                urlImg: 'images/full_inventory.jpg',
+                desc: 'Baccalauréat Scientifique \n 2009, Saint Brieuc',
+                tags:''
+            }
+        ]
+    },
+    {
+        title: 'Work',
+        items: [
+            {
+                name:'Webrivage',
+                urlImg: 'images/full_inventory.jpg',
+                desc: 'Front End Developer\n Main Technologies : HTML / CSS / JavaScript \n In charge of one person, reference in Front End Development in the tech team\n Various tasks from animated landing pages to corporate sites, cross platform application with Appcelerator to admin in ReactJs \n\nSince december 2013',
+                tags:''
+            },
+            {
+                name:'Studio GD',
+                urlImg: 'images/full_inventory.jpg',
+                desc: 'Web Developer\n Main Technologies : HTML / CSS / JavaScript / PHP \n Internship in a small creative agency \n Worked with Drupal 7 and SVG a lot \n\n6 months, 2013',
+                tags:''
+            },
+            {
+                name:'Self Employed',
+                urlImg: 'images/full_inventory.jpg',
+                desc: 'Beginning with graphic job, end with developer, it offered me an opportunity to enter the professional world during my scholarship\n\n2011-2013',
+                tags:''
+            }
+        ]
+    },
+    {
+        title: 'Social',
+        items: [
+            {
+                name:'Contact',
+                urlImg: 'images/full_inventory.jpg',
+                desc: 'slc.le.clerc at gmail dot com',
+                links:[
+                    {link: 'http://fr.viadeo.com/fr/profile/simon.le-clerc', text: 'Viadeo'},
+                    {link: 'https://www.linkedin.com/in/simon-le-clerc-677996a0', text: 'LinkedIn'}
+                ],
+                tags:''
+            },
+            {
+                name:'Code',
+                urlImg: 'images/full_inventory.jpg',
+                desc: 'Find some of my work here :',
+                links:[
+                    {link: 'http://codepen.io/poolboy/', text: 'CodePen'},
+                    {link: 'https://github.com/simonleclerc/', text: 'GitHub'}
+                ],
+                tags:''
             }
         ]
     }
-]
+];

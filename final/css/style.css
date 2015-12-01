@@ -229,6 +229,9 @@ ul, ol {
     opacity: 0;
     visibility: hidden;
 }
+.itemModal__hide {
+    display: none;
+}
 .itemModal--left {
     left: calc(15.625% + 12.5% + 40px + 40px);
     right: 0;
