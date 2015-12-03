@@ -331,49 +331,143 @@ var skills = [
     },
     {
         title: 'Javascript',
-        level: '70',
-        levelProgress: 10,
+        level: '78',
+        levelProgress: 50,
         perkAbove: 'javascript',
         perks: [
             {
-                title: 'Novice',
-                desc: 'Write novice javascript',
+                title: 'Beginner',
+                desc: 'Know the difference between Java and JavaScript.',
                 x: 5,
                 y: 0,
                 linkTo: [
-                    {x: 10, y: 1}, {x: 0, y: 5}
+                    {x: 4, y: 1},
+                    {x: 1, y: 1.2},
+                    {x: 8.5, y: 0.7}
+                ],
+                lock: false
+            },
+            {
+                title: 'Novice',
+                desc: 'Write for loop and if statement.',
+                x: 4,
+                y: 1,
+                linkTo: [
+                    {x: 6, y: 2}
                 ],
                 lock: false
             },
             {
                 title: 'Medium',
-                desc: 'Write medium javascript',
-                x: 0,
+                desc: 'Discover the power of vanilla JS.\nBetter DOM manipulation.',
+                x: 6,
+                y: 2,
+                linkTo: [
+                    {x: 5, y: 3.5},
+                    {x: 7, y: 2.8},
+                    {x: 4, y: 3, lock: true}
+                ],
+                lock: false
+            },
+            {
+                title: 'Expert',
+                desc: 'You can use Object.prototype.\n Use ES6 feature (or think about using it).',
+                x: 5,
+                y: 3.5,
+                linkTo: [
+                    {x: 6, y: 5},
+                    {x: 7, y: 4}
+                ],
+                lock: false
+            },
+            {
+                title: 'Master',
+                desc: 'Rule the world.',
+                x: 6,
                 y: 5,
                 lock: false
             },
             {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 10,
-                y: 10,
-                lock: false
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 1,
-                y: 7,
-                lock: false
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 10,
-                y: 1,
+                title: 'jQuery',
+                desc: 'Think JavaScript is easy.',
+                x: 8.5,
+                y:0.7,
                 linkTo: [
-                    {x: 10, y: 10}
+                    {x: 8, y: 1.4},
+                    {x: 10, y: 3}
                 ],
+                lock: false
+            },
+            {
+                title: 'Async',
+                desc: 'Use jQuery Ajax and deferred object.',
+                x: 8,
+                y: 1.4,
+                lock: false
+            },
+            {
+                title: 'ReactJs',
+                desc: 'Discover a new vision of manipulating the DOM. Rethink C in CSS.',
+                x: 10,
+                y: 3,
+                linkTo: [
+                    {x: 9, y: 4}
+                ],
+                lock: false
+            },
+            {
+                title: 'React Form',
+                desc: 'Master React input.\nControlled or uncontrolled, you know the difference.',
+                x: 9,
+                y: 4,
+                lock: false
+            },
+            {
+                title: 'Animation',
+                desc: 'Use a library for animation. GreenSock for the win.',
+                x: 1,
+                y: 1.2,
+                linkTo: [
+                    {x: 0, y: 3.2}
+                ],
+                lock: false
+            },
+            {
+                title: 'Canvas',
+                desc: 'Draw circles or rectangles. But mainly particles.',
+                x: 0,
+                y: 3.2,
+                linkTo: [
+                    {x: 0, y: 4.5, lock: true}
+                ],
+                lock: false
+            },
+            {
+                title: 'WebGL',
+                desc: 'Loose yourself in Euclidean Geometry.',
+                x: 0,
+                y: 4.5,
+                lock: true
+            },
+            {
+                title: 'Closure',
+                desc: 'Finally understand how to pass "i" to your setTimeout function.',
+                x: 7,
+                y: 2.8,
+                lock: false
+            },
+            {
+                title: 'Grunt',
+                desc: 'Or Gulp, or Cake, or Broccoli, or Brunch. Wait, what ?',
+                x: 4,
+                y: 3,
+                lock: true
+            },
+            {
+                title: 'Flip a coin',
+                desc: 'Use Math.random() to know which pizza you want.\nBecause pseudo random is sometime okay.',
+                x: 7,
+                y: 4,
                 lock: false
             }
         ]
@@ -871,8 +965,8 @@ function createPerkToPerk(elm, elm2, ulH, ulW) {
     li2.appendChild(document.createElement('li'));
     li2.appendChild(document.createElement('li'));
     li2.appendChild(document.createElement('li'));
-    li2.appendChild(document.createElement('li'));
-    li2.appendChild(document.createElement('li'));
+//    li2.appendChild(document.createElement('li'));
+//    li2.appendChild(document.createElement('li'));
     if(elm2.lock){
         li2.classList.add('lock');
     }
@@ -909,11 +1003,11 @@ function zoomOutConstelation(ul){
         skillsState.perkToPerkAnimation.map(function(animation){
             animation.kill();
         });
-        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(1), .perkToPerk:not(.lock) li:nth-child(2)'),0, {autoAlpha: 0});
-        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(4), .perkToPerk:not(.lock) li:nth-child(5)'),0, {autoAlpha: 0});
+//        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(1), .perkToPerk:not(.lock) li:nth-child(2)'),0, {autoAlpha: 0});
+        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(2), .perkToPerk:not(.lock) li:nth-child(3)'),0, {autoAlpha: 0});
         TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li'),0, {filter: 'brightness(1.5) blur(1px)', WebkitFilter: 'brightness(1.4) blur(0px)'});
-        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(3)'),0, {boxShadow: '0 -10px 0px 1px #ffffff, 0 -10px 1px 1px rgba(0,173,255,1), 0 -10px 3px 3px rgba(32, 82, 193, 0.8)', width: 1, autoAlpha: 1});
-        TweenMax.to('.perkToPerk.lock li:nth-child(3)',0, {autoAlpha:1, boxShadow: '0 -10px 3px 1px rgba(155, 178, 206, .2)'});
+        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(1)'),0, {boxShadow: '0 -10px 0px 1px #ffffff, 0 -10px 1px 1px rgba(0,173,255,1), 0 -10px 3px 3px rgba(32, 82, 193, 0.8)', width: 1, autoAlpha: 1});
+        TweenMax.to('.perkToPerk.lock li:nth-child(1)',0, {autoAlpha:1, boxShadow: '0 -10px 3px 1px rgba(155, 178, 206, .2)'});
 
         var perks = ul.getElementsByClassName('perks');
         for(var i = 0; i < perks.length; i++){
@@ -952,23 +1046,21 @@ function zoomInConstelation(ul){
         for(var i = 0; i < perkToPerk.length; i++){
             var perkObj ={taille:0, taille2: 200};
             skillsState.perkToPerkAnimation.push(TweenMax.fromTo(perkObj, Math.random()+.8, {taille: 0}, {taille:200, yoyo: true, repeat: -1, ease: Power1.easeInOut, onUpdateParams:[i], onUpdate: function(i){
-                var newElm = perkToPerk[i].querySelectorAll('li:nth-child(1), li:nth-child(4)');
+                var newElm = perkToPerk[i].querySelectorAll('li:nth-child(2)');
                 newElm[0].style.transform = 'translateY('+this.target.taille+'%)';
-                newElm[1].style.transform = 'translateY('+this.target.taille+'%)';
             }}));
             skillsState.perkToPerkAnimation.push(TweenMax.fromTo(perkObj, Math.random()+.8, {taille2: 200}, {taille2:0, yoyo: true, repeat: -1, ease: Power1.easeInOut, onUpdateParams:[i], onUpdate: function(i){
-                var newElm = perkToPerk[i].querySelectorAll('li:nth-child(2), li:nth-child(5)');
+                var newElm = perkToPerk[i].querySelectorAll('li:nth-child(3)');
                 newElm[0].style.transform = 'translateY('+this.target.taille2+'%)';
-                newElm[1].style.transform = 'translateY('+this.target.taille2+'%)';
             }}));
         }
 
-//        TweenMax.fromTo(ul.querySelectorAll('.perkToPerk li:nth-child(4)'), 1,{transform: 'translateY(0)'}, {transform: 'translateY(210px)', yoyo: true, repeat: -1});
-        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(1), .perkToPerk:not(.lock) li:nth-child(2)'),0, {autoAlpha: 1});
-        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(4), .perkToPerk:not(.lock) li:nth-child(5)'),0, {autoAlpha: 1});
+//        TweenMax.fromTo(ul.querySelectorAll('.perkToPerk li:nth-child(2)'), 1,{transform: 'translateY(0)'}, {transform: 'translateY(210px)', yoyo: true, repeat: -1});
+//        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(1), .perkToPerk:not(.lock) li:nth-child(2)'),0, {autoAlpha: 1});
+        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(2), .perkToPerk:not(.lock) li:nth-child(3)'),0, {autoAlpha: 1});
         TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li'),0, {filter: 'brightness(1.5) blur(1px)', WebkitFilter: 'brightness(1.5) blur(1px)'});
-        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(3)'),.5, {boxShadow: '0 -20px 2px 1px #ffffff, 0 -20px 9px 3px rgba(0,173,255,1), 0 -20px 7px 9px rgba(32, 82, 193, 0.8)', width: 1, autoAlpha: 1});
-        TweenMax.to(ul.querySelectorAll('.perkToPerk.lock li:nth-child(3)'),.5, {autoAlpha:1, boxShadow: '0 -10px 50px 5px rgba(155, 178, 206, 1), 0 -10px 5px 2px rgba(155, 178, 206, .3)'});
+        TweenMax.to(ul.querySelectorAll('.perkToPerk:not(.lock) li:nth-child(1)'),.5, {boxShadow: '0 -20px 2px 1px #ffffff, 0 -20px 9px 3px rgba(0,173,255,1), 0 -20px 7px 9px rgba(32, 82, 193, 0.8)', width: 1, autoAlpha: 1});
+        TweenMax.to(ul.querySelectorAll('.perkToPerk.lock li:nth-child(1)'),.5, {autoAlpha:1, boxShadow: '0 -10px 50px 5px rgba(155, 178, 206, 1), 0 -10px 5px 2px rgba(155, 178, 206, .3)'});
         TweenMax.to(ul.querySelectorAll('.perkToPerk.lock'),.5, {autoAlpha:1, onComplete: function(){
             skillsState.movingConstelation = false;
         }});
