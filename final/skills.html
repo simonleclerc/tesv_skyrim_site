@@ -943,7 +943,7 @@ function createPerks(perks, ul) {
             if(skillsState.zoomConstelation) {
                 skillsState.zoomConstelationDeepPerk = true;
                 TweenMax.to(ul.getElementsByClassName('perkToPerk'),.3, {autoAlpha: 1});
-                TweenMax.to(ul.getElementsByClassName('to'+elm.title.toLowerCase().replace(' ', '_')), 1, {autoAlpha: 0});
+                TweenMax.to(ul.getElementsByClassName('to'+elm.title.toLowerCase().replace(/ /g, '_')), 1, {autoAlpha: 0});
                 TweenMax.to(ul.getElementsByClassName('perk--desc'),.3, {autoAlpha: 0});
                 TweenMax.to(li.getElementsByClassName('perk--desc'),.3, {autoAlpha: 1});
                 style.innerHTML = '.perks.transform {transform: rotateX(50deg) translate3d(' + (elm.x * -10 + 50) + '%,' + (elm.y * 10) + '%,0);';
