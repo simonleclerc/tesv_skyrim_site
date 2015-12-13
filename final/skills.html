@@ -341,9 +341,9 @@ var skills = [
                 x: 5,
                 y: 0,
                 linkTo: [
-                    {x: 4, y: 1},
-                    {x: 1, y: 1.2},
-                    {x: 8.5, y: 0.7}
+                    {x: 4, y: 1, title: 'novice'},
+                    {x: 1, y: 1.2, title: 'animation'},
+                    {x: 8.5, y: 0.7, title: 'jquery'}
                 ],
                 lock: false
             },
@@ -353,7 +353,7 @@ var skills = [
                 x: 4,
                 y: 1,
                 linkTo: [
-                    {x: 6, y: 2}
+                    {x: 6, y: 2, title: 'medium'}
                 ],
                 lock: false
             },
@@ -363,9 +363,9 @@ var skills = [
                 x: 6,
                 y: 2,
                 linkTo: [
-                    {x: 5, y: 3.5},
-                    {x: 7, y: 2.8},
-                    {x: 4, y: 3, lock: true}
+                    {x: 5, y: 3.5, title: 'expert'},
+                    {x: 7, y: 2.8, title: 'closure'},
+                    {x: 4, y: 3, lock: true, title: 'grunt'}
                 ],
                 lock: false
             },
@@ -375,8 +375,8 @@ var skills = [
                 x: 5,
                 y: 3.5,
                 linkTo: [
-                    {x: 6, y: 5},
-                    {x: 7, y: 4}
+                    {x: 6, y: 5, title: 'master'},
+                    {x: 7, y: 4, title: 'flip_a_coin'}
                 ],
                 lock: false
             },
@@ -393,8 +393,8 @@ var skills = [
                 x: 8.5,
                 y:0.7,
                 linkTo: [
-                    {x: 8, y: 1.4},
-                    {x: 10, y: 3}
+                    {x: 8, y: 1.4, title: 'async'},
+                    {x: 10, y: 3, title: 'reactjs'}
                 ],
                 lock: false
             },
@@ -411,7 +411,7 @@ var skills = [
                 x: 10,
                 y: 3,
                 linkTo: [
-                    {x: 9, y: 4}
+                    {x: 9, y: 4, title: 'react_form'}
                 ],
                 lock: false
             },
@@ -428,7 +428,7 @@ var skills = [
                 x: 1,
                 y: 1.2,
                 linkTo: [
-                    {x: 0, y: 3.2}
+                    {x: 0, y: 3.2, title: 'canvas'}
                 ],
                 lock: false
             },
@@ -438,7 +438,7 @@ var skills = [
                 x: 0,
                 y: 3.2,
                 linkTo: [
-                    {x: 0, y: 4.5, lock: true}
+                    {x: 0, y: 4.5, lock: true, title: 'webgl'}
                 ],
                 lock: false
             },
@@ -942,6 +942,8 @@ function createPerks(perks, ul) {
         E.addHandler(li, 'click', function(){
             if(skillsState.zoomConstelation) {
                 skillsState.zoomConstelationDeepPerk = true;
+                TweenMax.to(ul.getElementsByClassName('perkToPerk'),.3, {autoAlpha: 1});
+                TweenMax.to(ul.getElementsByClassName('to'+elm.title.toLowerCase().replace(' ', '_')), 1, {autoAlpha: 0});
                 TweenMax.to(ul.getElementsByClassName('perk--desc'),.3, {autoAlpha: 0});
                 TweenMax.to(li.getElementsByClassName('perk--desc'),.3, {autoAlpha: 1});
                 style.innerHTML = '.perks.transform {transform: rotateX(50deg) translate3d(' + (elm.x * -10 + 50) + '%,' + (elm.y * 10) + '%,0);';
@@ -962,6 +964,7 @@ function createPerkToPerk(elm, elm2, ulH, ulW) {
         li2 = document.createElement('li');
     li2.setAttribute('id', elm2.id);
     li2.classList.add('perkToPerk');
+    li2.classList.add('to'+elm2.title);
     li2.appendChild(document.createElement('li'));
     li2.appendChild(document.createElement('li'));
     li2.appendChild(document.createElement('li'));
@@ -1077,7 +1080,7 @@ var navigation = {
         if(skillsState.zoomConstelationDeepPerk) {
             skillsState.zoomConstelationDeepPerk = false;
             TweenMax.to(skillsState.zoomedConstelation.getElementsByClassName('perk--desc'),.3, {autoAlpha: 0});
-            TweenMax.to(skillsState.zoomedConstelation.getElementsByClassName('perk--desc:first-child'),.3, {autoAlpha: 1});
+            TweenMax.to([document.getElementsByClassName('perkToPerk'), skillsState.zoomedConstelation.getElementsByClassName('perk--desc:first-child')],.3, {autoAlpha: 1});
             var transformedPerk = skillsState.zoomedConstelation.querySelector('.perks.transform');
             transformedPerk.classList.remove('transform');
         } else if(skillsState.zoomConstelation) {
