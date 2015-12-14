@@ -230,7 +230,116 @@
 <script type="text/javascript" src="js/greensock-js/src/minified/TweenMax.min.js"></script>
 <script type="text/javascript" src="js/other.js"></script>
 <script type="text/javascript">
+//@todo mettre toute les perkToPerk avant les perks IMG
+//@todo ajouter place pour desc sur plusieurs lignes
 var skills = [
+    {
+        title: 'CSS',
+        level: '76',
+        levelProgress: 89,
+        perkAbove: 'javascript',
+        perks: [
+            {
+                title: 'Beginner',
+                desc: 'Target your first class and id.',
+                x: 5,
+                y: 0,
+                linkTo: [
+                    {x: 5, y: 1, lock: false, title: 'novice'},
+                    {x: 9, y: 0.5, lock: false, title: 'naming_convention'},
+                    {x: 2, y: 0.7, lock: false, title: 'layout'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Novice',
+                desc: 'Style basic interface.',
+                x: 5,
+                y: 1,
+                linkTo: [
+                    {x: 4, y: 3, lock: false, title: 'medium'},
+                    {x: 6, y: 2, lock: false, title: 'animation'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Medium',
+                desc: 'Discover pseudo selector and their power.',
+                x: 4,
+                y: 3,
+                linkTo: [
+                    {x: 3, y: 4, lock: false, title: 'expert'},
+                    {x: 4.5, y: 3.5, lock: false, title: 'responsive'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Expert',
+                desc: 'Test exotic properties and add fallback for old browser. ',
+                x: 3,
+                y: 4,
+                linkTo: [
+                    {x: 1, y: 5, lock: false, title: 'master'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Master',
+                desc: 'Shape the world.',
+                x: 1,
+                y: 5,
+                lock: false
+            },
+            {
+                title: 'Layout',
+                desc: 'Learn display, position and float property.',
+                x: 2,
+                y: 0.7,
+                linkTo: [
+                    {x: 2, y: 3, lock: false, title: 'advanced_layout'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Advanced layout',
+                desc: 'Use flexbox and think of using grid layout.',
+                x: 2,
+                y: 3,
+                lock: false
+            },
+            {
+                title: 'Animation',
+                desc: 'Unlock the power of transition.',
+                x: 6,
+                y: 2,
+                lock: false
+            },
+            {
+                title: 'Responsive',
+                desc: 'Adapt your layout to any size.',
+                x: 4.5,
+                y: 3.5,
+                lock: false
+            },
+            {
+                title: 'Naming convention',
+                desc: 'Name things with BEM, think atomic.',
+                x: 9,
+                y: 0.5,
+                linkTo: [
+                    {x: 6.5, y: 3, lock: false, title: 'preprocessor'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Preprocessor',
+                desc: 'Add more tools to your gear.',
+                x: 6.5,
+                y: 3,
+                lock: false
+            }
+        ]
+    },
     {
         title: 'Javascript',
         level: '70',
@@ -579,55 +688,6 @@ var skills = [
                 y: 4,
                 lock: false
             },
-        ]
-    },
-    {
-        title: 'Javascript',
-        level: '70',
-        levelProgress: 10,
-        perkAbove: 'javascript',
-        perks: [
-            {
-                title: 'Novice',
-                desc: 'Write novice javascript',
-                x: 5,
-                y: 0,
-                linkTo: [
-                    {x: 10, y: 1}, {x: 0, y: 5}
-                ],
-                lock: false
-            },
-            {
-                title: 'Medium',
-                desc: 'Write medium javascript',
-                x: 0,
-                y: 5,
-                lock: false
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 10,
-                y: 10,
-                lock: false
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 1,
-                y: 7,
-                lock: false
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 10,
-                y: 1,
-                linkTo: [
-                    {x: 10, y: 10}
-                ],
-                lock: false
-            }
         ]
     },
     {
