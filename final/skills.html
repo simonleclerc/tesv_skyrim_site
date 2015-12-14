@@ -473,52 +473,112 @@ var skills = [
         ]
     },
     {
-        title: 'Javascript',
-        level: '70',
-        levelProgress: 10,
+        title: 'HTML',
+        level: '83',
+        levelProgress: 74,
         perkAbove: 'javascript',
         perks: [
             {
-                title: 'Novice',
-                desc: 'Write novice javascript',
+                title: 'Beginner',
+                desc: 'Write your first HTML element',
                 x: 5,
                 y: 0,
                 linkTo: [
-                    {x: 10, y: 1}, {x: 0, y: 5}
+                    {x: 4.5, y: 1, lock: false, title: 'novice'},
+                    {x: 10, y: 1, lock: false, title: 'email'},
+                    {x: 0, y: 1.8, lock: false, title: 'semantic'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Novice',
+                desc: 'Create basic interface',
+                x: 4.5,
+                y: 1,
+                linkTo: [
+                    {x: 5.5, y: 2, lock: false, title: 'medium'}
                 ],
                 lock: false
             },
             {
                 title: 'Medium',
-                desc: 'Write medium javascript',
-                x: 0,
+                desc: 'Use new elements from HTML 5',
+                x: 5.5,
+                y: 2,
+                linkTo: [
+                    {x: 6.5, y: 4, lock: false, title: 'expert'},
+                    {x: 7.5, y: 3, lock: false, title: 'svg'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Expert',
+                desc: 'Create complex interface with unnecessary elements',
+                x: 6.5,
+                y: 4,
+                linkTo: [
+                    {x: 7, y: 5, lock: true, title: 'master'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Master',
+                desc: 'Build your own world',
+                x: 7,
                 y: 5,
+                lock: true
+            },
+            {
+                title: 'Semantic',
+                desc: 'Use HTML in a semantic way',
+                x: 0,
+                y: 1.8,
+                linkTo: [
+                    {x: 3, y: 3, lock: true, title: 'accessibility'}
+                ],
                 lock: false
             },
             {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 10,
-                y: 10,
-                lock: false
+                title: 'Accessibility',
+                desc: 'Build accessible interface',
+                x: 3,
+                y: 3,
+                lock: true
             },
             {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 1,
-                y: 7,
-                lock: false
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
+                title: 'Email',
+                desc: 'Back to the table',
                 x: 10,
                 y: 1,
                 linkTo: [
-                    {x: 10, y: 10}
+                    {x: 8, y: 2, lock: false, title: 'advanced_email'}
                 ],
                 lock: false
-            }
+            },
+            {
+                title: 'Advanced Email',
+                desc: 'Be responsive and hack more than ever',
+                x: 8,
+                y: 2,
+                lock: false
+            },
+            {
+                title: 'SVG',
+                desc: 'Add SVG to your tool belt',
+                x: 7.5,
+                y: 3,
+                linkTo: [
+                    {x: 8.5, y: 4, lock: false, title: 'advanced_svg'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Advanced SVG',
+                desc: 'Manipulate the svg after your export. Gradient, SMIL, Viewbox.',
+                x: 8.5,
+                y: 4,
+                lock: false
+            },
         ]
     },
     {

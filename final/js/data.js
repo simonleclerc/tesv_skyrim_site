@@ -135,6 +135,9 @@ var itemsData = [
                 name:'Historic manager',
                 urlImg: 'images/full_inventory.jpg',
                 desc: 'Create for the email tool. Allow to create and manage an history. Add entry, go back/forward...',
+                links: [
+                    {link: 'https://github.com/simonleclerc/HistoryManager.js', text: 'Github'}
+                ],
                 tags: 'JavaScript',
                 weight: 10,
                 value: 1000
