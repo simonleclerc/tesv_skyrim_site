@@ -230,8 +230,6 @@
 <script type="text/javascript" src="js/greensock-js/src/minified/TweenMax.min.js"></script>
 <script type="text/javascript" src="js/other.js"></script>
 <script type="text/javascript">
-//@todo mettre toute les perkToPerk avant les perks IMG
-//@todo ajouter place pour desc sur plusieurs lignes
 var skills = [
     {
         title: 'CSS',
@@ -692,7 +690,7 @@ var skills = [
     },
     {
         title: 'Animation',
-        level: '70',
+        level: '88',
         levelProgress: 23,
         perkAbove: 'javascript',
         perks: [
@@ -758,49 +756,91 @@ var skills = [
     },
     {
         title: 'Graphism',
-        level: '70',
+        level: '42',
         levelProgress: 10,
         perkAbove: 'javascript',
         perks: [
             {
-                title: 'Novice',
-                desc: 'Write novice javascript',
+                title: 'Beginner',
+                desc: 'Adjust colors on family photo.',
                 x: 5,
                 y: 0,
                 linkTo: [
-                    {x: 10, y: 1}, {x: 0, y: 5}
+                    {x: 5.5, y: 1, lock: false, title: 'novice'},
+                    {x: 2, y: 1, lock: false, title: 'software_manipulation'},
+                    {x: 8, y: 1.3, lock: false, title: 'decline'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Novice',
+                desc: 'Express a bit of creativity.',
+                x: 5.5,
+                y: 1,
+                linkTo: [
+                    {x: 4.2, y: 2.5, lock: false, title: 'medium'}
                 ],
                 lock: false
             },
             {
                 title: 'Medium',
-                desc: 'Write medium javascript',
-                x: 0,
+                desc: 'Have sense for motion.',
+                x: 4.2,
+                y: 2.5,
+                linkTo: [
+                    {x: 3, y: 3.8, lock: true, title: 'expert'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Expert',
+                desc: 'Show us creativity and technical ability.',
+                x: 3,
+                y: 3.8,
+                linkTo: [
+                    {x: 2, y: 5, lock: true, title: 'master'}
+                ],
+                lock: true
+            },
+            {
+                title: 'Master',
+                desc: 'Sketch the world.',
+                x: 2,
                 y: 5,
-                lock: false
+                lock: true
             },
             {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 10,
-                y: 10,
-                lock: false
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 1,
-                y: 7,
-                lock: false
-            },
-            {
-                title: 'Expert',
-                desc: 'Write expert javascript',
-                x: 10,
+                title: 'Software manipulation',
+                desc: 'Have a large view of the possibility with graphism software.',
+                x: 2,
                 y: 1,
                 linkTo: [
-                    {x: 10, y: 10}
+                    {x: 3, y: 2, lock: true, title: 'advanced_software'}
                 ],
+                lock: false
+            },
+            {
+                title: 'Advanced software',
+                desc: 'Have a large an detail view with graphism software.',
+                x: 3,
+                y: 2,
+                lock: true
+            },
+            {
+                title: 'Decline',
+                desc: 'Decline a model.',
+                x: 8,
+                y: 1.3,
+                linkTo: [
+                    {x: 7.8, y: 2.3, lock: false, title: 'responsive'}
+                ],
+                lock: false
+            },
+            {
+                title: 'Responsive',
+                desc: 'Decline a model into responsive version.',
+                x: 7.8,
+                y: 2.3,
                 lock: false
             }
         ]
@@ -1088,9 +1128,11 @@ function createPerks(perks, ul) {
             }
         });
         ul.appendChild(li);
+//        ul.insertBefore(li, ul.firstChild);
         if(elm.linkTo) {
             elm.linkTo.map(function (elm2, index) {
-                ul.appendChild(createPerkToPerk(elm, elm2, ulH, ulW))
+//                ul.appendChild(createPerkToPerk(elm, elm2, ulH, ulW))
+                ul.insertBefore(createPerkToPerk(elm, elm2, ulH, ulW), ul.firstChild);
             });
         }
     });
