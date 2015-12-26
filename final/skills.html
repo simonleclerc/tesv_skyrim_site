@@ -230,12 +230,13 @@
 <script type="text/javascript" src="js/greensock-js/src/minified/TweenMax.min.js"></script>
 <script type="text/javascript" src="js/other.js"></script>
 <script type="text/javascript">
+//@todo add description for each skill list below const
 var skills = [
     {
         title: 'CSS',
         level: '76',
         levelProgress: 89,
-        perkAbove: 'javascript',
+        perkAbove: 'css',
         perks: [
             {
                 title: 'Beginner',
@@ -482,7 +483,7 @@ var skills = [
                 x: 5,
                 y: 3.5,
                 linkTo: [
-                    {x: 6, y: 5, title: 'master'},
+                    {x: 6, y: 5, title: 'master', lock: true},
                     {x: 7, y: 4, title: 'flip_a_coin'}
                 ],
                 lock: false
@@ -492,7 +493,7 @@ var skills = [
                 desc: 'Rule the world.',
                 x: 6,
                 y: 5,
-                lock: false
+                lock: true
             },
             {
                 title: 'jQuery',
@@ -583,7 +584,7 @@ var skills = [
         title: 'HTML',
         level: '83',
         levelProgress: 74,
-        perkAbove: 'javascript',
+        perkAbove: 'html',
         perks: [
             {
                 title: 'Beginner',
@@ -685,14 +686,44 @@ var skills = [
                 x: 8.5,
                 y: 4,
                 lock: false
-            },
+            }
+        ]
+    },
+    {
+        title: 'Admin System',
+        level: '1',
+        levelProgress: 15,
+        perkAbove: 'autre',
+        perks: [
+            {
+                title: 'In coming',
+                desc: 'In coming perk.',
+                x: 5,
+                y: 0,
+                lock: false
+            }
+        ]
+    },
+    {
+        title: 'BackEnd Dev',
+        level: '1',
+        levelProgress: 15,
+        perkAbove: 'autre',
+        perks: [
+            {
+                title: 'In coming',
+                desc: 'In coming perk.',
+                x: 5,
+                y: 0,
+                lock: false
+            }
         ]
     },
     {
         title: 'Animation',
         level: '88',
         levelProgress: 23,
-        perkAbove: 'javascript',
+        perkAbove: 'animation',
         perks: [
             {
                 title: 'Transition',
@@ -758,7 +789,7 @@ var skills = [
         title: 'Graphism',
         level: '42',
         levelProgress: 10,
-        perkAbove: 'javascript',
+        perkAbove: 'graphism',
         perks: [
             {
                 title: 'Beginner',
