@@ -438,8 +438,8 @@ Menu.prototype.populateSubPan = function(itemArr) {
     }
 };
 Menu.prototype.populateModal = function(itemData) {
-    var img = _itemModal.querySelector('.itemModal--img'),
-        weight = _itemModal.querySelector('.itemModal--adjWeight .itemModal--adjVal'),
+    //var img = _itemModal.querySelector('.itemModal--img'),
+    var weight = _itemModal.querySelector('.itemModal--adjWeight .itemModal--adjVal'),
         value = _itemModal.querySelector('.itemModal--adjValue .itemModal--adjVal'),
         weightAdj = _itemModal.querySelector('.itemModal--adjWeight'),
         valueAdj = _itemModal.querySelector('.itemModal--adjValue'),
@@ -448,7 +448,7 @@ Menu.prototype.populateModal = function(itemData) {
         tags = _itemModal.querySelector('.itemModal--tags'),
         links = _itemModal.querySelector('.itemModal--links');
 
-    img.src = itemData.urlImg;
+    //img.src = itemData.urlImg;
     if(itemData.weight && itemData.value) {
         weightAdj.classList.remove('itemModal__hide');
         valueAdj.classList.remove('itemModal__hide');

@@ -5,9 +5,9 @@ var itemsData = [
             {
                 name:'Psd Text extractor to HTML',
                 urlImg: 'images/full_inventory.jpg',
-                desc: 'Creation of a script for Photoshop that parse the open .psd and write in a json file an object containing all the text with the HTML formating depending on the style pf the text.',
+                desc: 'Creation of a script for Photoshop that parse the open .psd and write in a json file an object containing all the text with the HTML formating depending on the style of the text.',
                 tags: 'Javascript / Photoshop Script',
-                weight: 10,
+                weight: 300,
                 value: 1000
             },
             {
@@ -15,15 +15,15 @@ var itemsData = [
                 urlImg: 'images/full_inventory.jpg',
                 desc: 'Creation of multiple admin interface with ReactJs and RefluxJs.',
                 tags: 'HTML / Twig / Javascript / ReactJs / RefluxJs',
-                weight: 100,
-                value: 100
+                weight: 1500,
+                value: 700
             },
             {
                 name:'Mobile application',
                 urlImg: 'images/full_inventory.jpg',
                 desc: 'Creation of a cross-platform prototype application with the Titanium Appcelerator technology.',
                 tags: 'JavaScript / Titanium Appcelerator',
-                weight: 20,
+                weight: 2000,
                 value: 520
             },
             {
@@ -37,8 +37,8 @@ var itemsData = [
                     {link: 'http://coffre-fort.plein2kdo.com/', text: 'Coffre fort'}
                 ],
                 tags: 'Javascript',
-                weight: 20,
-                value: 520
+                weight: 500,
+                value: 2300
             },
             {
                 name:'Animated Sweepstake',
@@ -51,8 +51,8 @@ var itemsData = [
                     {link: 'http://photo8.plein2kdo.com/', text: 'Photo'}
                 ],
                 tags: 'HTML / CSS / JavaScript / TweenMax',
-                weight: 20,
-                value: 520
+                weight: 200,
+                value: 650
             },
             {
                 name:'Juicy Fruits',
@@ -62,8 +62,8 @@ var itemsData = [
                     {link: 'http://juicy-fruits.plein2kdo.com/', text: 'Juicy-Fruits'}
                 ],
                 tags: 'HTML / CSS / JavaScript / TweenMax',
-                weight: 20,
-                value: 520
+                weight: 730,
+                value: 900
             },
             {
                 name:'SVG SMIL Animation',
@@ -75,8 +75,8 @@ var itemsData = [
                     {link: 'https://twitter.com/search?q=codepen%20poolboy&src=typd&lang=fr', text: 'Achievement'}
                 ],
                 tags: 'SVG / SMIL / CSS',
-                weight: 20,
-                value: 520
+                weight: 550,
+                value: 240
             },
             {
                 name:'SVG posts',
@@ -89,8 +89,8 @@ var itemsData = [
                     {link: 'http://blog.studio.gd/blog/id/15/how_to_progressively_draw_a_stroke_of_a_shape', text: 'How to progresively draw a stroke of a shape'}
                 ],
                 tags: 'SVG / SMIL /CSS',
-                weight: 20,
-                value: 520
+                weight: 360,
+                value: 780
             },
             {
                 name:'Corporate Sites',
@@ -101,8 +101,8 @@ var itemsData = [
                     {link: 'http://www.webrivage.com', text: 'WebRivage'}
                 ],
                 tags: 'Twig / HTML / CSS /JavaScript',
-                weight: 100,
-                value: 100
+                weight: 7000,
+                value: 1300
             },
             {
                 name:'Sondage National',
@@ -112,7 +112,7 @@ var itemsData = [
                     {link: 'http://www.sondagenational.com', text: 'Sondage National'}
                 ],
                 tags: 'Twig / HTML / CSS / JavaScript / Canvas',
-                weight: 100,
+                weight: 1500,
                 value: 100
             }
         ]
@@ -128,8 +128,8 @@ var itemsData = [
                     {link: 'https://github.com/simonleclerc/email_skeleton_grid', text: 'Github'}
                 ],
                 tags: 'HTML / CSS / JavaScript',
-                weight: 10,
-                value: 1000
+                weight: 1000,
+                value: 1850
             },
             {
                 name:'Historic manager',
@@ -139,8 +139,8 @@ var itemsData = [
                     {link: 'https://github.com/simonleclerc/HistoryManager.js', text: 'Github'}
                 ],
                 tags: 'JavaScript',
-                weight: 10,
-                value: 1000
+                weight: 300,
+                value: 950
             },
             {
                 name:'Skyrim',
@@ -150,8 +150,8 @@ var itemsData = [
                     {link: 'https://github.com/simonleclerc/tesv_skyrim_site', text: 'Github'}
                 ],
                 tags: 'HTML / CSS / JavaScript / SVG / Canvas',
-                weight: 100,
-                value: 100
+                weight: 3750,
+                value: 7500
             },
             {
                 name:'Note maker',
