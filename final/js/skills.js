@@ -954,8 +954,6 @@ function zoomInConstelation(ul){
         }
     }});
 }
-//@todo ajouter tous les skills/perks
-//@todo séparer js de cette page
 var navigation = {
     previousDezoomState: function(){
         if(skillsState.zoomConstelationDeepPerk) {

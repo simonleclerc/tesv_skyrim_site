@@ -5,16 +5,16 @@ var svgMenu = document.getElementById('menu');
 var canvas = document.getElementById('canvas');
 var c = canvas.getContext("2d");
 
-canvas.setAttribute('height', window.innerHeight);
-canvas.setAttribute('width', window.innerWidth);
-
-function randomRand(rand1, rand2) {
-    if (Math.random() >= .5){
-        return rand(rand1[0], rand1[1]);
-    } else {
-        return rand(rand2[0], rand2[1]);
-    }
-}
+canvas.setAttribute('height', window.innerHeight.toString());
+canvas.setAttribute('width', window.innerWidth.toString());
+//
+//function randomRand(rand1, rand2) {
+//    if (Math.random() >= .5){
+//        return rand(rand1[0], rand1[1]);
+//    } else {
+//        return rand(rand2[0], rand2[1]);
+//    }
+//}
 function getPercentage(base, percent) {
     return (base/100)*(percent);
 }
@@ -105,7 +105,7 @@ Particle.prototype.draw = function() {
     c.closePath();
     c.fill();
 
-}
+};
 
 var fixeParticle = function () {
     this.x = particlesData.position[0];
@@ -125,7 +125,7 @@ var fixeParticle = function () {
 var particlesData = {
     visible: false,
     angle: Math.PI*2
-}
+};
 function render() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     if(particlesData.visible) {
@@ -134,8 +134,8 @@ function render() {
         }
         fixeParticle();
     }
-    for (var i in particles) {
-        particles[i].draw();
+    for (var particle in particles) {
+        particles[particle].draw();
     }
 }
 (function animloop(){
@@ -157,12 +157,12 @@ var menuItemTopElmSize = menuItemTopElm.getBoundingClientRect();
 var menuItemBottomElmSize = menuItemBottomElm.getBoundingClientRect();
 var menuSelectorSvgSize = menuSelectorSvgElm.getBoundingClientRect();
 function resize () {
-    canvas.setAttribute('height', window.innerHeight);
-    canvas.setAttribute('width', window.innerWidth);
+    canvas.setAttribute('height', window.innerHeight.toString());
+    canvas.setAttribute('width', window.innerWidth.toString());
     menuElmSize = menuElm.getBoundingClientRect();
     menuItemElm.style.fontSize = menuElmSize.width/20+'px';
-    menuSelectorSvgElm.setAttribute('width', menuElmSize.width/20);
-    menuSelectorSvgElm.setAttribute('height', menuElmSize.width/20);
+    menuSelectorSvgElm.setAttribute('width', (menuElmSize.width/20).toString());
+    menuSelectorSvgElm.setAttribute('height', (menuElmSize.width/20).toString());
     menuSelectorSvgSize = menuSelectorSvgElm.getBoundingClientRect();
     menuItemRightElmSize = menuItemRightElm.getBoundingClientRect();
     menuItemLeftElmSize = menuItemLeftElm.getBoundingClientRect();
@@ -276,7 +276,7 @@ var hoverMenuAction= {
     }
 };
 
-function mousePositionOnMenuCanvas(e, actions, callback){
+function mousePositionOnMenuCanvas(e, actions){
     //RIGHT
     c.beginPath();
     c.moveTo(canvas.width/2,canvas.height/2);
@@ -390,7 +390,6 @@ var forEach = function (array, callback, scope) {
 var _menu = document.querySelector('.menu-container');
 var _lateralPan = document.getElementById('lateral-pan');
 var _subLateralPan = document.getElementById('sub-lateral-pan');
-var _panListItemsMain = document.querySelectorAll('.pan--listItemMain');
 var _panListItemsSub = document.querySelectorAll('.pan--listItemSub');
 var _itemModal = document.getElementById('itemModal');
 
@@ -548,9 +547,6 @@ Menu.prototype.getSubTitleList = function() {
 Menu.prototype.disappearMenu = function() {
     TweenMax.fromTo(_menu,.15, {autoAlpha: 1}, {autoAlpha: 0});
 };
-Menu.prototype.appearMenu = function() {
-    TweenMax.fromTo(_menu,.15, {autoAlpha: 0}, {autoAlpha: 1});
-};
 Menu.prototype.closeAllPan = function() {
     TweenMax.to([_lateralPan, _subLateralPan, _itemModal],.4, {autoAlpha: 0});
     TweenMax.to(_menu,.4, {autoAlpha: 1, onComplete: function(){
@@ -609,6 +605,14 @@ forEach(_panListItemsSub, function (index, _elm) {
     });
 });
 E.addHandler(document.getElementById('closePan'), 'click', menu.closeAllPan);
+E.addHandler(document.getElementById('credits-modal'), 'click', function(){
+    var el = document.getElementById('credits-modal');
+    el.classList.remove('display');
+});
+E.addHandler(document.getElementById('credits'), 'click', function(){
+    var el = document.getElementById('credits-modal');
+    el.classList.add('display');
+});
 
 E.addHandler(document, 'keyup', function(e) {
     switch(e.which) {
@@ -621,5 +625,3 @@ E.addHandler(document, 'keyup', function(e) {
 //@todo navigation au clavier
 //@todo navigation à la manette
 //@todo mini menu explicatif/keymap clavier manette
-//@todo ajouter crédit a bethesda skyrim
-//@todo add images to content

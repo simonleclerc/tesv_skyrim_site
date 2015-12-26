@@ -3,7 +3,7 @@ var geocoder = new google.maps.Geocoder();
 if(navigator.geolocation) {
     survId = navigator.geolocation.getCurrentPosition(maPosition,erreurPosition);
 } else {
-    alert("Ce navigateur ne supporte pas la géolocalisation");
+    alert("This browser does not support geolocalisation");
 }
 
 function maPosition(pos){
