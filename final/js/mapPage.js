@@ -147,7 +147,6 @@ function maPosition(pos){
             }
             // Limit the zoom level
             google.maps.event.addListener(map, 'zoom_changed', function() {
-                console.log(map.getZoom());
                 if (map.getZoom() < 3) {
                     map.setZoom(3);
                 } else if(map.getZoom() > 12) {

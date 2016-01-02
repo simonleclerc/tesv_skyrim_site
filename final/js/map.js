@@ -36,5 +36,4 @@ function erreurPosition(error) {
             info += "Erreur inconnue";
             break;
     }
-    console.log(info);
 }

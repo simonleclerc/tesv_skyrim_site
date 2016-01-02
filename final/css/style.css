@@ -33,22 +33,22 @@ body.home:before {
     width: 105%;
     top: -4%;
     left: -2.5%;
-    background: #000000 url(../images/rpgskyrimscreenshotart1.png) no-repeat center center;
+    background: #000000 url(../images/test.jpg) no-repeat center center;
     background-size: cover;
     z-index: -1;
     transition: all 1s  ease-out;
 }
 body.home.go-left:before {
-    transform: translate(-1.5%, 0);
-}
-body.home.go-right:before {
     transform: translate(1.5%, 0);
 }
+body.home.go-right:before {
+    transform: translate(-1.5%, 0);
+}
 body.home.go-bottom:before {
-    transform: translate(0, 2.5%);
+    transform: translate(0, -2.5%);
 }
 body.home.go-top:before {
-    transform: translate(0, -2.5%);
+    transform: translate(0, 2.5%);
 }
 body.home:after {
     position: absolute;
