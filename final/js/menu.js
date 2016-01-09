@@ -284,8 +284,8 @@ function mousePositionOnMenuCanvas(e, actions){
     c.beginPath();
     c.moveTo(canvas.width/2,canvas.height/2);
     c.lineTo(canvas.width/100*65,canvas.height/100*38);
-    c.lineTo(canvas.width/100*85,canvas.height/100*38);
-    c.lineTo(canvas.width/100*85,canvas.height/100*62);
+    c.lineTo(canvas.width/100*98,canvas.height/100*38);
+    c.lineTo(canvas.width/100*98,canvas.height/100*62);
     c.lineTo(canvas.width/100*65,canvas.height/100*62);
     c.lineTo(canvas.width/2,canvas.height/2);
     c.closePath();
@@ -298,8 +298,8 @@ function mousePositionOnMenuCanvas(e, actions){
     c.beginPath();
     c.moveTo(canvas.width/2,canvas.height/2);
     c.lineTo(canvas.width/100*35,canvas.height/100*38);
-    c.lineTo(canvas.width/100*15,canvas.height/100*38);
-    c.lineTo(canvas.width/100*15,canvas.height/100*62);
+    c.lineTo(canvas.width/100*2,canvas.height/100*38);
+    c.lineTo(canvas.width/100*2,canvas.height/100*62);
     c.lineTo(canvas.width/100*35,canvas.height/100*62);
     c.lineTo(canvas.width/2,canvas.height/2);
     c.closePath();
@@ -312,8 +312,8 @@ function mousePositionOnMenuCanvas(e, actions){
     c.beginPath();
     c.moveTo(canvas.width/2,canvas.height/2);
     c.lineTo(canvas.width/100*38,canvas.height/100*65);
-    c.lineTo(canvas.width/100*38,canvas.height/100*85);
-    c.lineTo(canvas.width/100*62,canvas.height/100*85);
+    c.lineTo(canvas.width/100*38,canvas.height/100*95);
+    c.lineTo(canvas.width/100*62,canvas.height/100*95);
     c.lineTo(canvas.width/100*62,canvas.height/100*65);
     c.lineTo(canvas.width/2,canvas.height/2);
     c.closePath();
@@ -326,8 +326,8 @@ function mousePositionOnMenuCanvas(e, actions){
     c.beginPath();
     c.moveTo(canvas.width/2,canvas.height/2);
     c.lineTo(canvas.width/100*38,canvas.height/100*35);
-    c.lineTo(canvas.width/100*38,canvas.height/100*15);
-    c.lineTo(canvas.width/100*62,canvas.height/100*15);
+    c.lineTo(canvas.width/100*38,canvas.height/100*5);
+    c.lineTo(canvas.width/100*62,canvas.height/100*5);
     c.lineTo(canvas.width/100*62,canvas.height/100*35);
     c.lineTo(canvas.width/2,canvas.height/2);
     c.closePath();

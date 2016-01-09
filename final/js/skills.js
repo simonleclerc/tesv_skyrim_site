@@ -578,15 +578,15 @@ function moveConstellationsAway(){
     for(var i = 0; i < leftSkill; i++) {
         newId = ((parseInt(skillsState.centered.substring(5,6)) - (leftSkill-i))%skillsLength);
         newId = newId < 0 ? skillsLength +newId : newId;
-        TweenMax.to('#skill'+newId, 2, {x: '-=2000'});
+        TweenMax.to('#skill'+newId,.5, {x: '-=300', autoAlpha: 0});
     }
     for(var j = 0; j < rightSkill; j++) {
         newId = (parseInt(skillsState.centered.substring(5,6)) + j +1)%skillsLength;
-        TweenMax.to('#skill'+newId, 2, {x: '+=2000'});
+        TweenMax.to('#skill'+newId,.5, {x: '+=300', autoAlpha: 0});
     }
 }
 function moveConstellationsCloser(){
-    TweenMax.to('.skill', 1, {x: 0});
+    TweenMax.to('.skill',1, {x: 0, autoAlpha: 1});
 }
 function moveConstellationToCenter(target) {
     skillsState.movingConstelation = true;

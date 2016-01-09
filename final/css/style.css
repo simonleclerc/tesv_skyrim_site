@@ -26,6 +26,12 @@ body{
     height: 100%;
     overflow: hidden;
 }
+.overflowingFixer {
+    overflow: hidden;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
 body.home:before {
     position: absolute;
     content: '';
