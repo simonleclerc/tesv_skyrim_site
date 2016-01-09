@@ -1,12 +1,14 @@
 
 
+var winW = window.innerWidth;
+var winH = window.innerHeight;
 var svgMenu = document.getElementById('menu');
 
 var canvas = document.getElementById('canvas');
 var c = canvas.getContext("2d");
 
-canvas.setAttribute('height', window.innerHeight.toString());
-canvas.setAttribute('width', window.innerWidth.toString());
+canvas.setAttribute('height', winH.toString());
+canvas.setAttribute('width', winW.toString());
 //
 //function randomRand(rand1, rand2) {
 //    if (Math.random() >= .5){
@@ -142,7 +144,6 @@ function render() {
     requestAnimFrame(animloop);
     render();
 })();
-
 var menuElm = document.getElementById('menu');
 var menuItemElm = document.querySelector('.menuItems');
 var menuItemRightElm = menuItemElm.querySelector('.right');
@@ -157,8 +158,10 @@ var menuItemTopElmSize = menuItemTopElm.getBoundingClientRect();
 var menuItemBottomElmSize = menuItemBottomElm.getBoundingClientRect();
 var menuSelectorSvgSize = menuSelectorSvgElm.getBoundingClientRect();
 function resize () {
-    canvas.setAttribute('height', window.innerHeight.toString());
-    canvas.setAttribute('width', window.innerWidth.toString());
+    winW = window.innerWidth;
+    winH = window.innerHeight;
+    canvas.setAttribute('height', winH.toString());
+    canvas.setAttribute('width', winW.toString());
     menuElmSize = menuElm.getBoundingClientRect();
     menuItemElm.style.fontSize = menuElmSize.width/20+'px';
     menuSelectorSvgElm.setAttribute('width', (menuElmSize.width/20).toString());
@@ -168,8 +171,8 @@ function resize () {
     menuItemLeftElmSize = menuItemLeftElm.getBoundingClientRect();
     menuItemTopElmSize = menuItemTopElm.getBoundingClientRect();
     menuItemBottomElmSize = menuItemBottomElm.getBoundingClientRect();
-    menuItemRightElm.style.transform = 'translateX('+Math.round(menuElmSize.right + menuElmSize.width/100)+'px) translateY('+Math.round(menuElmSize.top+(menuElmSize.height/2)-menuItemRightElmSize.height/2)+'px)';
-    menuItemLeftElm.style.transform = 'translateX('+Math.round(menuElmSize.left-(menuItemLeftElmSize.width) - menuElmSize.width/100)+'px) translateY('+Math.round(menuElmSize.top+(menuElmSize.height/2)-menuItemRightElmSize.height/2)+'px)';
+    menuItemRightElm.style.transform = 'translateX('+Math.round(menuElmSize.right + menuElmSize.width/100-(winW < 780 ? menuItemRightElmSize.width:0))+'px) translateY('+Math.round(menuElmSize.top+(menuElmSize.height/2)-menuItemRightElmSize.height/2)+'px)';
+    menuItemLeftElm.style.transform = 'translateX('+Math.round(menuElmSize.left-(menuItemLeftElmSize.width) - menuElmSize.width/100+(winW < 780 ? menuItemLeftElmSize.width:0))+'px) translateY('+Math.round(menuElmSize.top+(menuElmSize.height/2)-menuItemRightElmSize.height/2)+'px)';
     menuItemTopElm.style.transform = 'translateX('+Math.round(menuElmSize.left+(menuElmSize.width/2)-(menuItemTopElmSize.width/2))+'px) translateY('+Math.round(menuElmSize.top - menuItemTopElmSize.height - menuElmSize.height/100)+'px)';
     menuItemBottomElm.style.transform = 'translateX('+Math.round(menuElmSize.left+(menuElmSize.width/2 - menuItemBottomElmSize.width/2))+'px) translateY('+Math.round(menuElmSize.bottom + menuElmSize.height/100)+'px)';
 }

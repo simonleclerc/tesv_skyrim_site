@@ -29,26 +29,14 @@ body{
 body.home:before {
     position: absolute;
     content: '';
-    height: 108%;
-    width: 105%;
-    top: -4%;
-    left: -2.5%;
-    background: #000000 url(../images/test.jpg) no-repeat center center;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: #000000 url(../images/test_small.jpg) no-repeat center center;
     background-size: cover;
     z-index: -1;
     transition: all 1s  ease-out;
-}
-body.home.go-left:before {
-    transform: translate(1.5%, 0);
-}
-body.home.go-right:before {
-    transform: translate(-1.5%, 0);
-}
-body.home.go-bottom:before {
-    transform: translate(0, -2.5%);
-}
-body.home.go-top:before {
-    transform: translate(0, 2.5%);
 }
 body.home:after {
     position: absolute;
@@ -67,6 +55,7 @@ ul, ol {
 }
 .main-container {
     height: 100%;
+    overflow: hidden;
 }
 .menu-container svg,
 .menu-container canvas {
@@ -287,6 +276,10 @@ ul, ol {
 }
 .itemModal--links {
     padding: 10px 50px;
+    font-size: 1.4vw;
+}
+.itemModal--tags {
+    font-size: 1.4vw;
 }
 
 .itemModal--link:first-child:before {
@@ -375,7 +368,7 @@ ul, ol {
     justify-content: space-around;
 }
 .footer--buttonLabel {
-    font-size: 30px;
+    font-size: 1.5vw;
     color: #ffffff;
 }
 .bottom--buttonKey,
@@ -391,7 +384,7 @@ ul, ol {
     line-height: 35px;
     padding: 0 7px;
     margin-right: 7px;
-    font-size: 25px;
+    font-size: 1.4vw;
     text-decoration: none;
 }
 .bottom--buttonKey {
@@ -684,4 +677,35 @@ ul, ol {
     font-size: 20px;
     font-family: 'Futura-Condensed-Normal', Helvetica, Arial, sans-serif;
     text-transform: uppercase;
+}
+@media only screen and (min-width: 780px) {
+    #svgMenu {
+        width: 70%;
+    }
+    body.home:before {
+        background-image: url(../images/test_low.jpg);
+    }
+    body.home:before {
+        height: 108%;
+        width: 105%;
+        top: -4%;
+        left: -2.5%;
+    }
+    body.home.go-left:before {
+        transform: translate(1.5%, 0);
+    }
+    body.home.go-right:before {
+        transform: translate(-1.5%, 0);
+    }
+    body.home.go-bottom:before {
+        transform: translate(0, -2.5%);
+    }
+    body.home.go-top:before {
+        transform: translate(0, 2.5%);
+    }
+}
+@media only screen and (min-width: 1000px) {
+    #svgMenu {
+        width: 40%;
+    }
 }
